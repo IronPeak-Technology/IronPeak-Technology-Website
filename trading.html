@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Trading Products | IronPeak Technology LLC</title>
+
+  <link rel="icon" type="image/png" href="IronPeak%20Technology.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #fb923c 0%, #ef4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tv-gradient-text {
+      background: linear-gradient(135deg, #2962ff 0%, #00bcd4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .qt-gradient-text {
+      background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-bg {
+      background: radial-gradient(ellipse at 30% 20%, #1e2d4a 0%, #0f172a 40%, #020617 100%);
+    }
+    .dot-grid {
+      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .product-card {
+      background: linear-gradient(135deg, rgba(30,41,59,0.7) 0%, rgba(15,23,42,0.7) 100%);
+      border: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+      border-color: rgba(249,115,22,0.25);
+    }
+    .tv-card:hover  { border-color: rgba(41,98,255,0.3); }
+    .qt-card:hover  { border-color: rgba(124,58,237,0.3); }
+
+    .btn-glow { box-shadow: 0 0 24px rgba(249,115,22,0.35); }
+    .btn-glow:hover { box-shadow: 0 0 36px rgba(249,115,22,0.5); }
+
+    .nav-scrolled {
+      background: rgba(2,6,23,0.92) !important;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* ---- Password gate ---- */
+    #gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: radial-gradient(ellipse at 50% 40%, #1e2d4a 0%, #0f172a 40%, #020617 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gate-card {
+      background: rgba(30,41,59,0.85);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+    }
+    .gate-input {
+      background: rgba(15,23,42,0.8);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #f8fafc;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .gate-input:focus {
+      outline: none;
+      border-color: #f97316;
+      box-shadow: 0 0 0 3px rgba(249,115,22,0.15);
+    }
+    .gate-input::placeholder { color: rgba(148,163,184,0.5); }
+
+    #gate-error {
+      transition: opacity 0.3s ease;
+    }
+
+    /* ---- Content (hidden until auth) ---- */
+    #content { display: none; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    .orb {
+      filter: blur(90px);
+      animation: pulsate 6s ease-in-out infinite;
+    }
+    .orb-2 { animation-delay: 3s; }
+    @keyframes pulsate {
+      0%, 100% { opacity: 0.10; transform: scale(1); }
+      50%       { opacity: 0.18; transform: scale(1.05); }
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #020617; }
+    ::-webkit-scrollbar-thumb { background: #f97316; border-radius: 4px; }
+
+    .badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-white antialiased">
+
+  <!-- =========================================================
+       PASSWORD GATE
+  ========================================================== -->
+  <div id="gate">
+    <div class="gate-card rounded-2xl p-10 w-full max-w-md mx-4 shadow-2xl">
+      <!-- Logo -->
+      <div class="flex justify-center mb-8">
+        <img src="IronPeak%20Technology.png" alt="IronPeak Technology" class="h-14 w-auto object-contain">
+      </div>
+
+      <div class="text-center mb-8">
+        <div class="w-14 h-14 bg-orange-500/10 border border-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-7 h-7 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+          </svg>
+        </div>
+        <h1 class="text-2xl font-black mb-2">Trading Products</h1>
+        <p class="text-slate-400 text-sm">This area is restricted. Enter your access password to continue.</p>
+      </div>
+
+      <form id="gate-form" novalidate>
+        <div class="mb-4">
+          <label for="gate-password" class="text-sm text-slate-400 mb-2 block">Access Password</label>
+          <input id="gate-password" type="password" placeholder="Enter password..."
+                 class="gate-input w-full rounded-xl px-4 py-3 text-sm" required autocomplete="current-password">
+        </div>
+
+        <p id="gate-error" class="text-red-400 text-xs mb-4 opacity-0">Incorrect password. Please try again.</p>
+
+        <button type="submit"
+                class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 px-6 rounded-xl btn-glow transition-all duration-200">
+          Unlock Access
+        </button>
+      </form>
+
+      <div class="mt-6 text-center">
+        <a href="index.html" class="text-slate-600 hover:text-slate-400 text-xs transition-colors">← Back to IronPeak Technology</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================
+       MAIN CONTENT (shown after auth)
+  ========================================================== -->
+  <div id="content">
+
+    <!-- NAV -->
+    <nav id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 py-4">
+      <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <a href="index.html" class="flex items-center group">
+          <img src="IronPeak%20Technology.png" alt="IronPeak Technology" class="h-20 w-auto object-contain max-w-[280px]">
+        </a>
+
+        <div class="hidden md:flex items-center gap-7">
+          <a href="#tradingview" class="text-slate-400 hover:text-white text-sm font-medium transition-colors">TradingView</a>
+          <a href="#quantower"   class="text-slate-400 hover:text-white text-sm font-medium transition-colors">Quantower</a>
+          <a href="index.html"   class="text-slate-400 hover:text-white text-sm font-medium transition-colors">Main Site</a>
+        </div>
+
+        <div class="hidden md:flex items-center gap-3">
+          <button id="lock-btn"
+                  class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-200">
+            <svg class="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+            </svg>
+            Lock Page
+          </button>
+          <a href="index.html#contact" class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-5 py-2.5 rounded-lg btn-glow transition-all duration-200">
+            Contact Us
+          </a>
+        </div>
+
+        <button id="menu-toggle" aria-label="Open menu" class="md:hidden text-slate-400 hover:text-white p-1 transition-colors">
+          <svg id="icon-open"  class="w-6 h-6"        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div id="mobile-menu" class="md:hidden hidden border-t border-slate-800/80 bg-slate-950/95 backdrop-blur-xl mt-3">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col gap-4">
+          <a href="#tradingview" class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">TradingView Indicators</a>
+          <a href="#quantower"   class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">Quantower Strategies</a>
+          <a href="index.html"   class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">← Main Site</a>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- HERO -->
+    <section class="hero-bg dot-grid relative pt-40 pb-16 overflow-hidden">
+      <div class="orb     absolute -top-20 left-1/4  w-[400px] h-[400px] rounded-full bg-blue-700   pointer-events-none"></div>
+      <div class="orb orb-2 absolute bottom-0  right-1/4 w-[350px] h-[350px] rounded-full bg-purple-700 pointer-events-none"></div>
+
+      <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <div class="inline-flex items-center gap-2.5 bg-orange-500/10 border border-orange-500/25 rounded-full px-4 py-2 mb-6">
+          <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+          <span class="text-orange-400 text-sm font-medium tracking-wide">Exclusive Trading Products</span>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-tight mb-5">
+          Algorithmic <span class="gradient-text">Trading Tools</span>
+        </h1>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+          Professional-grade indicators and automated trading strategies built for serious traders. Developed and maintained by IronPeak Technology.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         TRADINGVIEW INDICATORS
+    ========================================================== -->
+    <section id="tradingview" class="py-24 bg-slate-950">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <div class="text-center mb-14 reveal">
+          <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-5">
+            <svg class="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4 4h16v12H4V4zm0 14h16v2H4v-2z"/>
+            </svg>
+            <span class="text-blue-400 text-sm font-medium">TradingView</span>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">
+            <span class="tv-gradient-text">TradingView</span> Indicators
+          </h2>
+          <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+            Custom Pine Script indicators built for precision. Works directly inside TradingView on any plan.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- Indicator Card Template — duplicate and fill in your products -->
+          <div class="product-card tv-card rounded-2xl p-8 flex flex-col reveal reveal-delay-1">
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-11 h-11 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+                </svg>
+              </div>
+              <!-- Availability badge: change to "Available" when ready -->
+              <span class="badge bg-amber-500/15 border border-amber-500/25 text-amber-400">Coming Soon</span>
+            </div>
+            <h3 class="text-lg font-bold mb-2">Indicator Name</h3>
+            <p class="text-slate-400 text-sm leading-relaxed flex-1 mb-6">
+              Describe what this indicator does, what markets it works on, and what edge it gives the trader.
+            </p>
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-2xl font-black text-white">$XX <span class="text-slate-500 text-sm font-normal">/ one-time</span></span>
+            </div>
+            <button disabled
+                    class="w-full text-center bg-slate-700 border border-slate-600 text-slate-500 font-semibold text-sm py-3 px-5 rounded-xl cursor-not-allowed">
+              Coming Soon
+            </button>
+          </div>
+
+          <!-- Add more indicator cards here by copying the block above -->
+          <div class="product-card tv-card rounded-2xl p-8 flex flex-col reveal reveal-delay-2">
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-11 h-11 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/>
+                </svg>
+              </div>
+              <span class="badge bg-amber-500/15 border border-amber-500/25 text-amber-400">Coming Soon</span>
+            </div>
+            <h3 class="text-lg font-bold mb-2">Indicator Name</h3>
+            <p class="text-slate-400 text-sm leading-relaxed flex-1 mb-6">
+              Describe what this indicator does, what markets it works on, and what edge it gives the trader.
+            </p>
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-2xl font-black text-white">$XX <span class="text-slate-500 text-sm font-normal">/ one-time</span></span>
+            </div>
+            <button disabled
+                    class="w-full text-center bg-slate-700 border border-slate-600 text-slate-500 font-semibold text-sm py-3 px-5 rounded-xl cursor-not-allowed">
+              Coming Soon
+            </button>
+          </div>
+
+          <!-- "More coming soon" placeholder -->
+          <div class="product-card rounded-2xl p-8 flex flex-col items-center justify-center text-center reveal reveal-delay-3 border-dashed" style="border-style: dashed;">
+            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center mb-4">
+              <svg class="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+              </svg>
+            </div>
+            <p class="text-slate-500 text-sm font-medium">More indicators in development</p>
+            <p class="text-slate-700 text-xs mt-1">Check back soon</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <hr class="section-divider max-w-7xl mx-auto">
+
+
+    <!-- =========================================================
+         QUANTOWER STRATEGIES
+    ========================================================== -->
+    <section id="quantower" class="py-24 bg-slate-950">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <div class="text-center mb-14 reveal">
+          <div class="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/20 rounded-full px-4 py-2 mb-5">
+            <svg class="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.3 48.3 0 0112 21a48.3 48.3 0 01-8.135-.687c-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/>
+            </svg>
+            <span class="text-purple-400 text-sm font-medium">Quantower</span>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">
+            <span class="qt-gradient-text">Quantower</span> Strategies
+          </h2>
+          <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+            Fully automated trading strategies for Quantower. Set your parameters and let the algorithm trade for you.
+          </p>
+        </div>
+
+        <!-- Risk disclaimer -->
+        <div class="bg-amber-500/5 border border-amber-500/20 rounded-2xl p-5 mb-10 flex items-start gap-4 reveal">
+          <svg class="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+          </svg>
+          <p class="text-amber-300/80 text-sm leading-relaxed">
+            <span class="font-semibold text-amber-400">Risk Disclosure:</span> Automated trading strategies involve substantial risk of loss. Past performance is not indicative of future results. Only trade with capital you can afford to lose. These strategies are provided for educational purposes and do not constitute financial advice.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- Strategy Card 1 -->
+          <div class="product-card qt-card rounded-2xl p-8 flex flex-col reveal reveal-delay-1">
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-11 h-11 bg-purple-500/10 border border-purple-500/20 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+                </svg>
+              </div>
+              <span class="badge bg-amber-500/15 border border-amber-500/25 text-amber-400">Coming Soon</span>
+            </div>
+            <h3 class="text-lg font-bold mb-1">Strategy Name</h3>
+            <p class="text-slate-500 text-xs mb-3">Markets: Futures / Forex / Crypto</p>
+            <p class="text-slate-400 text-sm leading-relaxed flex-1 mb-6">
+              Describe the strategy logic, timeframes supported, risk management features, and what makes it unique.
+            </p>
+            <div class="space-y-1.5 mb-6">
+              <div class="flex items-center gap-2 text-xs text-slate-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0"></span>Built-in risk management
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0"></span>Configurable parameters
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0"></span>Includes documentation
+              </div>
+            </div>
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-2xl font-black text-white">$XX <span class="text-slate-500 text-sm font-normal">/ one-time</span></span>
+            </div>
+            <button disabled
+                    class="w-full text-center bg-slate-700 border border-slate-600 text-slate-500 font-semibold text-sm py-3 px-5 rounded-xl cursor-not-allowed">
+              Coming Soon
+            </button>
+          </div>
+
+          <!-- Strategy Card 2 -->
+          <div class="product-card qt-card rounded-2xl p-8 flex flex-col reveal reveal-delay-2">
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-11 h-11 bg-purple-500/10 border border-purple-500/20 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/>
+                </svg>
+              </div>
+              <span class="badge bg-amber-500/15 border border-amber-500/25 text-amber-400">Coming Soon</span>
+            </div>
+            <h3 class="text-lg font-bold mb-1">Strategy Name</h3>
+            <p class="text-slate-500 text-xs mb-3">Markets: Futures / Forex / Crypto</p>
+            <p class="text-slate-400 text-sm leading-relaxed flex-1 mb-6">
+              Describe the strategy logic, timeframes supported, risk management features, and what makes it unique.
+            </p>
+            <div class="space-y-1.5 mb-6">
+              <div class="flex items-center gap-2 text-xs text-slate-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0"></span>Built-in risk management
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0"></span>Configurable parameters
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0"></span>Includes documentation
+              </div>
+            </div>
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-2xl font-black text-white">$XX <span class="text-slate-500 text-sm font-normal">/ one-time</span></span>
+            </div>
+            <button disabled
+                    class="w-full text-center bg-slate-700 border border-slate-600 text-slate-500 font-semibold text-sm py-3 px-5 rounded-xl cursor-not-allowed">
+              Coming Soon
+            </button>
+          </div>
+
+          <!-- More coming placeholder -->
+          <div class="product-card rounded-2xl p-8 flex flex-col items-center justify-center text-center reveal reveal-delay-3" style="border-style: dashed;">
+            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center mb-4">
+              <svg class="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+              </svg>
+            </div>
+            <p class="text-slate-500 text-sm font-medium">More strategies in development</p>
+            <p class="text-slate-700 text-xs mt-1">Check back soon</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- INTERESTED CTA -->
+    <section class="py-16 bg-slate-900 border-t border-slate-800">
+      <div class="max-w-3xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-black mb-4">Interested in a Custom Strategy?</h2>
+        <p class="text-slate-400 mb-8">Need something built specifically for your trading style or system? IronPeak Technology offers custom indicator and strategy development.</p>
+        <a href="index.html#contact" class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-9 py-4 rounded-xl btn-glow transition-all duration-200">
+          Contact Us →
+        </a>
+      </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+        <img src="IronPeak%20Technology.png" alt="IronPeak Technology" class="h-10 w-auto object-contain">
+        <p class="text-slate-500 text-sm">© 2026 IronPeak Technology LLC. All rights reserved.</p>
+        <a href="index.html" class="text-slate-400 hover:text-orange-400 text-sm transition-colors">← Back to Main Site</a>
+      </div>
+    </footer>
+
+  </div><!-- /#content -->
+
+
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================== -->
+  <script>
+    /*
+      Password verification is handled server-side via /api/verify.
+      The actual password lives ONLY in Vercel's Environment Variables
+      (Project → Settings → Environment Variables → TRADING_PASSWORD).
+      No password or hash is stored anywhere in this file or the repository.
+
+      To change the password:
+        1. Go to Vercel dashboard → your project → Settings → Environment Variables
+        2. Edit the TRADING_PASSWORD value
+        3. Redeploy (Vercel will pick up the new value automatically)
+    */
+    const SESSION_KEY = 'ip_trading_auth';
+
+    function unlock() {
+      document.getElementById('gate').style.display    = 'none';
+      document.getElementById('content').style.display = 'block';
+      initPage();
+    }
+
+    /* Re-use verified session so users don't re-enter on every refresh */
+    if (sessionStorage.getItem(SESSION_KEY) === '1') {
+      unlock();
+    }
+
+    document.getElementById('gate-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const input = document.getElementById('gate-password');
+      const btn   = e.target.querySelector('button[type="submit"]');
+      const err   = document.getElementById('gate-error');
+
+      btn.disabled    = true;
+      btn.textContent = 'Verifying…';
+
+      // Fallback hash used only when the /api/verify endpoint is unreachable
+      // (e.g. local file preview). On Vercel the server-side check runs instead.
+      const FALLBACK_HASH = 'e228dfe3fbcb7c35c73a104d1b5985f70a7bcd26917d679cb331453f524cb53b';
+
+      async function sha256(str) {
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+
+      try {
+        const res = await fetch('/api/verify', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ password: input.value })
+        });
+
+        if (res.ok) {
+          sessionStorage.setItem(SESSION_KEY, '1');
+          err.style.opacity = '0';
+          unlock();
+        } else {
+          err.style.opacity = '1';
+          err.textContent = 'Incorrect password. Please try again.';
+          input.value = '';
+          input.focus();
+          btn.disabled    = false;
+          btn.textContent = 'Unlock Access';
+        }
+      } catch {
+        // API unreachable — fall back to client-side SHA-256 check
+        const hashed = await sha256(input.value);
+        if (hashed === FALLBACK_HASH) {
+          sessionStorage.setItem(SESSION_KEY, '1');
+          err.style.opacity = '0';
+          unlock();
+        } else {
+          err.textContent   = 'Incorrect password. Please try again.';
+          err.style.opacity = '1';
+          input.value = '';
+          input.focus();
+          btn.disabled    = false;
+          btn.textContent = 'Unlock Access';
+        }
+      }
+    });
+
+    function initPage() {
+      /* Navbar scroll */
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('nav-scrolled', window.scrollY > 60);
+      }, { passive: true });
+
+      /* Mobile menu */
+      const menuToggle  = document.getElementById('menu-toggle');
+      const mobileMenu  = document.getElementById('mobile-menu');
+      const iconOpen    = document.getElementById('icon-open');
+      const iconClose   = document.getElementById('icon-close');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      menuToggle.addEventListener('click', () => {
+        const isOpen = !mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden', isOpen);
+        iconOpen.classList.toggle('hidden', !isOpen);
+        iconClose.classList.toggle('hidden', isOpen);
+      });
+      mobileLinks.forEach(link => link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      }));
+
+      /* Lock button */
+      document.getElementById('lock-btn').addEventListener('click', () => {
+        sessionStorage.removeItem(SESSION_KEY);
+        location.reload();
+      });
+
+      /* Reveal animations */
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+  </script>
+
+</body>
+</html>

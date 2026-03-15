@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store | IronPeak Technology LLC</title>
+  <meta name="description" content="Browse IronPeak Technology products — TradingView indicators, automated trading strategies, and more.">
+
+  <link rel="icon" type="image/png" href="IronPeak%20Technology.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #fb923c 0%, #ef4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-bg {
+      background: radial-gradient(ellipse at 30% 20%, #1e2d4a 0%, #0f172a 40%, #020617 100%);
+    }
+    .dot-grid {
+      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .store-card {
+      background: linear-gradient(135deg, rgba(30,41,59,0.7) 0%, rgba(15,23,42,0.7) 100%);
+      border: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .store-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+    }
+    .card-trading:hover  { border-color: rgba(124,58,237,0.35); }
+    .card-placeholder:hover { border-color: rgba(249,115,22,0.25); }
+
+    .btn-glow { box-shadow: 0 0 24px rgba(249,115,22,0.35); }
+    .btn-glow:hover { box-shadow: 0 0 36px rgba(249,115,22,0.5); }
+
+    .nav-scrolled {
+      background: rgba(2,6,23,0.92) !important;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.10s; }
+    .reveal-delay-2 { transition-delay: 0.20s; }
+    .reveal-delay-3 { transition-delay: 0.30s; }
+    .reveal-delay-4 { transition-delay: 0.40s; }
+    .reveal-delay-5 { transition-delay: 0.50s; }
+
+    .orb {
+      filter: blur(90px);
+      animation: pulsate 6s ease-in-out infinite;
+    }
+    .orb-2 { animation-delay: 3s; }
+    @keyframes pulsate {
+      0%, 100% { opacity: 0.10; transform: scale(1); }
+      50%       { opacity: 0.18; transform: scale(1.05); }
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #020617; }
+    ::-webkit-scrollbar-thumb { background: #f97316; border-radius: 4px; }
+
+    .badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-white antialiased">
+
+  <!-- =========================================================
+       NAVIGATION
+  ========================================================== -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 py-4">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+
+      <a href="index.html" class="flex items-center group">
+        <img src="IronPeak%20Technology.png" alt="IronPeak Technology" class="h-20 w-auto object-contain max-w-[280px]">
+      </a>
+
+      <div class="hidden md:flex items-center gap-7">
+        <a href="index.html#services" class="text-slate-400 hover:text-white text-sm font-medium transition-colors">Services</a>
+        <a href="index.html#why-us"   class="text-slate-400 hover:text-white text-sm font-medium transition-colors">About</a>
+        <a href="index.html#contact"  class="text-slate-400 hover:text-white text-sm font-medium transition-colors">Contact</a>
+        <a href="store.html"          class="text-orange-400 hover:text-orange-300 text-sm font-semibold transition-colors">Store</a>
+        <a href="portal.html"         class="text-slate-400 hover:text-white text-sm font-medium transition-colors">Portal</a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-3">
+        <a href="https://ironpeaktechnology.screenconnect.com/" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-500 text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-200">
+          <svg class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          Remote Support
+        </a>
+        <a href="index.html#contact" class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-5 py-2.5 rounded-lg btn-glow transition-all duration-200">
+          Free Assessment
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+
+      <button id="menu-toggle" aria-label="Open menu" class="md:hidden text-slate-400 hover:text-white p-1 transition-colors">
+        <svg id="icon-open"  class="w-6 h-6"        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="md:hidden hidden border-t border-slate-800/80 bg-slate-950/95 backdrop-blur-xl mt-3">
+      <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col gap-4">
+        <a href="index.html#services" class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">Services</a>
+        <a href="index.html#why-us"   class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">About</a>
+        <a href="index.html#contact"  class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">Contact</a>
+        <a href="store.html"          class="mobile-link text-orange-400 font-semibold transition-colors">Store</a>
+        <a href="portal.html"         class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">Customer Portal</a>
+        <a href="https://ironpeaktechnology.screenconnect.com/" target="_blank" rel="noopener noreferrer"
+           class="mobile-link mt-1 text-center bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white font-semibold px-5 py-3 rounded-lg transition-all flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          Remote Support
+        </a>
+        <a href="index.html#contact" class="mobile-link mt-1 text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-3 rounded-lg transition-all">Get Free Assessment</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- =========================================================
+       HERO
+  ========================================================== -->
+  <section class="hero-bg dot-grid relative pt-40 pb-20 overflow-hidden">
+    <div class="orb     absolute -top-20 left-1/4  w-[400px] h-[400px] rounded-full bg-orange-700  pointer-events-none"></div>
+    <div class="orb orb-2 absolute bottom-0 right-1/4 w-[350px] h-[350px] rounded-full bg-red-800  pointer-events-none"></div>
+
+    <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+      <div class="inline-flex items-center gap-2.5 bg-orange-500/10 border border-orange-500/25 rounded-full px-4 py-2 mb-6">
+        <svg class="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z"/>
+        </svg>
+        <span class="text-orange-400 text-sm font-medium tracking-wide">IronPeak Store</span>
+      </div>
+      <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-tight mb-5">
+        Our <span class="gradient-text">Products</span>
+      </h1>
+      <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+        Browse digital products built by IronPeak Technology. Select a category below to explore and purchase.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       PRODUCT CATEGORIES
+  ========================================================== -->
+  <section class="py-24 bg-slate-950">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- ── TRADING PRODUCTS ── -->
+        <a href="trading.html" class="store-card card-trading group rounded-2xl p-8 flex flex-col reveal reveal-delay-1 no-underline">
+          <div class="w-14 h-14 bg-purple-500/10 border border-purple-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/>
+            </svg>
+          </div>
+
+          <div class="flex items-center gap-2 mb-3">
+            <h2 class="text-xl font-black">Trading Products</h2>
+            <span class="badge bg-purple-500/15 border border-purple-500/25 text-purple-400">Members</span>
+          </div>
+
+          <p class="text-slate-400 text-sm leading-relaxed flex-1 mb-6">
+            Exclusive TradingView indicators and Quantower automated strategies for serious traders. Password-protected — access credentials provided at purchase.
+          </p>
+
+          <div class="space-y-2 mb-6">
+            <div class="flex items-center gap-2 text-xs text-slate-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0"></span>TradingView Pine Script Indicators
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0"></span>Quantower Automated Strategies
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0"></span>Lifetime access, future updates included
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-orange-400 text-sm font-semibold group-hover:text-orange-300 transition-colors">Browse Products →</span>
+            <div class="w-8 h-8 bg-orange-500/10 rounded-full flex items-center justify-center group-hover:bg-orange-500/20 transition-colors">
+              <svg class="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </div>
+          </div>
+        </a>
+
+
+        <!-- ── PLACEHOLDER — add your next product category here ── -->
+        <!--
+          To add a new product page:
+          1. Duplicate this card block
+          2. Change the icon, title, description, and href to your new page (e.g. "software.html")
+          3. Create the new .html file in this folder
+          4. Remove the "Coming Soon" badge and point the link to the real page
+        -->
+        <div class="store-card card-placeholder rounded-2xl p-8 flex flex-col reveal reveal-delay-2" style="border-style: dashed;">
+          <div class="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+            </svg>
+          </div>
+          <div class="flex items-center gap-2 mb-3">
+            <h2 class="text-xl font-black text-slate-600">New Category</h2>
+            <span class="badge bg-slate-800 border border-slate-700 text-slate-600">Coming Soon</span>
+          </div>
+          <p class="text-slate-700 text-sm leading-relaxed flex-1 mb-6">
+            This slot is reserved for your next product category. Duplicate this card and point it to a new page.
+          </p>
+          <span class="text-slate-700 text-sm font-semibold">In Development →</span>
+        </div>
+
+
+        <!-- ── SECOND PLACEHOLDER ── -->
+        <div class="store-card card-placeholder rounded-2xl p-8 flex flex-col reveal reveal-delay-3" style="border-style: dashed;">
+          <div class="w-14 h-14 bg-slate-800 rounded-2xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+            </svg>
+          </div>
+          <div class="flex items-center gap-2 mb-3">
+            <h2 class="text-xl font-black text-slate-600">New Category</h2>
+            <span class="badge bg-slate-800 border border-slate-700 text-slate-600">Coming Soon</span>
+          </div>
+          <p class="text-slate-700 text-sm leading-relaxed flex-1 mb-6">
+            This slot is reserved for your next product category. Duplicate this card and point it to a new page.
+          </p>
+          <span class="text-slate-700 text-sm font-semibold">In Development →</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CUSTOM WORK CTA -->
+  <section class="py-16 bg-slate-900 border-t border-slate-800">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-black mb-4">Need Something Custom?</h2>
+      <p class="text-slate-400 mb-8">Don't see what you're looking for? IronPeak Technology offers custom development for software, trading tools, and MSP solutions.</p>
+      <a href="index.html#contact" class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-9 py-4 rounded-xl btn-glow transition-all duration-200">
+        Contact Us →
+      </a>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <img src="IronPeak%20Technology.png" alt="IronPeak Technology" class="h-10 w-auto object-contain">
+      <p class="text-slate-500 text-sm">© 2026 IronPeak Technology LLC. All rights reserved.</p>
+      <a href="index.html" class="text-slate-400 hover:text-orange-400 text-sm transition-colors">← Back to Main Site</a>
+    </div>
+  </footer>
+
+
+  <script>
+    /* Navbar scroll */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('nav-scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    /* Mobile menu */
+    const menuToggle  = document.getElementById('menu-toggle');
+    const mobileMenu  = document.getElementById('mobile-menu');
+    const iconOpen    = document.getElementById('icon-open');
+    const iconClose   = document.getElementById('icon-close');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden', isOpen);
+      iconOpen.classList.toggle('hidden', !isOpen);
+      iconClose.classList.toggle('hidden', isOpen);
+    });
+    mobileLinks.forEach(link => link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    }));
+
+    /* Reveal animations */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
