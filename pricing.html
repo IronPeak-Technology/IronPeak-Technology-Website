@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing &amp; Services | IronPeak Technology LLC</title>
+  <meta name="description" content="Transparent pricing for managed IT support, cybersecurity, backup, antivirus, and cloud services from IronPeak Technology LLC.">
+  <link rel="icon" type="image/png" href="IronPeak%20Technology.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    .gradient-text {
+      background: linear-gradient(135deg, #fb923c 0%, #ef4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-bg { background: radial-gradient(ellipse at 30% 20%, #1e2d4a 0%, #0f172a 40%, #020617 100%); }
+    .dot-grid {
+      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .glass-card {
+      background: linear-gradient(135deg, rgba(30,41,59,0.7) 0%, rgba(15,23,42,0.7) 100%);
+      border: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px);
+    }
+    .btn-glow { box-shadow: 0 0 24px rgba(249,115,22,0.35); }
+    .btn-glow:hover { box-shadow: 0 0 36px rgba(249,115,22,0.5); }
+    .nav-scrolled {
+      background: rgba(2,6,23,0.92) !important;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.10s; }
+    .reveal-delay-2 { transition-delay: 0.20s; }
+    .reveal-delay-3 { transition-delay: 0.30s; }
+    .orb { filter: blur(90px); animation: pulsate 6s ease-in-out infinite; }
+    .orb-2 { animation-delay: 3s; }
+    @keyframes pulsate {
+      0%, 100% { opacity: 0.10; transform: scale(1); }
+      50%       { opacity: 0.18; transform: scale(1.05); }
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #020617; }
+    ::-webkit-scrollbar-thumb { background: #f97316; border-radius: 4px; }
+    .price-table th {
+      background: rgba(249,115,22,0.12);
+      border-bottom: 1px solid rgba(249,115,22,0.2);
+      color: #f97316;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      text-align: left;
+    }
+    .price-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.875rem;
+      color: #cbd5e1;
+      vertical-align: top;
+    }
+    .price-table tr:last-child td { border-bottom: none; }
+    .price-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .price-amount { font-weight: 700; color: #f8fafc; white-space: nowrap; }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-white antialiased">
+
+  <!-- =========================================================
+       NAVIGATION
+  ========================================================== -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 py-4">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <a href="index.html" class="flex items-center group">
+        <img src="IronPeak%20Technology.png" alt="IronPeak Technology" class="h-20 w-auto object-contain max-w-[280px]">
+      </a>
+      <div class="hidden md:flex items-center gap-7">
+        <a href="index.html#services" class="text-slate-400 hover:text-white text-sm font-medium transition-colors">Services</a>
+        <a href="index.html#why-us"   class="text-slate-400 hover:text-white text-sm font-medium transition-colors">About</a>
+        <a href="index.html#contact"  class="text-slate-400 hover:text-white text-sm font-medium transition-colors">Contact</a>
+        <a href="pricing.html"        class="text-orange-400 hover:text-orange-300 text-sm font-semibold transition-colors">Pricing</a>
+        <a href="store.html"          class="text-slate-400 hover:text-white text-sm font-medium transition-colors">Store</a>
+        <a href="portal.html"         class="text-slate-400 hover:text-white text-sm font-medium transition-colors">Portal</a>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <a href="https://ironpeaktechnology.screenconnect.com/" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 hover:border-slate-500 text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-200">
+          <svg class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          Remote Support
+        </a>
+        <a href="index.html#contact" class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-5 py-2.5 rounded-lg btn-glow transition-all duration-200">
+          Free Assessment
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+      <button id="menu-toggle" aria-label="Open menu" class="md:hidden text-slate-400 hover:text-white p-1 transition-colors">
+        <svg id="icon-open"  class="w-6 h-6"        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="md:hidden hidden border-t border-slate-800/80 bg-slate-950/95 backdrop-blur-xl mt-3">
+      <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col gap-4">
+        <a href="index.html#services" class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">Services</a>
+        <a href="index.html#why-us"   class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">About</a>
+        <a href="index.html#contact"  class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">Contact</a>
+        <a href="pricing.html"        class="mobile-link text-orange-400 font-semibold transition-colors">Pricing</a>
+        <a href="store.html"          class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">Store</a>
+        <a href="portal.html"         class="mobile-link text-slate-300 hover:text-orange-400 font-medium transition-colors">Customer Portal</a>
+        <a href="https://ironpeaktechnology.screenconnect.com/" target="_blank" rel="noopener noreferrer"
+           class="mobile-link mt-1 text-center bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white font-semibold px-5 py-3 rounded-lg transition-all flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          Remote Support
+        </a>
+        <a href="index.html#contact" class="mobile-link mt-1 text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-3 rounded-lg transition-all">Get Free Assessment</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- =========================================================
+       HERO
+  ========================================================== -->
+  <section class="hero-bg dot-grid relative pt-40 pb-20 overflow-hidden">
+    <div class="orb     absolute -top-20 left-1/4  w-[400px] h-[400px] rounded-full bg-orange-600 pointer-events-none"></div>
+    <div class="orb orb-2 absolute bottom-0 right-1/4 w-[350px] h-[350px] rounded-full bg-blue-800  pointer-events-none"></div>
+    <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+      <div class="inline-flex items-center gap-2.5 bg-orange-500/10 border border-orange-500/25 rounded-full px-4 py-2 mb-6">
+        <svg class="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span class="text-orange-400 text-sm font-medium tracking-wide">Transparent Pricing</span>
+      </div>
+      <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-tight mb-5">
+        Pricing &amp; <span class="gradient-text">Services</span>
+      </h1>
+      <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+        Straightforward, flat-rate pricing with no hidden fees. Everything your business needs to stay secure, monitored, and supported.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3 text-sm">
+        <a href="#endpoints" class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Endpoints</a>
+        <a href="#backup"    class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Backup</a>
+        <a href="#antivirus" class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Antivirus</a>
+        <a href="#support"   class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Support Plans</a>
+        <a href="#security"  class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Security</a>
+        <a href="#terms"     class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Terms</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       ABOUT + CERTS
+  ========================================================== -->
+  <section class="py-20 bg-slate-950">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-10 items-start reveal">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-5">
+            <span class="text-orange-400 text-sm font-medium">About IronPeak Technology</span>
+          </div>
+          <h2 class="text-3xl font-black tracking-tight mb-4">Enterprise Expertise.<br>Small Business Pricing.</h2>
+          <p class="text-slate-400 leading-relaxed mb-4">
+            IronPeak Technology LLC is a solo managed IT service provider based in Michigan, offering professional, reliable IT support to individuals, home offices, and small businesses.
+          </p>
+          <p class="text-slate-400 leading-relaxed">
+            With a hands-on background in enterprise IT security and a <span class="text-white font-semibold">CompTIA Security+ certification</span>, IronPeak brings enterprise-grade expertise to small business clients — without the enterprise price tag.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-bold text-white">CompTIA Security+ Certified</p>
+              <p class="text-slate-500 text-xs">Plus Series &middot; Active Certification</p>
+            </div>
+          </div>
+          <table class="w-full text-sm">
+            <thead>
+              <tr>
+                <th class="text-left text-slate-500 text-xs uppercase tracking-widest font-semibold pb-3">Microsoft Certification</th>
+                <th class="text-left text-slate-500 text-xs uppercase tracking-widest font-semibold pb-3">Earned</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+              <tr><td class="py-2.5 text-slate-300">Microsoft Certified Professional</td><td class="py-2.5 text-slate-500 whitespace-nowrap">Feb 2014</td></tr>
+              <tr><td class="py-2.5 text-slate-300">MTA: Security Fundamentals</td><td class="py-2.5 text-slate-500 whitespace-nowrap">Feb 2015</td></tr>
+              <tr><td class="py-2.5 text-slate-300">MTA: Windows OS Fundamentals</td><td class="py-2.5 text-slate-500 whitespace-nowrap">May 2014</td></tr>
+              <tr><td class="py-2.5 text-slate-300">MTA: Networking Fundamentals</td><td class="py-2.5 text-slate-500 whitespace-nowrap">Feb 2014</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       MANAGED ENDPOINTS
+  ========================================================== -->
+  <section id="endpoints" class="py-20 bg-slate-900/40">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-4">
+          <span class="text-orange-400 text-sm font-medium">Section 1</span>
+        </div>
+        <h2 class="text-3xl font-black tracking-tight mb-3">Managed Endpoint Services</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Monitoring, patching, and backup management for every device — hands-on support billed separately.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 mb-6 border-l-4 border-orange-500 reveal reveal-delay-1">
+        <h3 class="font-bold text-white mb-3">What's Included in Every Managed Endpoint</h3>
+        <div class="grid sm:grid-cols-2 gap-2">
+          <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 font-bold">&#10004;</span> Remote Monitoring &amp; Alerting</div>
+          <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 font-bold">&#10004;</span> Automated Patch Management</div>
+          <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 font-bold">&#10004;</span> Backup Agent Management</div>
+          <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 font-bold">&#10004;</span> Monthly Health Reporting</div>
+        </div>
+        <p class="text-slate-500 text-xs mt-3">Endpoint fees cover monitoring, patching &amp; backup management only. Hands-on support is billed separately.</p>
+      </div>
+      <div class="glass-card rounded-2xl overflow-hidden reveal reveal-delay-2">
+        <table class="price-table w-full">
+          <thead><tr><th>Service</th><th>Description</th><th>Unit</th><th>Price / Mo</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="text-white font-semibold">Desktop / Laptop</td>
+              <td>Monitoring, patch management &amp; backup agent</td>
+              <td class="whitespace-nowrap">Per Device</td>
+              <td class="price-amount">$10.00</td>
+            </tr>
+            <tr>
+              <td class="text-white font-semibold">Server</td>
+              <td>Monitoring, patch management &amp; backup agent — priority handling</td>
+              <td class="whitespace-nowrap">Per Server</td>
+              <td class="price-amount">$25.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       BACKUP SERVICES
+  ========================================================== -->
+  <section id="backup" class="py-20 bg-slate-950">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-4">
+          <span class="text-orange-400 text-sm font-medium">Section 2 &amp; 3</span>
+        </div>
+        <h2 class="text-3xl font-black tracking-tight mb-3">Backup Services</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Device backup via Arcserve, plus email and cloud app backup for Microsoft 365 and Google Workspace.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="reveal reveal-delay-1">
+          <h3 class="text-white font-bold mb-3 flex items-center gap-2">
+            <span class="w-7 h-7 bg-red-500/10 border border-red-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-4 h-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+              </svg>
+            </span>
+            Device Backup (Arcserve)
+          </h3>
+          <div class="glass-card rounded-2xl overflow-hidden">
+            <table class="price-table w-full">
+              <thead><tr><th>Service</th><th>Description</th><th>Price / Mo</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="text-white font-semibold">Desktop Backup</td>
+                  <td>File-level backup &amp; recovery</td>
+                  <td class="price-amount">$7.00</td>
+                </tr>
+                <tr>
+                  <td class="text-white font-semibold">Server Backup</td>
+                  <td>Full system backup &amp; disaster recovery</td>
+                  <td class="price-amount">$50.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <h3 class="text-white font-bold mb-3 flex items-center gap-2">
+            <span class="w-7 h-7 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </span>
+            Email &amp; Cloud App Backup
+          </h3>
+          <div class="glass-card rounded-2xl overflow-hidden">
+            <table class="price-table w-full">
+              <thead><tr><th>Service</th><th>Includes</th><th>Price / Mo</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="text-white font-semibold">Microsoft 365</td>
+                  <td>Mailbox, OneDrive, Calendar, Contacts — point-in-time restore</td>
+                  <td class="price-amount">$5.00 / mailbox</td>
+                </tr>
+                <tr>
+                  <td class="text-white font-semibold">Google Workspace</td>
+                  <td>Gmail, Drive, Calendar, Contacts — point-in-time restore</td>
+                  <td class="price-amount">$5.00 / mailbox</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card rounded-2xl p-6 mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 reveal reveal-delay-3">
+        <div>
+          <p class="font-bold text-white mb-1">IronPeak Secure Cloud Storage</p>
+          <p class="text-slate-400 text-sm">Encrypted off-site storage via IronPeak managed infrastructure. Billed on actual GB used — no minimum commitment.</p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <span class="text-2xl font-black text-orange-400">$0.10</span>
+          <p class="text-slate-500 text-xs">per GB / month</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       MANAGED ANTIVIRUS + BUNDLE
+  ========================================================== -->
+  <section id="antivirus" class="py-20 bg-slate-900/40">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-4">
+          <span class="text-orange-400 text-sm font-medium">Section 4</span>
+        </div>
+        <h2 class="text-3xl font-black tracking-tight mb-3">Managed Antivirus</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">SentinelOne AI-driven endpoint protection with ransomware defense and 24/7 monitoring.</p>
+      </div>
+      <div class="glass-card rounded-2xl overflow-hidden mb-8 reveal reveal-delay-1">
+        <table class="price-table w-full">
+          <thead><tr><th>Service</th><th>Description</th><th>Devices</th><th>Price / Mo</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="text-white font-semibold">Endpoint Protection</td>
+              <td>AI-driven antivirus with ransomware protection, automated remediation, and 24/7 monitoring</td>
+              <td class="whitespace-nowrap">1 – 25</td>
+              <td class="price-amount">$10.00 / device</td>
+            </tr>
+            <tr>
+              <td class="text-white font-semibold">Endpoint Protection</td>
+              <td>AI-driven antivirus with ransomware protection, automated remediation, and 24/7 monitoring</td>
+              <td class="whitespace-nowrap">26 – 100</td>
+              <td class="price-amount">$9.00 / device</td>
+            </tr>
+            <tr>
+              <td class="text-white font-semibold">Endpoint Protection</td>
+              <td>AI-driven antivirus with ransomware protection, automated remediation, and 24/7 monitoring</td>
+              <td class="whitespace-nowrap">101+</td>
+              <td class="price-amount">$8.00 / device</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Secure Endpoint Bundle highlight -->
+      <div class="reveal reveal-delay-2">
+        <div class="relative rounded-2xl overflow-hidden" style="background: linear-gradient(135deg, rgba(249,115,22,0.10) 0%, rgba(239,68,68,0.06) 100%); border: 1px solid rgba(249,115,22,0.25);">
+          <div class="p-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div>
+                <div class="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/25 rounded-full px-3 py-1 mb-4">
+                  <span class="text-orange-400 text-xs font-bold uppercase tracking-widest">Recommended Bundle</span>
+                </div>
+                <h3 class="text-2xl font-black text-white mb-2">Secure Endpoint Bundle</h3>
+                <p class="text-slate-300 text-sm mb-4">All-in-one security &amp; protection — save $5/device vs purchasing separately.</p>
+                <div class="grid sm:grid-cols-2 gap-2">
+                  <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 font-bold">&#10004;</span> Remote Monitoring &amp; Patch Management</div>
+                  <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 font-bold">&#10004;</span> Managed Antivirus (SentinelOne)</div>
+                  <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 font-bold">&#10004;</span> Device Backup (Arcserve)</div>
+                  <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 font-bold">&#10004;</span> Monthly Health Reporting</div>
+                </div>
+              </div>
+              <div class="text-center flex-shrink-0">
+                <div class="text-4xl font-black gradient-text">$22</div>
+                <div class="text-slate-400 text-sm">per device / month</div>
+                <div class="text-green-400 text-xs font-semibold mt-1">Save $5/device</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       IT SUPPORT PLANS
+  ========================================================== -->
+  <section id="support" class="py-20 bg-slate-950">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-4">
+          <span class="text-orange-400 text-sm font-medium">Section 5</span>
+        </div>
+        <h2 class="text-3xl font-black tracking-tight mb-3">IT Support Plans</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Hands-on troubleshooting, repairs, and user support. Independent of endpoint and backup fees.</p>
+      </div>
+      <!-- Plan cards -->
+      <div class="grid md:grid-cols-3 gap-6 mb-10">
+        <div class="glass-card rounded-2xl p-7 flex flex-col reveal reveal-delay-1">
+          <div class="text-slate-400 text-sm font-medium mb-1">Pay-As-You-Go</div>
+          <h3 class="text-xl font-black mb-2">Hourly Support</h3>
+          <div class="text-3xl font-black text-white mb-1">$120<span class="text-slate-500 text-base font-normal"> / hr</span></div>
+          <p class="text-slate-500 text-xs mb-5">30-min minimum per session, billed in 10-min increments.</p>
+          <ul class="space-y-2 flex-1 mb-6">
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> On-demand remote support</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> On-site technician visits</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Any business size</li>
+          </ul>
+          <a href="index.html#contact" class="block text-center bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-semibold py-2.5 rounded-xl transition-all text-sm">Get Started</a>
+        </div>
+        <div class="relative rounded-2xl p-7 flex flex-col reveal reveal-delay-2" style="background:linear-gradient(135deg,rgba(249,115,22,0.12) 0%,rgba(239,68,68,0.08) 100%);border:1px solid rgba(249,115,22,0.3)">
+          <div class="absolute top-4 right-4"><span class="text-xs font-bold bg-orange-500 text-white px-2 py-0.5 rounded-full">Popular</span></div>
+          <div class="text-orange-400 text-sm font-medium mb-1">Under 5 Users</div>
+          <h3 class="text-xl font-black mb-2">Flat-Rate Support</h3>
+          <div class="text-3xl font-black text-white mb-1">$500<span class="text-slate-500 text-base font-normal"> / mo</span></div>
+          <p class="text-slate-500 text-xs mb-5">Predictable monthly cost — no surprise bills.</p>
+          <ul class="space-y-2 flex-1 mb-6">
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Unlimited remote support</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> On-site technician visits</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Predictable flat cost</li>
+          </ul>
+          <a href="index.html#contact" class="block text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 rounded-xl btn-glow transition-all text-sm">Get Started</a>
+        </div>
+        <div class="glass-card rounded-2xl p-7 flex flex-col reveal reveal-delay-3">
+          <div class="text-slate-400 text-sm font-medium mb-1">6+ Users</div>
+          <h3 class="text-xl font-black mb-2">Enterprise Support</h3>
+          <div class="text-3xl font-black text-white mb-1">Custom</div>
+          <p class="text-slate-500 text-xs mb-5">Custom SLA &amp; pricing based on scope and size.</p>
+          <ul class="space-y-2 flex-1 mb-6">
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Custom SLA agreement</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Unlimited support coverage</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Tailored to your business</li>
+          </ul>
+          <a href="index.html#contact" class="block text-center bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-semibold py-2.5 rounded-xl transition-all text-sm">Contact Us</a>
+        </div>
+      </div>
+      <!-- Included vs Not Included -->
+      <div class="grid md:grid-cols-2 gap-6 reveal reveal-delay-2">
+        <div class="glass-card rounded-2xl p-6 border-l-4 border-green-500">
+          <h3 class="font-bold text-white mb-4">&#10004; Included in Monthly Support</h3>
+          <ul class="space-y-2">
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 text-xs">&#10004;</span> Computer support (Windows &amp; macOS)</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 text-xs">&#10004;</span> Mobile device support (iOS &amp; Android)</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 text-xs">&#10004;</span> Email support &amp; management (M365 / Google)</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 text-xs">&#10004;</span> Password resets &amp; account changes</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 text-xs">&#10004;</span> Software installation &amp; updates</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 text-xs">&#10004;</span> Basic troubleshooting (network, printers, apps)</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 text-xs">&#10004;</span> Remote support during business hours</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 text-xs">&#10004;</span> New employee setup &amp; offboarding</li>
+            <li class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400 text-xs">&#10004;</span> Basic endpoint monitoring</li>
+          </ul>
+        </div>
+        <div class="glass-card rounded-2xl p-6 border-l-4 border-red-500">
+          <h3 class="font-bold text-white mb-4">&#10008; Not Included — Billed Hourly</h3>
+          <ul class="space-y-2">
+            <li class="flex items-center gap-2 text-sm text-slate-400"><span class="text-red-400 text-xs">&#10008;</span> Major network redesigns</li>
+            <li class="flex items-center gap-2 text-sm text-slate-400"><span class="text-red-400 text-xs">&#10008;</span> Server work</li>
+            <li class="flex items-center gap-2 text-sm text-slate-400"><span class="text-red-400 text-xs">&#10008;</span> Hardware installation</li>
+            <li class="flex items-center gap-2 text-sm text-slate-400"><span class="text-red-400 text-xs">&#10008;</span> After-hours emergency support</li>
+            <li class="flex items-center gap-2 text-sm text-slate-400"><span class="text-red-400 text-xs">&#10008;</span> Cloud migrations</li>
+            <li class="flex items-center gap-2 text-sm text-slate-400"><span class="text-red-400 text-xs">&#10008;</span> Backup configuration (unless added as service)</li>
+            <li class="flex items-center gap-2 text-sm text-slate-400"><span class="text-red-400 text-xs">&#10008;</span> Security incident response</li>
+            <li class="flex items-center gap-2 text-sm text-slate-400"><span class="text-red-400 text-xs">&#10008;</span> Website design &amp; development</li>
+            <li class="flex items-center gap-2 text-sm text-slate-400"><span class="text-red-400 text-xs">&#10008;</span> Other development tasks</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       ADVANCED SECURITY ADD-ONS
+  ========================================================== -->
+  <section id="security" class="py-20 bg-slate-900/40">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-4">
+          <span class="text-blue-400 text-sm font-medium">Section 6</span>
+        </div>
+        <h2 class="text-3xl font-black tracking-tight mb-3">Advanced Security Add-Ons</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Enterprise-grade security backed by CompTIA Security+ certification and hands-on enterprise experience.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="glass-card rounded-2xl p-7 reveal reveal-delay-1">
+          <div class="w-10 h-10 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-black mb-2">Huntress MDR</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4">Managed Detection &amp; Response for endpoints. 24/7 threat hunting, ransomware canaries, automated isolation of compromised hosts, M365 account takeover protection, and detailed incident reports.</p>
+          <a href="index.html#contact" class="text-orange-400 hover:text-orange-300 text-sm font-semibold transition-colors">Contact for pricing &rarr;</a>
+        </div>
+        <div class="glass-card rounded-2xl p-7 reveal reveal-delay-2">
+          <div class="w-10 h-10 bg-purple-500/10 border border-purple-500/20 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-black mb-2">IronScales</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4">AI-powered email security &amp; phishing protection. Inbox-level defense against BEC &amp; spoofing, phishing simulation &amp; training, auto-remediation, and real-time threat intelligence. Works with M365 &amp; Google Workspace.</p>
+          <a href="index.html#contact" class="text-orange-400 hover:text-orange-300 text-sm font-semibold transition-colors">Contact for pricing &rarr;</a>
+        </div>
+      </div>
+      <p class="text-slate-500 text-xs text-center mt-4 reveal">Security services can be bundled with your monthly support plan. Ask about combined pricing.</p>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       OPTIONAL ADD-ONS + WORKFLOW
+  ========================================================== -->
+  <section class="py-20 bg-slate-950">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-10">
+        <div class="reveal">
+          <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-5">
+            <span class="text-orange-400 text-sm font-medium">Optional Add-Ons</span>
+          </div>
+          <h2 class="text-2xl font-black mb-5">A La Carte Services</h2>
+          <div class="glass-card rounded-2xl p-6">
+            <ul class="space-y-3">
+              <li class="flex items-center gap-2 text-sm text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span>Managed Backups</li>
+              <li class="flex items-center gap-2 text-sm text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span>Email Backup (M365 &amp; Google Workspace)</li>
+              <li class="flex items-center gap-2 text-sm text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span>Microsoft 365 Licensing</li>
+              <li class="flex items-center gap-2 text-sm text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span>Network Equipment Upgrades</li>
+              <li class="flex items-center gap-2 text-sm text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span>Security Hardening</li>
+              <li class="flex items-center gap-2 text-sm text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span>Device Lifecycle Planning</li>
+              <li class="flex items-center gap-2 text-sm text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span>Multi-Factor Authentication Setup</li>
+              <li class="flex items-center gap-2 text-sm text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span>Email &amp; Account Management</li>
+            </ul>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-5">
+            <span class="text-orange-400 text-sm font-medium">Support Workflow</span>
+          </div>
+          <h2 class="text-2xl font-black mb-5">How Support Works</h2>
+          <div class="space-y-4">
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 rounded-full bg-orange-500/10 border border-orange-500/30 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-sm font-black gradient-text">1</span></div>
+              <div><p class="font-semibold text-white text-sm">Submit Issue</p><p class="text-slate-400 text-xs mt-0.5">Client submits issue via email or phone</p></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 rounded-full bg-orange-500/10 border border-orange-500/30 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-sm font-black gradient-text">2</span></div>
+              <div><p class="font-semibold text-white text-sm">Acknowledgment</p><p class="text-slate-400 text-xs mt-0.5">Response within 4 business hours</p></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 rounded-full bg-orange-500/10 border border-orange-500/30 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-sm font-black gradient-text">3</span></div>
+              <div><p class="font-semibold text-white text-sm">Remote Troubleshooting</p><p class="text-slate-400 text-xs mt-0.5">Fast remote diagnosis and resolution</p></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 rounded-full bg-orange-500/10 border border-orange-500/30 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-sm font-black gradient-text">4</span></div>
+              <div><p class="font-semibold text-white text-sm">On-Site Visit (if needed)</p><p class="text-slate-400 text-xs mt-0.5">If unresolved remotely, on-site scheduled</p></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 rounded-full bg-orange-500/10 border border-orange-500/30 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-sm font-black gradient-text">5</span></div>
+              <div><p class="font-semibold text-white text-sm">Ticket Closed</p><p class="text-slate-400 text-xs mt-0.5">Follow-up summary provided</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       TERMS & BILLING
+  ========================================================== -->
+  <section id="terms" class="py-20 bg-slate-900/40">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-4">
+          <span class="text-orange-400 text-sm font-medium">Section 7</span>
+        </div>
+        <h2 class="text-3xl font-black tracking-tight mb-3">Terms &amp; Billing</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Straightforward billing with no hidden fees or surprises.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 reveal reveal-delay-1">
+        <div class="glass-card rounded-2xl p-5"><p class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Billing</p><p class="text-slate-300 text-sm">All services billed monthly. Invoices issued on the 1st of each month.</p></div>
+        <div class="glass-card rounded-2xl p-5"><p class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Payment</p><p class="text-slate-300 text-sm">Net 15. Accepted: ACH, check, credit card.</p></div>
+        <div class="glass-card rounded-2xl p-5"><p class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Hourly Minimum</p><p class="text-slate-300 text-sm">30-min minimum per session, billed in 10-min increments thereafter.</p></div>
+        <div class="glass-card rounded-2xl p-5"><p class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Onboarding Fee</p><p class="text-slate-300 text-sm">One-time $100.00 per device setup fee for all new deployments.</p></div>
+        <div class="glass-card rounded-2xl p-5"><p class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Contracts</p><p class="text-slate-300 text-sm">Month-to-month available. Annual contracts receive a <span class="text-green-400 font-semibold">10% discount</span>.</p></div>
+        <div class="glass-card rounded-2xl p-5"><p class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Referrals</p><p class="text-slate-300 text-sm">Earn a <span class="text-green-400 font-semibold">5% discount</span> per referred customer who signs up. Stackable.</p></div>
+        <div class="glass-card rounded-2xl p-5"><p class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Cancellation</p><p class="text-slate-300 text-sm">30-day written notice required.</p></div>
+        <div class="glass-card rounded-2xl p-5"><p class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Support Hours</p><p class="text-slate-300 text-sm">Mon &ndash; Fri, 8 AM &ndash; 5 PM ET. After-hours emergency support available.</p></div>
+        <div class="glass-card rounded-2xl p-5"><p class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Enterprise</p><p class="text-slate-300 text-sm">6+ users &mdash; contact us for a custom support agreement.</p></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       CTA
+  ========================================================== -->
+  <section class="relative py-24 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-orange-600 via-orange-700 to-red-800"></div>
+    <div class="absolute inset-0 dot-grid opacity-20"></div>
+    <div class="orb absolute -top-16 -left-16 w-80 h-80 rounded-full bg-orange-300 pointer-events-none" style="opacity:0.08;filter:blur(100px)"></div>
+    <div class="orb orb-2 absolute -bottom-16 -right-16 w-80 h-80 rounded-full bg-red-900 pointer-events-none" style="opacity:0.15;filter:blur(100px)"></div>
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10 reveal">
+      <h2 class="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">Ready to Get Started?</h2>
+      <p class="text-orange-100 text-lg mb-10 max-w-2xl mx-auto">
+        Schedule a free IT assessment and we'll put together a custom plan that fits your business and budget.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="index.html#contact" class="w-full sm:w-auto bg-white hover:bg-orange-50 text-orange-600 font-bold text-base px-9 py-4 rounded-xl shadow-xl transition-all duration-200">Get Free Assessment &rarr;</a>
+        <a href="tel:+15178628282"   class="w-full sm:w-auto bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold text-base px-9 py-4 rounded-xl transition-all duration-200">Call (517) 862-8282</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       FOOTER
+  ========================================================== -->
+  <footer class="bg-slate-900 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <img src="IronPeak%20Technology.png" alt="IronPeak Technology" class="h-10 w-auto object-contain">
+      <p class="text-slate-500 text-sm">&copy; 2026 IronPeak Technology LLC. All rights reserved.</p>
+      <a href="index.html" class="text-slate-400 hover:text-orange-400 text-sm transition-colors">&larr; Back to Main Site</a>
+    </div>
+  </footer>
+
+
+  <script>
+    /* Navbar scroll effect */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('nav-scrolled', window.scrollY > 20);
+    });
+
+    /* Mobile menu toggle */
+    const toggle    = document.getElementById('menu-toggle');
+    const mobileNav = document.getElementById('mobile-menu');
+    const iconOpen  = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    toggle.addEventListener('click', () => {
+      const isHidden = mobileNav.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden', !isHidden);
+      iconClose.classList.toggle('hidden', isHidden);
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      });
+    });
+
+    /* Scroll-triggered reveal */
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
