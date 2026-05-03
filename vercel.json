@@ -1,4 +1,7 @@
 {
+  "buildCommand": "echo 'No build step required for static site'",
+  "outputDirectory": ".",
+  "installCommand": "echo 'No install step required'",
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
@@ -11,5 +14,10 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/verify.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
 }
