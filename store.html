@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>Store | IronPeak Technology LLC</title>
   <meta name="description" content="Browse IronPeak Technology products — TradingView indicators, automated trading strategies, and more.">
 
@@ -58,6 +59,34 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
+    /* ---- Password gate ---- */
+    #gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: radial-gradient(ellipse at 50% 40%, #1e2d4a 0%, #0f172a 40%, #020617 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gate-card {
+      background: rgba(30,41,59,0.85);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+    }
+    .gate-input {
+      background: rgba(15,23,42,0.8);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #f8fafc;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .gate-input:focus {
+      outline: none;
+      border-color: #f97316;
+      box-shadow: 0 0 0 3px rgba(249,115,22,0.15);
+    }
+    .gate-input::placeholder { color: rgba(148,163,184,0.5); }
+
     .reveal {
       opacity: 0;
       transform: translateY(28px);
@@ -96,6 +125,30 @@
 </head>
 
 <body class="bg-slate-950 text-white antialiased">
+
+  <!-- Password Gate -->
+  <div id="gate">
+    <div class="gate-card rounded-2xl p-8 max-w-sm w-full mx-4">
+      <div class="text-center mb-6">
+        <img src="IronPeak%20Technology.png" alt="IronPeak Technology" class="h-12 w-auto mx-auto mb-4">
+        <h2 class="text-xl font-bold text-white mb-2">Store Access</h2>
+        <p class="text-slate-400 text-sm">Enter password to continue</p>
+      </div>
+      <form id="passwordForm" class="space-y-4">
+        <input 
+          type="password" 
+          id="passwordInput"
+          placeholder="Enter password"
+          class="gate-input w-full px-4 py-3 rounded-xl"
+          autocomplete="off"
+        >
+        <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-xl transition-colors">
+          Access Store
+        </button>
+        <p id="errorMsg" class="text-red-400 text-sm text-center hidden">Incorrect password</p>
+      </form>
+    </div>
+  </div>
 
   <!-- =========================================================
        NAVIGATION
@@ -309,6 +362,42 @@
 
 
   <script>
+    /* ---- Password verification ---- */
+    const gate = document.getElementById('gate');
+    const passwordForm = document.getElementById('passwordForm');
+    const passwordInput = document.getElementById('passwordInput');
+    const errorMsg = document.getElementById('errorMsg');
+
+    passwordForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const password = passwordInput.value;
+      
+      try {
+        const response = await fetch('/api/verify.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password, type: 'password_verify' })
+        });
+        
+        if (response.ok) {
+          gate.style.display = 'none';
+          sessionStorage.setItem('storeAccess', 'true');
+        } else {
+          errorMsg.classList.remove('hidden');
+          passwordInput.value = '';
+          passwordInput.focus();
+        }
+      } catch (err) {
+        console.error('Password verification failed:', err);
+        errorMsg.classList.remove('hidden');
+      }
+    });
+
+    // Check if already authenticated
+    if (sessionStorage.getItem('storeAccess') === 'true') {
+      gate.style.display = 'none';
+    }
+
     /* Navbar scroll */
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {

@@ -1,0 +1,21 @@
+{
+  "name": "ironpeak-technology-website",
+  "version": "1.0.0",
+  "description": "IronPeak Technology MSP website with pricing calculator and quote system",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required for static site'",
+    "start": "vercel dev"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "msp",
+    "managed-services",
+    "technology",
+    "pricing-calculator"
+  ],
+  "author": "IronPeak Technology",
+  "license": "MIT"
+}
