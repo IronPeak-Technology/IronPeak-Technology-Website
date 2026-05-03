@@ -70,7 +70,7 @@ async function handleQuoteRequest(body, res) {
     // Prepare form data for Mailgun API
     const formData = new URLSearchParams();
     formData.append('from', `IronPeak Quote System <postmaster@${process.env.MAILGUN_DOMAIN}>`);
-    formData.append('to', 'quotes@ironpeak.technology');
+    formData.append('to', 'tfinch@ironpeaktechnology.com');
     formData.append('subject', body.subject);
     formData.append('text', emailText);
     formData.append('html', emailHtml);

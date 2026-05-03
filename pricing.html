@@ -75,6 +75,56 @@
     .price-table tr:last-child td { border-bottom: none; }
     .price-table tr:hover td { background: rgba(255,255,255,0.02); }
     .price-amount { font-weight: 700; color: #f8fafc; white-space: nowrap; }
+
+    /* Collapsible calculator groups */
+    .calc-group {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .calc-group[open] { border-color: rgba(249, 115, 22, 0.35); }
+    .calc-group-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.875rem 1rem;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      transition: background 0.15s ease;
+    }
+    .calc-group-summary::-webkit-details-marker { display: none; }
+    .calc-group-summary:hover { background: rgba(30, 41, 59, 0.5); }
+    .calc-group[open] > .calc-group-summary {
+      background: rgba(30, 41, 59, 0.6);
+      border-bottom: 1px solid rgba(71, 85, 105, 0.4);
+    }
+    .calc-chevron { transition: transform 0.25s ease; }
+    .calc-group[open] > .calc-group-summary .calc-chevron { transform: rotate(180deg); }
+    .calc-group > div { padding: 0.75rem 1rem 1rem 1rem; }
+
+    /* Tier selection — dynamic highlight via :has() */
+    .tier-option {
+      border: 1px solid rgb(51, 65, 85);
+      transition: all 0.2s ease;
+    }
+    .tier-option:hover { border-color: rgb(249, 115, 22); }
+    .tier-option:has(input:checked) {
+      border-color: rgb(249, 115, 22);
+      background: rgba(249, 115, 22, 0.05);
+    }
+    .tier-option.tier-purple:hover { border-color: rgb(168, 85, 247); }
+    .tier-option.tier-purple:has(input:checked) {
+      border-color: rgb(168, 85, 247);
+      background: rgba(168, 85, 247, 0.05);
+    }
+    .tier-option.tier-blue:hover { border-color: rgb(59, 130, 246); }
+    .tier-option.tier-blue:has(input:checked) {
+      border-color: rgb(59, 130, 246);
+      background: rgba(59, 130, 246, 0.05);
+    }
   </style>
 </head>
 
@@ -172,9 +222,7 @@
       <div class="flex flex-wrap justify-center gap-3 text-sm">
         <a href="#pricing-tiers" class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Pricing Tiers</a>
         <a href="#calculator"    class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Calculator</a>
-        <a href="#a-la-carte"    class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">A La Carte</a>
-        <a href="#add-ons"       class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Add-Ons</a>
-        <a href="#security"      class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Security</a>
+        <a href="#projects"      class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Projects</a>
         <a href="#terms"         class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg transition-all">Terms</a>
       </div>
     </div>
@@ -258,11 +306,11 @@
           <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-1">Basic monitoring and security with flexible add-ons. All services billed separately.</p>
           
           <div class="space-y-3 mb-6">
-            <div class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Core Services</div>
+            <div class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Included</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Monitoring & patching</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> SentinelOne EDR</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Monthly health reports</div>
-            <div class="flex items-center gap-2 text-sm text-slate-400"><span class="text-orange-400">●</span> Support at $120/hour</div>
+            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Support at $120/hour</div>
             <div class="flex items-center gap-2 text-sm text-slate-400"><span class="text-orange-400">●</span> All other services are add-ons</div>
           </div>
 
@@ -287,10 +335,10 @@
           <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-1">Comprehensive protection with unlimited support. Perfect for most businesses.</p>
           
           <div class="space-y-3 mb-6">
-            <div class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Everything in Essentials, Plus</div>
-            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Unlimited remote support for 1x User</div>
-            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> <strong>1 workstation + 1 laptop per user Included</strong></div>
-            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Axcient workstation backup Included for desktop, laptop</div>
+            <div class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Includes everything in Essentials, Plus</div>
+            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Unlimited remote support for 1x user</div>
+            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> <strong>1 workstation + 1 laptop per user INCLUDED</strong></div>
+            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Axcient workstation backup INCLUDED for desktop & laptop</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Microsoft 365 administration</div>
             <div class="text-orange-400 text-xs font-bold uppercase tracking-widest mt-4 mb-1">Available Add-Ons</div>
             <div class="flex items-center gap-2 text-sm text-slate-400"><span class="text-orange-400">●</span> Extra devices ($20/device)</div>
@@ -356,7 +404,7 @@
        PRICING CALCULATOR
   ========================================================== -->
   <section id="calculator" class="py-20 bg-slate-950">
-    <div class="max-w-4xl mx-auto px-6">
+    <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-12 reveal">
         <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-4">
           <span class="text-orange-400 text-sm font-medium">Pricing Calculator</span>
@@ -371,40 +419,47 @@
           <h4 class="font-bold text-blue-400 mb-2 text-sm">📱 Device Rule for Standard & Compliance Complete</h4>
           <p class="text-slate-300 text-sm leading-relaxed">Each user license includes support and protection for:</p>
           <div class="mt-2 space-y-1">
-            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">•</span> 1 primary workstation (desktop or laptop)</div>
-            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">•</span> 1 secondary device (laptop)</div>
+            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">�</span> 1 primary workstation (desktop or laptop)</div>
+            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">�</span> 1 secondary device (laptop)</div>
           </div>
           <p class="text-slate-400 text-xs mt-2">Additional devices (workstations, laptops, tablets, phones, etc.) must be added as <strong>Extra Devices</strong> at $20/device/month.</p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8">
+        <div class="grid lg:grid-cols-3 gap-8">
           <!-- Calculator Controls -->
-          <div>
+          <div class="lg:col-span-2">
             <h3 class="font-bold text-white mb-6">Configure Your Plan</h3>
             
             <!-- Tier Selection -->
             <div class="mb-6">
-              <label class="block text-slate-300 text-sm font-semibold mb-3">Select Pricing Tier</label>
-              <div class="grid grid-cols-1 gap-3">
-                <label class="flex items-center p-3 rounded-lg border border-slate-700 hover:border-slate-600 cursor-pointer transition-colors">
-                  <input type="radio" name="tier" value="essentials" class="text-orange-500 mr-3" onchange="calculateTotal()">
-                  <div>
-                    <span class="text-white font-semibold">Essentials</span>
-                    <span class="text-slate-400 text-sm ml-2">Basic protection + hourly support</span>
+              <label class="block text-slate-300 text-sm font-semibold mb-4">Select Pricing Tier</label>
+              <div class="space-y-3">
+                <label class="tier-option flex items-center p-4 rounded-lg cursor-pointer group">
+                  <input type="radio" name="tier" value="essentials" class="w-4 h-4 text-orange-500 bg-slate-800 border-slate-600 focus:ring-orange-500 focus:ring-2 mr-4" onchange="calculateTotal()">
+                  <div class="flex-1 min-w-0">
+                    <div class="text-white font-semibold group-hover:text-orange-400 transition-colors">Essentials</div>
+                    <div class="text-slate-400 text-sm">A la carte protection + hourly support</div>
                   </div>
                 </label>
-                <label class="flex items-center p-3 rounded-lg border border-slate-700 hover:border-slate-600 cursor-pointer transition-colors">
-                  <input type="radio" name="tier" value="standard" class="text-orange-500 mr-3" checked onchange="calculateTotal()">
-                  <div>
-                    <span class="text-white font-semibold">Standard</span>
-                    <span class="text-slate-400 text-sm ml-2">$130/user with unlimited support</span>
+                <label class="tier-option flex items-center p-4 rounded-lg cursor-pointer group">
+                  <input type="radio" name="tier" value="standard" class="w-4 h-4 text-orange-500 bg-slate-800 border-slate-600 focus:ring-orange-500 focus:ring-2 mr-4" checked onchange="calculateTotal()">
+                  <div class="flex-1 min-w-0">
+                    <div class="text-white font-semibold group-hover:text-orange-400 transition-colors">Standard</div>
+                    <div class="text-slate-400 text-sm">$130/user with unlimited support</div>
                   </div>
                 </label>
-                <label class="flex items-center p-3 rounded-lg border border-slate-700 hover:border-slate-600 cursor-pointer transition-colors">
-                  <input type="radio" name="tier" value="complete" class="text-orange-500 mr-3" onchange="calculateTotal()">
-                  <div>
-                    <span class="text-white font-semibold">Compliance Complete</span>
-                    <span class="text-slate-400 text-sm ml-2">$200/user with compliance features</span>
+                <label class="tier-option tier-purple flex items-center p-4 rounded-lg cursor-pointer group">
+                  <input type="radio" name="tier" value="complete" class="w-4 h-4 text-orange-500 bg-slate-800 border-slate-600 focus:ring-orange-500 focus:ring-2 mr-4" onchange="calculateTotal()">
+                  <div class="flex-1 min-w-0">
+                    <div class="text-white font-semibold group-hover:text-purple-400 transition-colors">Compliance Complete</div>
+                    <div class="text-slate-400 text-sm">$200/user with compliance features</div>
+                  </div>
+                </label>
+                <label class="tier-option tier-blue flex items-center p-4 rounded-lg cursor-pointer group">
+                  <input type="radio" name="tier" value="alacarte" class="w-4 h-4 text-orange-500 bg-slate-800 border-slate-600 focus:ring-orange-500 focus:ring-2 mr-4" onchange="calculateTotal()">
+                  <div class="flex-1 min-w-0">
+                    <div class="text-white font-semibold group-hover:text-blue-400 transition-colors">Build Your Own</div>
+                    <div class="text-slate-400 text-sm">A la carte - pick individual services</div>
                   </div>
                 </label>
               </div>
@@ -413,110 +468,407 @@
             <!-- User Count (for Standard/Complete) -->
             <div class="mb-6" id="userCountSection">
               <label for="userCount" class="block text-slate-300 text-sm font-semibold mb-2">Number of Users</label>
-              <input type="number" id="userCount" value="5" min="1" max="100" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+              <input type="number" id="userCount" value="1" min="1" max="100" class="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-3 text-white text-lg focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none transition-all" onchange="calculateTotal()">
             </div>
 
             <!-- Device Count (for Essentials only) -->
             <div class="mb-6 hidden" id="deviceCountSection">
               <label for="deviceCount" class="block text-slate-300 text-sm font-semibold mb-2">Number of Devices</label>
-              <input type="number" id="deviceCount" value="10" min="1" max="100" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+              <input type="number" id="deviceCount" value="1" min="1" max="100" class="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-3 text-white text-lg focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none transition-all" onchange="calculateTotal()">
             </div>
 
-            <!-- Add-ons Section -->
+            <!-- Add-On Services -->
             <div id="addOnsSection" class="mb-6">
-              <label class="block text-slate-300 text-sm font-semibold mb-3">Add-On Services</label>
-              <div class="space-y-4">
+              <label class="block text-slate-300 text-sm font-semibold mb-4">Add-On Services <span class="text-slate-500 font-normal text-xs">(optional — click any category to expand)</span></label>
+
+              <div class="bg-slate-800/30 rounded-xl p-6 border border-slate-700">
+                <div class="space-y-3">
+
+                  <!-- Core Infrastructure -->
+                  <details class="calc-group" id="addonGroupCore">
+                    <summary class="calc-group-summary">
+                      <span class="text-orange-400 text-sm font-bold uppercase tracking-wider">Core Infrastructure</span>
+                      <svg class="calc-chevron w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <div class="grid sm:grid-cols-2 gap-2 pt-3">
+                      <!-- Extra Devices -->
+                      <div class="bg-slate-800/50 border border-slate-600 rounded-lg p-3 hover:border-slate-500 transition-colors" id="extraDevicesSection">
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                          <label class="flex items-center cursor-pointer flex-1 min-w-0">
+                            <input type="checkbox" id="extraDevices" class="w-4 h-4 text-orange-500 bg-slate-800 border-slate-600 rounded focus:ring-orange-500 focus:ring-2 mr-3" onchange="calculateTotal()">
+                            <div class="flex-1 min-w-0">
+                              <div class="text-slate-200 font-medium">Extra Devices</div>
+                              <div class="text-slate-500 text-sm">Additional devices beyond included 2 per user</div>
+                            </div>
+                          </label>
+                          <div class="text-orange-400 font-semibold" style="white-space:nowrap;flex-shrink:0;margin-left:0.75rem;">$20<span class="text-slate-500">/device</span></div>
+                        </div>
+                        <div class="hidden ml-7" id="extraDevicesCount">
+                          <div class="flex items-center gap-3">
+                            <label class="text-slate-400 text-sm">Quantity:</label>
+                            <input type="number" id="extraDevicesNumber" value="0" min="0" max="100" class="w-20 bg-slate-700 border border-slate-600 rounded px-3 py-1 text-white focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+
+                  <!-- Security & Protection -->
+                  <details class="calc-group" id="addonGroupSecurity" open>
+                    <summary class="calc-group-summary">
+                      <span class="text-orange-400 text-sm font-bold uppercase tracking-wider">Security &amp; Protection</span>
+                      <svg class="calc-chevron w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <div class="grid sm:grid-cols-2 gap-2 pt-3">
+                      <!-- IronScales Email Security -->
+                      <div class="bg-slate-800/50 border border-slate-600 rounded-lg p-3 hover:border-slate-500 transition-colors" id="ironscalesSection">
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                          <label class="flex items-center cursor-pointer flex-1 min-w-0">
+                            <input type="checkbox" id="ironscales" class="w-4 h-4 text-orange-500 bg-slate-800 border-slate-600 rounded focus:ring-orange-500 focus:ring-2 mr-3" onchange="calculateTotal()">
+                            <div class="flex-1 min-w-0">
+                              <div class="text-slate-200 font-medium">IronScales Email Security</div>
+                              <div class="text-slate-500 text-sm">AI-driven email protection &amp; training</div>
+                            </div>
+                          </label>
+                          <div class="text-orange-400 font-semibold" style="white-space:nowrap;flex-shrink:0;margin-left:0.75rem;">$5<span class="text-slate-500">/email</span></div>
+                        </div>
+                        <div class="hidden ml-7" id="ironscalesUsers">
+                          <div class="flex items-center gap-3">
+                            <label class="text-slate-400 text-sm">Quantity:</label>
+                            <input type="number" id="ironscalesCount" value="1" min="1" max="500" class="w-20 bg-slate-700 border border-slate-600 rounded px-3 py-1 text-white focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+
+                  <!-- Backup Solutions -->
+                  <details class="calc-group" id="addonGroupBackup">
+                    <summary class="calc-group-summary">
+                      <span class="text-orange-400 text-sm font-bold uppercase tracking-wider">Backup Solutions</span>
+                      <svg class="calc-chevron w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <div class="grid sm:grid-cols-2 gap-2 pt-3">
+                      <!-- Mailbox Backup -->
+                      <div class="bg-slate-800/50 border border-slate-600 rounded-lg p-3 hover:border-slate-500 transition-colors" id="mailboxBackupSection">
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                          <label class="flex items-center cursor-pointer flex-1 min-w-0">
+                            <input type="checkbox" id="mailboxBackup" class="w-4 h-4 text-orange-500 bg-slate-800 border-slate-600 rounded focus:ring-orange-500 focus:ring-2 mr-3" onchange="calculateTotal()">
+                            <div class="flex-1 min-w-0">
+                              <div class="text-slate-200 font-medium">Mailbox/OneDrive/SharePoint Backup</div>
+                              <div class="text-slate-500 text-sm">Microsoft 365 data protection</div>
+                            </div>
+                          </label>
+                          <div class="text-orange-400 font-semibold" style="white-space:nowrap;flex-shrink:0;margin-left:0.75rem;">$5<span class="text-slate-500">/mailbox</span></div>
+                        </div>
+                        <div class="hidden ml-7" id="mailboxBackupUsers">
+                          <div class="flex items-center gap-3">
+                            <label class="text-slate-400 text-sm">Quantity:</label>
+                            <input type="number" id="mailboxCount" value="1" min="1" max="500" class="w-20 bg-slate-700 border border-slate-600 rounded px-3 py-1 text-white focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Workstation Backup -->
+                      <div class="bg-slate-800/50 border border-slate-600 rounded-lg p-3 hover:border-slate-500 transition-colors" id="workstationBackupSection">
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                          <label class="flex items-center cursor-pointer flex-1 min-w-0">
+                            <input type="checkbox" id="workstationBackup" class="w-4 h-4 text-orange-500 bg-slate-800 border-slate-600 rounded focus:ring-orange-500 focus:ring-2 mr-3" onchange="calculateTotal()">
+                            <div class="flex-1 min-w-0">
+                              <div class="text-slate-200 font-medium">Workstation Backup</div>
+                              <div class="text-slate-500 text-sm">Axcient x360Recover endpoint backup</div>
+                            </div>
+                          </label>
+                          <div class="text-orange-400 font-semibold" style="white-space:nowrap;flex-shrink:0;margin-left:0.75rem;">$20<span class="text-slate-500">/device</span></div>
+                        </div>
+                        <div class="hidden ml-7" id="workstationBackupDevices">
+                          <div class="flex items-center gap-3">
+                            <label class="text-slate-400 text-sm">Quantity:</label>
+                            <input type="number" id="workstationDevices" value="1" min="1" max="100" class="w-20 bg-slate-700 border border-slate-600 rounded px-3 py-1 text-white focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Server Backup -->
+                      <div class="bg-slate-800/50 border border-slate-600 rounded-lg p-3 hover:border-slate-500 transition-colors" id="serverBackupSection">
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                          <label class="flex items-center cursor-pointer flex-1 min-w-0">
+                            <input type="checkbox" id="serverBackup" class="w-4 h-4 text-orange-500 bg-slate-800 border-slate-600 rounded focus:ring-orange-500 focus:ring-2 mr-3" onchange="calculateTotal()">
+                            <div class="flex-1 min-w-0">
+                              <div class="text-slate-200 font-medium">Server Backup (x360Recover D2C)</div>
+                              <div class="text-slate-500 text-sm">Direct-to-cloud server protection</div>
+                            </div>
+                          </label>
+                          <div class="text-orange-400 font-semibold" style="white-space:nowrap;flex-shrink:0;margin-left:0.75rem;">$150<span class="text-slate-500">/server</span></div>
+                        </div>
+                        <div class="hidden ml-7" id="serverBackupCount">
+                          <div class="flex items-center gap-3">
+                            <label class="text-slate-400 text-sm">Quantity:</label>
+                            <input type="number" id="serverCount" value="1" min="1" max="50" class="w-20 bg-slate-700 border border-slate-600 rounded px-3 py-1 text-white focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+
+                  <!-- Cloud Services -->
+                  <details class="calc-group" id="addonGroupCloud">
+                    <summary class="calc-group-summary">
+                      <span class="text-orange-400 text-sm font-bold uppercase tracking-wider">Cloud Services</span>
+                      <svg class="calc-chevron w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <div class="grid sm:grid-cols-2 gap-2 pt-3">
+                      <!-- x360Sync -->
+                      <div class="bg-slate-800/50 border border-slate-600 rounded-lg p-3 hover:border-slate-500 transition-colors" id="x360syncSection">
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                          <label class="flex items-center cursor-pointer flex-1 min-w-0">
+                            <input type="checkbox" id="x360sync" class="w-4 h-4 text-orange-500 bg-slate-800 border-slate-600 rounded focus:ring-orange-500 focus:ring-2 mr-3" onchange="calculateTotal()">
+                            <div class="flex-1 min-w-0">
+                              <div class="text-slate-200 font-medium">x360Sync Cloud File Server</div>
+                              <div class="text-slate-500 text-sm">Secure cloud file sharing &amp; sync</div>
+                            </div>
+                          </label>
+                          <div class="text-orange-400 font-semibold" style="white-space:nowrap;flex-shrink:0;margin-left:0.75rem;">$15<span class="text-slate-500">/user</span></div>
+                        </div>
+                        <div class="hidden ml-7" id="x360syncUsers">
+                          <div class="flex items-center gap-3">
+                            <label class="text-slate-400 text-sm">Quantity:</label>
+                            <input type="number" id="x360syncCount" value="1" min="1" max="100" class="w-20 bg-slate-700 border border-slate-600 rounded px-3 py-1 text-white focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- A La Carte Section -->
+            <div class="mb-6 hidden" id="alacarteSection">
+              <label class="block text-slate-300 text-sm font-semibold mb-4">Build Your Custom Solution</label>
+              <div class="bg-slate-800/30 rounded-xl p-6 border border-slate-700">
+                <div class="text-center mb-6">
+                  <p class="text-slate-400 text-sm">Select individual services and quantities</p>
+                  <p class="text-slate-500 text-xs mt-1">All services include professional support at $120/hour</p>
+                </div>
                 
-                <!-- IronScales Email Security -->
-                <div class="border border-slate-700 rounded-lg p-3">
-                  <label class="flex items-center justify-between cursor-pointer">
-                    <div class="flex items-center">
-                      <input type="checkbox" id="ironscales" class="text-orange-500 mr-3" onchange="calculateTotal()">
-                      <span class="text-slate-300 text-sm font-medium">IronScales Email Security</span>
+                <!-- Professional Services Grid -->
+                <div class="space-y-3">
+                  <!-- Core Infrastructure -->
+                  <details class="calc-group" open>
+                    <summary class="calc-group-summary">
+                      <span class="text-orange-400 text-sm font-bold uppercase tracking-wider">Core Infrastructure</span>
+                      <svg class="calc-chevron w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <div class="grid sm:grid-cols-2 gap-2 pt-3">
+                    <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-600">
+                      <div class="flex items-start justify-between gap-2 mb-2">
+                        <label class="flex items-center cursor-pointer flex-1 min-w-0 mr-2">
+                          <input type="checkbox" id="desktopRMM" class="text-orange-500 mr-3" onchange="calculateTotal()">
+                          <div class="min-w-0 flex-1">
+                            <div class="text-slate-200 font-medium text-sm">Desktop & Laptop RMM</div>
+                            <div class="text-slate-500 text-xs">Remote monitoring & management</div>
+                          </div>
+                        </label>
+                        <div class="text-right flex-shrink-0">
+                          <div class="text-white font-semibold">$10</div>
+                          <div class="text-slate-400 text-xs">/device</div>
+                        </div>
+                      </div>
+                      <div class="hidden" id="desktopRMMDevices">
+                        <div class="flex items-center gap-2 ml-6">
+                          <label class="text-slate-400 text-xs">Qty:</label>
+                          <input type="number" id="desktopRMMCount" value="1" min="1" max="500" class="w-20 bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                        </div>
+                      </div>
                     </div>
-                    <span class="text-slate-400 text-sm">$5/email</span>
-                  </label>
-                  <div class="mt-2 ml-6 hidden" id="ironscalesUsers">
-                    <label for="ironscalesCount" class="block text-slate-400 text-xs mb-1">Number of Protected Emails</label>
-                    <input type="number" id="ironscalesCount" value="5" min="1" max="500" class="w-24 bg-slate-800 border border-slate-700 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
-                  </div>
+
+                    <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-600">
+                      <div class="flex items-start justify-between gap-2 mb-2">
+                        <label class="flex items-center cursor-pointer flex-1 min-w-0 mr-2">
+                          <input type="checkbox" id="serverRMM" class="text-orange-500 mr-3" onchange="calculateTotal()">
+                          <div class="min-w-0 flex-1">
+                            <div class="text-slate-200 font-medium text-sm">Server RMM</div>
+                            <div class="text-slate-500 text-xs">Server monitoring & patching</div>
+                          </div>
+                        </label>
+                        <div class="text-right flex-shrink-0">
+                          <div class="text-white font-semibold">$25</div>
+                          <div class="text-slate-400 text-xs">/server</div>
+                        </div>
+                      </div>
+                      <div class="hidden" id="serverRMMDevices">
+                        <div class="flex items-center gap-2 ml-6">
+                          <label class="text-slate-400 text-xs">Qty:</label>
+                          <input type="number" id="serverRMMCount" value="1" min="1" max="50" class="w-20 bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </details>
+
+                  <!-- Security & Protection -->
+                  <details class="calc-group">
+                    <summary class="calc-group-summary">
+                      <span class="text-orange-400 text-sm font-bold uppercase tracking-wider">Security &amp; Protection</span>
+                      <svg class="calc-chevron w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <div class="grid sm:grid-cols-2 gap-2 pt-3">
+                    <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-600">
+                      <div class="flex items-start justify-between gap-2 mb-2">
+                        <label class="flex items-center cursor-pointer flex-1 min-w-0 mr-2">
+                          <input type="checkbox" id="sentinelOneEDR" class="text-orange-500 mr-3" onchange="calculateTotal()">
+                          <div class="min-w-0 flex-1">
+                            <div class="text-slate-200 font-medium text-sm">SentinelOne EDR</div>
+                            <div class="text-slate-500 text-xs">Advanced endpoint protection</div>
+                          </div>
+                        </label>
+                        <div class="text-right flex-shrink-0">
+                          <div class="text-white font-semibold">$10</div>
+                          <div class="text-slate-400 text-xs">/device</div>
+                        </div>
+                      </div>
+                      <div class="hidden" id="sentinelOneEDRDevices">
+                        <div class="flex items-center gap-2 ml-6">
+                          <label class="text-slate-400 text-xs">Qty:</label>
+                          <input type="number" id="sentinelOneEDRCount" value="1" min="1" max="500" class="w-20 bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-600">
+                      <div class="flex items-start justify-between gap-2 mb-2">
+                        <label class="flex items-center cursor-pointer flex-1 min-w-0 mr-2">
+                          <input type="checkbox" id="alacarteIronScales" class="text-orange-500 mr-3" onchange="calculateTotal()">
+                          <div class="min-w-0 flex-1">
+                            <div class="text-slate-200 font-medium text-sm">IronScales Email Security</div>
+                            <div class="text-slate-500 text-xs">AI-driven email protection</div>
+                          </div>
+                        </label>
+                        <div class="text-right flex-shrink-0">
+                          <div class="text-white font-semibold">$5</div>
+                          <div class="text-slate-400 text-xs">/email</div>
+                        </div>
+                      </div>
+                      <div class="hidden" id="alacarteIronScalesUsers">
+                        <div class="flex items-center gap-2 ml-6">
+                          <label class="text-slate-400 text-xs">Qty:</label>
+                          <input type="number" id="alacarteIronScalesCount" value="1" min="1" max="500" class="w-20 bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </details>
                 </div>
 
-                <!-- Mailbox Backup -->
-                <div class="border border-slate-700 rounded-lg p-3">
-                  <label class="flex items-center justify-between cursor-pointer">
-                    <div class="flex items-center">
-                      <input type="checkbox" id="mailboxBackup" class="text-orange-500 mr-3" onchange="calculateTotal()">
-                      <span class="text-slate-300 text-sm font-medium">Mailbox/OneDrive/SharePoint Backup</span>
+                <div class="space-y-3 mt-3">
+                  <!-- Backup Solutions -->
+                  <details class="calc-group">
+                    <summary class="calc-group-summary">
+                      <span class="text-orange-400 text-sm font-bold uppercase tracking-wider">Backup Solutions</span>
+                      <svg class="calc-chevron w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <div class="grid sm:grid-cols-2 gap-2 pt-3">
+                    <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-600">
+                      <div class="flex items-start justify-between gap-2 mb-2">
+                        <label class="flex items-center cursor-pointer flex-1 min-w-0 mr-2">
+                          <input type="checkbox" id="alacarteWorkstationBackup" class="text-orange-500 mr-3" onchange="calculateTotal()">
+                          <div class="min-w-0 flex-1">
+                            <div class="text-slate-200 font-medium text-sm">Workstation Backup</div>
+                            <div class="text-slate-500 text-xs">Axcient x360Recover</div>
+                          </div>
+                        </label>
+                        <div class="text-right flex-shrink-0">
+                          <div class="text-white font-semibold">$20</div>
+                          <div class="text-slate-400 text-xs">/device</div>
+                        </div>
+                      </div>
+                      <div class="hidden" id="alacarteWorkstationBackupDevices">
+                        <div class="flex items-center gap-2 ml-6">
+                          <label class="text-slate-400 text-xs">Qty:</label>
+                          <input type="number" id="alacarteWorkstationBackupCount" value="1" min="1" max="100" class="w-20 bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                        </div>
+                      </div>
                     </div>
-                    <span class="text-slate-400 text-sm">$5/mailbox</span>
-                  </label>
-                  <div class="mt-2 ml-6 hidden" id="mailboxBackupUsers">
-                    <label for="mailboxCount" class="block text-slate-400 text-xs mb-1">Number of Mailboxes</label>
-                    <input type="number" id="mailboxCount" value="5" min="1" max="500" class="w-24 bg-slate-800 border border-slate-700 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
-                  </div>
-                </div>
 
-                <!-- Workstation Backup (Essentials only) -->
-                <div class="border border-slate-700 rounded-lg p-3" id="workstationBackupSection">
-                  <label class="flex items-center justify-between cursor-pointer">
-                    <div class="flex items-center">
-                      <input type="checkbox" id="workstationBackup" class="text-orange-500 mr-3" onchange="calculateTotal()">
-                      <span class="text-slate-300 text-sm font-medium">Workstation Backup</span>
+                    <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-600">
+                      <div class="flex items-start justify-between gap-2 mb-2">
+                        <label class="flex items-center cursor-pointer flex-1 min-w-0 mr-2">
+                          <input type="checkbox" id="alacarteServerBackup" class="text-orange-500 mr-3" onchange="calculateTotal()">
+                          <div class="min-w-0 flex-1">
+                            <div class="text-slate-200 font-medium text-sm">Server Backup D2C</div>
+                            <div class="text-slate-500 text-xs">Direct-to-cloud server backup</div>
+                          </div>
+                        </label>
+                        <div class="text-right flex-shrink-0">
+                          <div class="text-white font-semibold">$150</div>
+                          <div class="text-slate-400 text-xs">/server</div>
+                        </div>
+                      </div>
+                      <div class="hidden" id="alacarteServerBackupDevices">
+                        <div class="flex items-center gap-2 ml-6">
+                          <label class="text-slate-400 text-xs">Qty:</label>
+                          <input type="number" id="alacarteServerBackupCount" value="1" min="1" max="50" class="w-20 bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                        </div>
+                      </div>
                     </div>
-                    <span class="text-slate-400 text-sm">$20/device</span>
-                  </label>
-                  <div class="mt-2 ml-6 hidden" id="workstationBackupDevices">
-                    <label for="workstationDevices" class="block text-slate-400 text-xs mb-1">Number of Devices</label>
-                    <input type="number" id="workstationDevices" value="10" min="1" max="100" class="w-24 bg-slate-800 border border-slate-700 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
-                  </div>
-                </div>
 
-                <!-- Extra Devices (Standard/Complete only) -->
-                <div class="border border-slate-700 rounded-lg p-3" id="extraDevicesSection">
-                  <label class="flex items-center justify-between cursor-pointer">
-                    <div class="flex items-center">
-                      <input type="checkbox" id="extraDevices" class="text-orange-500 mr-3" onchange="calculateTotal()">
-                      <span class="text-slate-300 text-sm font-medium">Extra Devices</span>
+                    <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-600">
+                      <div class="flex items-start justify-between gap-2 mb-2">
+                        <label class="flex items-center cursor-pointer flex-1 min-w-0 mr-2">
+                          <input type="checkbox" id="alacarteMailboxBackup" class="text-orange-500 mr-3" onchange="calculateTotal()">
+                          <div class="min-w-0 flex-1">
+                            <div class="text-slate-200 font-medium text-sm">Mailbox Backup</div>
+                            <div class="text-slate-500 text-xs">M365 mailbox & OneDrive</div>
+                          </div>
+                        </label>
+                        <div class="text-right flex-shrink-0">
+                          <div class="text-white font-semibold">$5</div>
+                          <div class="text-slate-400 text-xs">/mailbox</div>
+                        </div>
+                      </div>
+                      <div class="hidden" id="alacarteMailboxBackupUsers">
+                        <div class="flex items-center gap-2 ml-6">
+                          <label class="text-slate-400 text-xs">Qty:</label>
+                          <input type="number" id="alacarteMailboxBackupCount" value="1" min="1" max="500" class="w-20 bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                        </div>
+                      </div>
                     </div>
-                    <span class="text-slate-400 text-sm">$20/device</span>
-                  </label>
-                  <div class="mt-2 ml-6 hidden" id="extraDevicesCount">
-                    <label for="extraDevicesNumber" class="block text-slate-400 text-xs mb-1">Additional Devices Beyond Included 2 Per User</label>
-                    <input type="number" id="extraDevicesNumber" value="0" min="0" max="100" class="w-24 bg-slate-800 border border-slate-700 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
-                  </div>
-                </div>
-
-                <!-- Server Backup -->
-                <div class="border border-slate-700 rounded-lg p-3">
-                  <label class="flex items-center justify-between cursor-pointer">
-                    <div class="flex items-center">
-                      <input type="checkbox" id="serverBackup" class="text-orange-500 mr-3" onchange="calculateTotal()">
-                      <span class="text-slate-300 text-sm font-medium">Server Backup (x360Recover D2C)</span>
                     </div>
-                    <span class="text-slate-400 text-sm">$150/server</span>
-                  </label>
-                  <div class="mt-2 ml-6 hidden" id="serverBackupCount">
-                    <label for="serverCount" class="block text-slate-400 text-xs mb-1">Number of Servers</label>
-                    <input type="number" id="serverCount" value="1" min="1" max="50" class="w-24 bg-slate-800 border border-slate-700 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
-                  </div>
-                </div>
+                  </details>
 
-                <!-- x360Sync Cloud File Server -->
-                <div class="border border-slate-700 rounded-lg p-3">
-                  <label class="flex items-center justify-between cursor-pointer">
-                    <div class="flex items-center">
-                      <input type="checkbox" id="x360sync" class="text-orange-500 mr-3" onchange="calculateTotal()">
-                      <span class="text-slate-300 text-sm font-medium">x360Sync Cloud File Server</span>
+                  <!-- Cloud Services -->
+                  <details class="calc-group">
+                    <summary class="calc-group-summary">
+                      <span class="text-orange-400 text-sm font-bold uppercase tracking-wider">Cloud Services</span>
+                      <svg class="calc-chevron w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <div class="grid sm:grid-cols-2 gap-2 pt-3">
+                    <div class="bg-slate-800/50 rounded-lg p-3 border border-slate-600">
+                      <div class="flex items-start justify-between gap-2 mb-2">
+                        <label class="flex items-center cursor-pointer flex-1 min-w-0 mr-2">
+                          <input type="checkbox" id="alacarteX360Sync" class="text-orange-500 mr-3" onchange="calculateTotal()">
+                          <div class="min-w-0 flex-1">
+                            <div class="text-slate-200 font-medium text-sm">x360Sync File Server</div>
+                            <div class="text-slate-500 text-xs">Cloud file sharing & sync</div>
+                          </div>
+                        </label>
+                        <div class="text-right flex-shrink-0">
+                          <div class="text-white font-semibold">$15</div>
+                          <div class="text-slate-400 text-xs">/user</div>
+                        </div>
+                      </div>
+                      <div class="hidden" id="alacarteX360SyncUsers">
+                        <div class="flex items-center gap-2 ml-6">
+                          <label class="text-slate-400 text-xs">Qty:</label>
+                          <input type="number" id="alacarteX360SyncCount" value="1" min="1" max="100" class="w-20 bg-slate-700 border border-slate-600 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
+                        </div>
+                      </div>
                     </div>
-                    <span class="text-slate-400 text-sm">$15/user</span>
-                  </label>
-                  <div class="mt-2 ml-6 hidden" id="x360syncUsers">
-                    <label for="x360syncCount" class="block text-slate-400 text-xs mb-1">Number of Users</label>
-                    <input type="number" id="x360syncCount" value="5" min="1" max="100" class="w-24 bg-slate-800 border border-slate-700 rounded px-2 py-1 text-white text-sm focus:border-orange-500 focus:outline-none" onchange="calculateTotal()">
-                  </div>
+                    </div>
+                  </details>
                 </div>
-
               </div>
             </div>
           </div>
@@ -525,28 +877,28 @@
           <div>
             <h3 class="font-bold text-white mb-6">Monthly Cost Summary</h3>
             
-            <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-600">
               <div id="pricingBreakdown" class="space-y-3 mb-6">
                 <!-- Pricing breakdown will be populated by JavaScript -->
               </div>
               
-              <div class="border-t border-slate-700 pt-4">
-                <div class="flex justify-between items-center mb-2">
-                  <span class="text-slate-300 font-semibold">Monthly Total</span>
-                  <span id="totalPrice" class="text-2xl font-black text-orange-400">$650.00</span>
+              <div class="border-t border-slate-700 pt-6">
+                <div class="flex justify-between items-center mb-4">
+                  <span class="text-slate-300 text-lg font-semibold">Monthly Total</span>
+                  <span id="totalPrice" class="text-3xl font-black text-orange-400">$650.00</span>
                 </div>
-                <div class="text-slate-500 text-xs mb-4" id="tierDescription">Standard tier - 5 users with unlimited support</div>
+                <div class="text-slate-500 text-sm mb-6" id="tierDescription">Standard tier - 5 users with unlimited support</div>
                 
-                <div class="space-y-2">
-                  <button onclick="showQuoteForm()" class="block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 rounded-lg transition-all text-sm">Request Custom Quote</button>
+                <div class="space-y-3">
+                  <button onclick="showQuoteForm()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-all text-sm shadow-lg hover:shadow-xl">Request Custom Quote</button>
                   <p class="text-slate-500 text-xs text-center">One-time $100 setup fee per device</p>
                 </div>
               </div>
             </div>
 
-            <div class="mt-6 glass-card rounded-lg p-4">
-              <h4 class="font-semibold text-white mb-2 text-sm">What's Included</h4>
-              <div id="includedFeatures" class="text-slate-400 text-xs space-y-1">
+            <div class="mt-6 bg-slate-800/30 rounded-lg p-4 border border-slate-700">
+              <h4 class="font-semibold text-white mb-3 text-sm">What's Included</h4>
+              <div id="includedFeatures" class="text-slate-400 text-sm space-y-2">
                 <!-- Features will be populated by JavaScript -->
               </div>
             </div>
@@ -556,128 +908,20 @@
     </div>
   </section>
 
-
   <!-- =========================================================
-       A LA CARTE SERVICES
+       CUSTOM PROJECTS
   ========================================================== -->
-  <section id="a-la-carte" class="py-20 bg-slate-900/40">
+  <section id="projects" class="py-20 bg-slate-900/40">
     <div class="max-w-5xl mx-auto px-6">
       <div class="text-center mb-12 reveal">
         <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-4">
-          <span class="text-orange-400 text-sm font-medium">Option 1</span>
+          <span class="text-orange-400 text-sm font-medium">Beyond Managed Services</span>
         </div>
-        <h2 class="text-3xl font-black tracking-tight mb-3">A La Carte Services (Essentials Plan)</h2>
-        <p class="text-slate-400 max-w-xl mx-auto">Pick only the services you need. Keep monthly costs low and pay for support as needed.</p>
+        <h2 class="text-3xl font-black tracking-tight mb-3">Custom Projects</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">One-time engagements priced separately from your monthly plan. Quote on request.</p>
       </div>
 
-      <!-- Hourly support highlight -->
-      <div class="glass-card rounded-2xl p-6 mb-8 border-l-4 border-blue-500 reveal reveal-delay-1">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <h3 class="font-bold text-white mb-2">Hourly Support Rate</h3>
-            <p class="text-slate-400 text-sm">All hands-on support billed at $120/hour in 15-minute increments. Perfect for cost-conscious businesses that need minimal support.</p>
-          </div>
-          <div class="text-right flex-shrink-0">
-            <span class="text-2xl font-black text-blue-400">$120</span>
-            <p class="text-slate-500 text-xs">per hour</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Service categories -->
-      <div class="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-        <!-- Endpoint Management -->
-        <div class="glass-card rounded-2xl p-6 reveal reveal-delay-1">
-          <div class="w-10 h-10 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-            </svg>
-          </div>
-          <h3 class="text-lg font-black mb-3">Endpoint Management</h3>
-          <div class="space-y-2 text-sm">
-            <div class="flex justify-between items-center">
-              <span class="text-slate-300">Desktop/Laptop RMM</span>
-              <span class="text-white font-semibold">$10/mo</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-300">Server RMM</span>
-              <span class="text-white font-semibold">$25/mo</span>
-            </div>
-          </div>
-          <p class="text-slate-500 text-xs mt-3">Includes monitoring, patching, and alerting</p>
-        </div>
-
-        <!-- Backup Services -->
-        <div class="glass-card rounded-2xl p-6 reveal reveal-delay-2">
-          <div class="w-10 h-10 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
-            </svg>
-          </div>
-          <h3 class="text-lg font-black mb-3">Backup Services (Axcient)</h3>
-          <div class="space-y-2 text-sm">
-            <div class="flex justify-between items-center">
-              <span class="text-slate-300">Workstation Backup</span>
-              <span class="text-white font-semibold">$20/device</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-300">Server Backup D2C</span>
-              <span class="text-white font-semibold">$150/server</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-300">Mailbox Backup</span>
-              <span class="text-white font-semibold">$5/mailbox</span>
-            </div>
-          </div>
-          <p class="text-slate-500 text-xs mt-3">Axcient x360Recover & x360Cloud platforms</p>
-        </div>
-
-        <!-- Security Services -->
-        <div class="glass-card rounded-2xl p-6 reveal reveal-delay-3">
-          <div class="w-10 h-10 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-            </svg>
-          </div>
-          <h3 class="text-lg font-black mb-3">Security Protection</h3>
-          <div class="space-y-2 text-sm">
-            <div class="flex justify-between items-center">
-              <span class="text-slate-300">SentinelOne EDR</span>
-              <span class="text-white font-semibold">$10/device</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-300">IronScales Email Security</span>
-              <span class="text-white font-semibold">$5/email</span>
-            </div>
-          </div>
-          <p class="text-slate-500 text-xs mt-3">AI-driven endpoint & email protection</p>
-        </div>
-
-        <!-- x360Sync Cloud File Server -->
-        <div class="glass-card rounded-2xl p-6 reveal reveal-delay-1">
-          <div class="w-10 h-10 bg-purple-500/10 border border-purple-500/20 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
-            </svg>
-          </div>
-          <h3 class="text-lg font-black mb-3">x360Sync Cloud File Server</h3>
-          <div class="space-y-2 text-sm">
-            <div class="flex justify-between items-center">
-              <span class="text-slate-300">Cloud File Server</span>
-              <span class="text-white font-semibold">$15/user</span>
-            </div>
-          </div>
-          <div class="space-y-1 mt-3">
-            <div class="flex items-center gap-2 text-xs text-slate-400"><span class="text-green-400">•</span> Real-time sync</div>
-            <div class="flex items-center gap-2 text-xs text-slate-400"><span class="text-green-400">•</span> File sharing</div>
-            <div class="flex items-center gap-2 text-xs text-slate-400"><span class="text-green-400">•</span> Version history</div>
-            <div class="flex items-center gap-2 text-xs text-slate-400"><span class="text-green-400">•</span> Ransomware protection</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Projects Services -->
-      <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="grid md:grid-cols-2 gap-6">
         <!-- Website & Digital Projects -->
         <div class="glass-card rounded-2xl p-6 reveal reveal-delay-1">
           <div class="w-10 h-10 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center mb-4">
@@ -685,12 +929,12 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-3a9 9 0 000-18v3m0 9a9 9 0 010-18"/>
             </svg>
           </div>
-          <h3 class="text-lg font-black mb-3">Website & Digital Projects</h3>
+          <h3 class="text-lg font-black mb-3">Website &amp; Digital Projects</h3>
           <div class="space-y-2 text-sm">
             <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span> Custom Website Development</div>
             <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span> E-commerce Solutions</div>
             <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span> Digital Marketing Setup</div>
-            <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span> SEO & Analytics Implementation</div>
+            <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span> SEO &amp; Analytics Implementation</div>
             <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span> Content Management Systems</div>
           </div>
           <p class="text-slate-500 text-xs mt-3">Custom quote based on project scope</p>
@@ -705,12 +949,12 @@
           </div>
           <h3 class="text-lg font-black mb-3">IT Infrastructure Projects</h3>
           <div class="space-y-2 text-sm">
-            <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span> Sharepoint Site Development</div>
-                        <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span> Microsoft 365 Migrations</div>
-            <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span> Network Design & Implementation</div>
-            <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span> Office Relocations & Setup</div>
+            <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span> SharePoint Site Development</div>
+            <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span> Microsoft 365 Migrations</div>
+            <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span> Network Design &amp; Implementation</div>
+            <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span> Office Relocations &amp; Setup</div>
             <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span> Server Virtualization Projects</div>
-            <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span> Security Assessments & Upgrades</div>
+            <div class="flex items-center gap-2 text-slate-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span> Security Assessments &amp; Upgrades</div>
           </div>
           <p class="text-slate-500 text-xs mt-3">Custom quote based on project scope</p>
         </div>
@@ -885,6 +1129,9 @@
       const addOnsSection = document.getElementById('addOnsSection');
       const workstationBackupSection = document.getElementById('workstationBackupSection');
       const extraDevicesSection = document.getElementById('extraDevicesSection');
+      const serverBackupSection = document.getElementById('serverBackupSection');
+      const x360syncSection = document.getElementById('x360syncSection');
+      const alacarteSection = document.getElementById('alacarteSection');
       
       if (tier === 'essentials') {
         userSection.classList.add('hidden');
@@ -892,6 +1139,9 @@
         addOnsSection.classList.remove('hidden');
         workstationBackupSection.classList.remove('hidden');
         extraDevicesSection.classList.add('hidden');
+        serverBackupSection.classList.remove('hidden');
+        x360syncSection.classList.remove('hidden');
+        alacarteSection.classList.add('hidden');
         
         // Base pricing for Essentials (monitoring + SentinelOne EDR)
         const baseCost = deviceCount * 20; // $20 per device for monitoring + EDR
@@ -907,6 +1157,9 @@
         addOnsSection.classList.remove('hidden');
         workstationBackupSection.classList.add('hidden');
         extraDevicesSection.classList.remove('hidden');
+        serverBackupSection.classList.add('hidden');
+        x360syncSection.classList.add('hidden');
+        alacarteSection.classList.add('hidden');
         
         total = userCount * 130;
         breakdown.push(`Standard Plan: ${userCount} users × $130 = $${total.toFixed(2)}`);
@@ -919,15 +1172,110 @@
         addOnsSection.classList.remove('hidden');
         workstationBackupSection.classList.add('hidden');
         extraDevicesSection.classList.remove('hidden');
+        serverBackupSection.classList.add('hidden');
+        x360syncSection.classList.add('hidden');
+        alacarteSection.classList.add('hidden');
         
         total = userCount * 200;
         breakdown.push(`Compliance Complete Plan: ${userCount} users × $200 = $${total.toFixed(2)}`);
         features.push('Everything in Standard', '1 workstation + 1 laptop per user INCLUDED', 'RMM (Remote Monitoring & Management)', 'Computer backup for desktop & laptop', 'Email backup (Mailbox/OneDrive/SharePoint)', 'IronScales for user\'s mailbox INCLUDED', 'Quarterly compliance reviews', 'Device lifecycle planning');
         description = `Compliance Complete tier - ${userCount} users (${userCount * 2} devices included) with compliance features`;
+        
+      } else if (tier === 'alacarte') {
+        userSection.classList.add('hidden');
+        deviceSection.classList.add('hidden');
+        addOnsSection.classList.add('hidden');
+        alacarteSection.classList.remove('hidden');
+        
+        // Calculate individual a la carte services
+        let serviceCount = 0;
+        
+        // Desktop/Laptop RMM
+        if (document.getElementById('desktopRMM').checked) {
+          const deviceCount = parseInt(document.getElementById('desktopRMMCount').value) || 0;
+          const cost = deviceCount * 10;
+          total += cost;
+          breakdown.push(`Desktop/Laptop RMM: ${deviceCount} devices × $10 = $${cost.toFixed(2)}`);
+          features.push('Desktop/Laptop monitoring & patching');
+          serviceCount++;
+        }
+        
+        // Server RMM
+        if (document.getElementById('serverRMM').checked) {
+          const serverCount = parseInt(document.getElementById('serverRMMCount').value) || 0;
+          const cost = serverCount * 25;
+          total += cost;
+          breakdown.push(`Server RMM: ${serverCount} servers × $25 = $${cost.toFixed(2)}`);
+          features.push('Server monitoring & patching');
+          serviceCount++;
+        }
+        
+        // SentinelOne EDR
+        if (document.getElementById('sentinelOneEDR').checked) {
+          const deviceCount = parseInt(document.getElementById('sentinelOneEDRCount').value) || 0;
+          const cost = deviceCount * 10;
+          total += cost;
+          breakdown.push(`SentinelOne EDR: ${deviceCount} devices × $10 = $${cost.toFixed(2)}`);
+          features.push('SentinelOne endpoint protection');
+          serviceCount++;
+        }
+        
+        // IronScales Email Security
+        if (document.getElementById('alacarteIronScales').checked) {
+          const emailCount = parseInt(document.getElementById('alacarteIronScalesCount').value) || 0;
+          const cost = emailCount * 5;
+          total += cost;
+          breakdown.push(`IronScales Email Security: ${emailCount} emails × $5 = $${cost.toFixed(2)}`);
+          features.push('IronScales email security & training');
+          serviceCount++;
+        }
+        
+        // Workstation Backup
+        if (document.getElementById('alacarteWorkstationBackup').checked) {
+          const deviceCount = parseInt(document.getElementById('alacarteWorkstationBackupCount').value) || 0;
+          const cost = deviceCount * 20;
+          total += cost;
+          breakdown.push(`Workstation Backup: ${deviceCount} devices × $20 = $${cost.toFixed(2)}`);
+          features.push('Axcient workstation backup & recovery');
+          serviceCount++;
+        }
+        
+        // Server Backup D2C
+        if (document.getElementById('alacarteServerBackup').checked) {
+          const serverCount = parseInt(document.getElementById('alacarteServerBackupCount').value) || 0;
+          const cost = serverCount * 150;
+          total += cost;
+          breakdown.push(`Server Backup D2C: ${serverCount} servers × $150 = $${cost.toFixed(2)}`);
+          features.push('Server backup & disaster recovery');
+          serviceCount++;
+        }
+        
+        // Mailbox Backup
+        if (document.getElementById('alacarteMailboxBackup').checked) {
+          const mailboxCount = parseInt(document.getElementById('alacarteMailboxBackupCount').value) || 0;
+          const cost = mailboxCount * 5;
+          total += cost;
+          breakdown.push(`Mailbox Backup: ${mailboxCount} mailboxes × $5 = $${cost.toFixed(2)}`);
+          features.push('Mailbox/OneDrive/SharePoint backup');
+          serviceCount++;
+        }
+        
+        // x360Sync Cloud File Server
+        if (document.getElementById('alacarteX360Sync').checked) {
+          const userCount = parseInt(document.getElementById('alacarteX360SyncCount').value) || 0;
+          const cost = userCount * 15;
+          total += cost;
+          breakdown.push(`x360Sync Cloud File Server: ${userCount} users × $15 = $${cost.toFixed(2)}`);
+          features.push('Cloud file server & sync');
+          serviceCount++;
+        }
+        
+        features.push('Support at $120/hour');
+        description = `Build Your Own - ${serviceCount} selected services with hourly support`;
       }
       
-      // Calculate add-ons based on tier-specific logic
-      if (tier !== 'complete' && document.getElementById('ironscales').checked) {
+      // Calculate add-ons based on tier-specific logic (skip for alacarte as it handles all services internally)
+      if (tier !== 'complete' && tier !== 'alacarte' && document.getElementById('ironscales').checked) {
         const ironscalesCount = parseInt(document.getElementById('ironscalesCount').value) || 0;
         const ironscalesCost = ironscalesCount * 5;
         total += ironscalesCost;
@@ -935,7 +1283,7 @@
         features.push('IronScales email security & training');
       }
       
-      // Mailbox backup - available for Essentials and Standard only (included in Complete)
+      // Mailbox backup - available for Essentials and Standard only (included in Complete, handled separately in alacarte)
       if (tier === 'essentials' && document.getElementById('mailboxBackup').checked) {
         const mailboxCount = parseInt(document.getElementById('mailboxCount').value) || 0;
         const mailboxCost = mailboxCount * 5;
@@ -950,7 +1298,7 @@
         features.push('Mailbox/OneDrive/SharePoint backup');
       }
       
-      // Workstation backup - only available for Essentials (included in Standard and Complete)
+      // Workstation backup - only available for Essentials (included in Standard and Complete, handled separately in alacarte)
       if (tier === 'essentials' && document.getElementById('workstationBackup').checked) {
         const workstationDevices = parseInt(document.getElementById('workstationDevices').value) || 0;
         const workstationCost = workstationDevices * WORKSTATION_BACKUP_PRICE;
@@ -959,7 +1307,7 @@
         features.push('Axcient workstation backup & recovery');
       }
       
-      // Extra Devices - for Standard and Complete only
+      // Extra Devices - for Standard and Complete only (alacarte handles devices individually)
       if ((tier === 'standard' || tier === 'complete') && document.getElementById('extraDevices').checked) {
         const extraDeviceCount = parseInt(document.getElementById('extraDevicesNumber').value) || 0;
         const extraDeviceCost = extraDeviceCount * EXTRA_DEVICE_PRICE;
@@ -968,8 +1316,8 @@
         features.push(`${extraDeviceCount} additional devices beyond included 2 per user`);
       }
       
-      // Server backup - available for all tiers
-      if (document.getElementById('serverBackup').checked) {
+      // Server backup - available for Essentials only (NOT for Standard or Compliance)
+      if (tier === 'essentials' && document.getElementById('serverBackup').checked) {
         const serverCount = parseInt(document.getElementById('serverCount').value) || 0;
         const serverCost = serverCount * SERVER_BACKUP_PRICE;
         total += serverCost;
@@ -977,8 +1325,8 @@
         features.push('Server backup & disaster recovery');
       }
       
-      // x360Sync - available for all tiers
-      if (document.getElementById('x360sync').checked) {
+      // x360Sync - available for Essentials only (NOT for Standard or Compliance)
+      if (tier === 'essentials' && document.getElementById('x360sync').checked) {
         const x360syncCount = parseInt(document.getElementById('x360syncCount').value) || 0;
         const x360syncCost = x360syncCount * X360SYNC_PRICE;
         total += x360syncCost;
@@ -989,16 +1337,46 @@
       // Update display
       document.getElementById('totalPrice').textContent = `$${total.toFixed(2)}`;
       document.getElementById('tierDescription').textContent = description;
+
+      // Hide add-on category groups whose cards are all hidden for this tier
+      hideEmptyAddonGroups();
       
       const breakdownEl = document.getElementById('pricingBreakdown');
-      breakdownEl.innerHTML = breakdown.map(line => 
-        `<div class="flex justify-between text-sm"><span class="text-slate-400">${line.split(':')[0]}:</span><span class="text-slate-300">${line.split(':').slice(1).join(':').trim()}</span></div>`
-      ).join('');
+      breakdownEl.innerHTML = breakdown.map(line => {
+        const colonIdx = line.indexOf(':');
+        const label = colonIdx >= 0 ? line.slice(0, colonIdx) : line;
+        const detail = colonIdx >= 0 ? line.slice(colonIdx + 1).trim() : '';
+        // Try to extract the final dollar amount as a separate emphasized value
+        const amtMatch = detail.match(/\$[\d,]+(?:\.\d+)?\s*$/);
+        const amount = amtMatch ? amtMatch[0].trim() : '';
+        const calc = amtMatch ? detail.slice(0, amtMatch.index).replace(/=\s*$/, '').trim() : detail;
+        return `<div class="py-2 border-b border-slate-700/40 last:border-0">
+          <div class="text-slate-200 text-sm font-medium leading-tight">${label}</div>
+          <div class="flex items-end justify-between gap-3 mt-1">
+            <div class="text-slate-500 text-xs leading-tight">${calc}</div>
+            ${amount ? `<div class="text-orange-400 text-sm font-semibold whitespace-nowrap">${amount}</div>` : ''}
+          </div>
+        </div>`;
+      }).join('');
       
       const featuresEl = document.getElementById('includedFeatures');
       featuresEl.innerHTML = features.map(feature => 
         `<div class="flex items-center gap-2"><span class="text-green-400 text-xs">&#10004;</span>${feature}</div>`
       ).join('');
+    }
+
+    // Hide collapsible add-on category if all its cards are hidden for current tier
+    function hideEmptyAddonGroups() {
+      const groups = document.querySelectorAll('#addOnsSection .calc-group');
+      groups.forEach(group => {
+        const cards = group.querySelectorAll(':scope > div > div[id$="Section"]');
+        const anyVisible = Array.from(cards).some(c => !c.classList.contains('hidden'));
+        if (anyVisible) {
+          group.classList.remove('hidden');
+        } else {
+          group.classList.add('hidden');
+        }
+      });
     }
     
     // Show/hide add-on input fields
@@ -1023,6 +1401,16 @@
       toggleAddOnInput('extraDevices', 'extraDevicesCount');
       toggleAddOnInput('serverBackup', 'serverBackupCount');
       toggleAddOnInput('x360sync', 'x360syncUsers');
+      
+      // Set up a la carte input toggles
+      toggleAddOnInput('desktopRMM', 'desktopRMMDevices');
+      toggleAddOnInput('serverRMM', 'serverRMMDevices');
+      toggleAddOnInput('sentinelOneEDR', 'sentinelOneEDRDevices');
+      toggleAddOnInput('alacarteIronScales', 'alacarteIronScalesUsers');
+      toggleAddOnInput('alacarteWorkstationBackup', 'alacarteWorkstationBackupDevices');
+      toggleAddOnInput('alacarteServerBackup', 'alacarteServerBackupDevices');
+      toggleAddOnInput('alacarteMailboxBackup', 'alacarteMailboxBackupUsers');
+      toggleAddOnInput('alacarteX360Sync', 'alacarteX360SyncUsers');
     });
 
     // Quote form functionality
@@ -1187,7 +1575,7 @@
         Number of Users: ${quoteData.userCount}
         
         PRICING BREAKDOWN:
-        ${quoteData.breakdown.map(line => `• ${line}`).join('\n')}
+        ${quoteData.breakdown.map(line => `� ${line}`).join('\n')}
         
         MONTHLY TOTAL: $${quoteData.total.toFixed(2)}
         One-time Setup Fee: $${quoteData.userCount * 2 * 100} (${quoteData.userCount * 2} devices × $100)
