@@ -14,10 +14,5 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
     }
-  ],
-  "functions": {
-    "api/verify.js": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  ]
 }
