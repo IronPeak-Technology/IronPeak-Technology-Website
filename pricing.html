@@ -338,12 +338,13 @@
             <div class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Includes everything in Essentials, Plus</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Unlimited remote support for 1x user</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> <strong>1 workstation + 1 laptop per user INCLUDED</strong></div>
-            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Axcient workstation backup INCLUDED for desktop & laptop</div>
+            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> <strong>1 mailbox per user INCLUDED</strong> (Mailbox/OneDrive/SharePoint backup)</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Microsoft 365 administration</div>
             <div class="text-orange-400 text-xs font-bold uppercase tracking-widest mt-4 mb-1">Available Add-Ons</div>
             <div class="flex items-center gap-2 text-sm text-slate-400"><span class="text-orange-400">●</span> Extra devices ($20/device)</div>
             <div class="flex items-center gap-2 text-sm text-slate-400"><span class="text-orange-400">●</span> IronScales ($5/email)</div>
-            <div class="flex items-center gap-2 text-sm text-slate-400"><span class="text-orange-400">●</span> Mailbox backup ($5/mailbox)</div>
+            <div class="flex items-center gap-2 text-sm text-slate-400"><span class="text-orange-400">●</span> Endpoint backup ($20/device)</div>
+            <div class="flex items-center gap-2 text-sm text-slate-400"><span class="text-orange-400">●</span> Extra mailboxes ($5/mailbox)</div>
           </div>
 
           <div class="mb-6">
@@ -369,8 +370,8 @@
             <div class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Everything in Standard, Plus</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> <strong>1 workstation + 1 laptop per user INCLUDED</strong></div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> RMM (Remote Monitoring & Management)</div>
-            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Computer backup for desktop & laptop</div>
-            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Email backup (Mailbox/OneDrive/SharePoint)</div>
+            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> <strong>Endpoint backup INCLUDED for desktop & laptop</strong> (Axcient x360Recover)</div>
+            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> <strong>1 mailbox per user INCLUDED</strong> (Mailbox/OneDrive/SharePoint backup)</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> IronScales for user's mailbox INCLUDED</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Quarterly compliance reviews</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Device lifecycle planning</div>
@@ -555,7 +556,7 @@
                           <label class="flex items-center cursor-pointer flex-1 min-w-0">
                             <input type="checkbox" id="mailboxBackup" class="w-4 h-4 text-orange-500 bg-slate-800 border-slate-600 rounded focus:ring-orange-500 focus:ring-2 mr-3" onchange="calculateTotal()">
                             <div class="flex-1 min-w-0">
-                              <div class="text-slate-200 font-medium">Mailbox/OneDrive/SharePoint Backup</div>
+                              <div class="text-slate-200 font-medium break-words">Mailbox / OneDrive / SharePoint Backup</div>
                               <div class="text-slate-500 text-sm">Microsoft 365 data protection</div>
                             </div>
                           </label>
@@ -1155,7 +1156,7 @@
         userSection.classList.remove('hidden');
         deviceSection.classList.add('hidden');
         addOnsSection.classList.remove('hidden');
-        workstationBackupSection.classList.add('hidden');
+        workstationBackupSection.classList.remove('hidden');
         extraDevicesSection.classList.remove('hidden');
         serverBackupSection.classList.add('hidden');
         x360syncSection.classList.add('hidden');
@@ -1163,8 +1164,8 @@
         
         total = userCount * 130;
         breakdown.push(`Standard Plan: ${userCount} users × $130 = $${total.toFixed(2)}`);
-        features.push('Unlimited remote support', '1 workstation + 1 laptop per user INCLUDED', 'SentinelOne EDR', 'Axcient workstation backup INCLUDED for included devices', 'Microsoft 365 administration');
-        description = `Standard tier - ${userCount} users (${userCount * 2} devices included) with unlimited support`;
+        features.push('Unlimited remote support', '1 workstation + 1 laptop per user INCLUDED', '1 mailbox per user INCLUDED (Mailbox/OneDrive/SharePoint backup)', 'SentinelOne EDR', 'Microsoft 365 administration');
+        description = `Standard tier - ${userCount} users (${userCount * 2} devices included, ${userCount} mailbox${userCount === 1 ? '' : 'es'} included) with unlimited support`;
         
       } else if (tier === 'complete') {
         userSection.classList.remove('hidden');
@@ -1283,7 +1284,7 @@
         features.push('IronScales email security & training');
       }
       
-      // Mailbox backup - available for Essentials and Standard only (included in Complete, handled separately in alacarte)
+      // Mailbox backup - available for Essentials and Standard (extra mailboxes only for Standard since 1/user is included; included in Complete; handled separately in alacarte)
       if (tier === 'essentials' && document.getElementById('mailboxBackup').checked) {
         const mailboxCount = parseInt(document.getElementById('mailboxCount').value) || 0;
         const mailboxCost = mailboxCount * 5;
@@ -1294,17 +1295,23 @@
         const mailboxCount = parseInt(document.getElementById('mailboxCount').value) || 0;
         const mailboxCost = mailboxCount * 5;
         total += mailboxCost;
-        breakdown.push(`Mailbox/OneDrive/SharePoint Backup (Axcient x360Cloud): ${mailboxCount} mailboxes × $5 = $${mailboxCost.toFixed(2)}`);
-        features.push('Mailbox/OneDrive/SharePoint backup');
+        breakdown.push(`Extra Mailbox Backups (beyond ${userCount} included): ${mailboxCount} mailboxes × $5 = $${mailboxCost.toFixed(2)}`);
+        features.push(`${mailboxCount} additional mailbox backup${mailboxCount === 1 ? '' : 's'} beyond included`);
       }
       
-      // Workstation backup - only available for Essentials (included in Standard and Complete, handled separately in alacarte)
+      // Workstation/Endpoint backup - available for Essentials and Standard (included in Complete, handled separately in alacarte)
       if (tier === 'essentials' && document.getElementById('workstationBackup').checked) {
         const workstationDevices = parseInt(document.getElementById('workstationDevices').value) || 0;
         const workstationCost = workstationDevices * WORKSTATION_BACKUP_PRICE;
         total += workstationCost;
         breakdown.push(`Workstation Backup (Axcient x360Recover): ${workstationDevices} devices × $${WORKSTATION_BACKUP_PRICE} = $${workstationCost.toFixed(2)}`);
         features.push('Axcient workstation backup & recovery');
+      } else if (tier === 'standard' && document.getElementById('workstationBackup').checked) {
+        const workstationDevices = parseInt(document.getElementById('workstationDevices').value) || 0;
+        const workstationCost = workstationDevices * WORKSTATION_BACKUP_PRICE;
+        total += workstationCost;
+        breakdown.push(`Endpoint Backup (Axcient x360Recover): ${workstationDevices} devices × $${WORKSTATION_BACKUP_PRICE} = $${workstationCost.toFixed(2)}`);
+        features.push('Axcient endpoint backup & recovery');
       }
       
       // Extra Devices - for Standard and Complete only (alacarte handles devices individually)
@@ -1337,6 +1344,9 @@
       // Update display
       document.getElementById('totalPrice').textContent = `$${total.toFixed(2)}`;
       document.getElementById('tierDescription').textContent = description;
+
+      // Cache for quote modal
+      window._lastQuote = { tier, userCount, total, breakdown: breakdown.slice(), features: features.slice() };
 
       // Hide add-on category groups whose cards are all hidden for this tier
       hideEmptyAddonGroups();
@@ -1431,133 +1441,98 @@
 
     function updateQuotePreview() {
       const quoteData = compileQuoteData();
-      
-      // Update modal with current selections
-      document.getElementById('quoteTierDisplay').textContent = quoteData.tier.charAt(0).toUpperCase() + quoteData.tier.slice(1);
-      document.getElementById('quoteUsersDisplay').textContent = quoteData.userCount;
-      document.getElementById('quoteTotalDisplay').textContent = `$${quoteData.total.toFixed(2)}`;
-      
-      // Show breakdown
       const previewEl = document.getElementById('quotePreview');
+      const tierLabel = quoteData.tier.charAt(0).toUpperCase() + quoteData.tier.slice(1);
       previewEl.innerHTML = `
         <div class="bg-slate-800/50 rounded-lg p-4 mb-4">
-          <h4 class="font-semibold text-white mb-3">Your Custom Plan</h4>
-          <div class="space-y-2 text-sm">
-            ${quoteData.breakdown.map(line => 
-              `<div class="flex justify-between">
-                <span class="text-slate-400">${line.split(':')[0]}:</span>
-                <span class="text-slate-300">${line.split(':').slice(1).join(':').trim()}</span>
-              </div>`
-            ).join('')}
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <div class="text-xs text-slate-400 uppercase tracking-wide">Plan</div>
+              <div class="font-bold text-white">${tierLabel}${quoteData.userCount ? ' — ' + quoteData.userCount + ' user' + (quoteData.userCount === 1 ? '' : 's') : ''}</div>
+            </div>
+            <div class="text-right">
+              <div class="text-xs text-slate-400 uppercase tracking-wide">Monthly</div>
+              <div class="font-bold text-orange-400 text-xl">$${quoteData.total.toFixed(2)}</div>
+            </div>
           </div>
-          <div class="border-t border-slate-700 pt-3 mt-3">
-            <div class="flex justify-between font-semibold">
-              <span class="text-white">Monthly Total:</span>
-              <span class="text-orange-400 text-lg">$${quoteData.total.toFixed(2)}</span>
+          <div class="border-t border-slate-700 pt-3">
+            <div class="text-xs text-slate-400 uppercase tracking-wide mb-2">Breakdown</div>
+            <div class="space-y-2 text-sm">
+              ${quoteData.breakdown.length ? quoteData.breakdown.map(line => {
+                const colonIdx = line.indexOf(':');
+                const label = colonIdx >= 0 ? line.slice(0, colonIdx) : line;
+                const detail = colonIdx >= 0 ? line.slice(colonIdx + 1).trim() : '';
+                const amtMatch = detail.match(/\$[\d,]+(?:\.\d+)?\s*$/);
+                const amount = amtMatch ? amtMatch[0].trim() : '';
+                return `<div class="flex justify-between gap-3"><span class="text-slate-300">${label}</span>${amount ? `<span class="text-orange-400 font-semibold whitespace-nowrap">${amount}</span>` : ''}</div>`;
+              }).join('') : '<div class="text-slate-500 italic">No services selected yet — use the calculator above.</div>'}
+            </div>
+          </div>
+          <div class="border-t border-slate-700 pt-3 mt-3 text-xs text-slate-500">
+            One-time setup fee: $${quoteData.userCount * 2 * 100} (${quoteData.userCount * 2} devices × $100)
+          </div>
+        </div>
+
+        <div class="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4 mb-4">
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <div class="flex-1">
+              <div class="text-sm font-semibold text-white mb-1">Service Agreement</div>
+              <div class="text-xs text-slate-300 mb-2">After submitting, you can review and electronically sign our Managed Services Agreement. Signed copies are emailed to you and to IronPeak automatically.</div>
+              <a href="agreement.html" target="_blank" rel="noopener" class="text-xs text-orange-400 hover:text-orange-300 font-semibold underline">Preview blank agreement →</a>
             </div>
           </div>
         </div>
-        
+
         <div class="bg-slate-800/50 rounded-lg p-4">
-          <h4 class="font-semibold text-white mb-3">Included Features</h4>
-          <div class="text-sm text-slate-400 space-y-1">
-            ${quoteData.features.map(feature => 
-              `<div class="flex items-start gap-2">
-                <span class="text-green-400 mt-0.5">✓</span>
-                <span>${feature}</span>
-              </div>`
-            ).join('')}
+          <div class="text-xs text-slate-400 uppercase tracking-wide mb-2">Included Features</div>
+          <div class="text-sm text-slate-300 space-y-1">
+            ${quoteData.features.length ? quoteData.features.map(feature => `<div class="flex items-start gap-2"><span class="text-green-400 mt-0.5">✓</span><span>${feature}</span></div>`).join('') : '<div class="text-slate-500 italic">Configure services in the calculator</div>'}
           </div>
         </div>
       `;
     }
 
     function compileQuoteData() {
-      const tier = document.querySelector('input[name="tier"]:checked').value;
-      const userCount = parseInt(document.getElementById('users').value) || 1;
-      
-      let total = 0;
-      let breakdown = [];
-      let features = [];
-      
-      // Calculate based on tier selection - same logic as main calculator
-      if (tier === 'essentials') {
-        total = userCount * 95;
-        breakdown.push(`Essentials Plan: ${userCount} users × $95 = $${total.toFixed(2)}`);
-        features.push('4-hour response time', '8-5 weekday support', 'Remote assistance', '1 workstation + 1 laptop per user INCLUDED');
-      } else if (tier === 'standard') {
-        total = userCount * 130;
-        breakdown.push(`Standard Plan: ${userCount} users × $130 = $${total.toFixed(2)}`);
-        features.push('Unlimited remote support', '1 workstation + 1 laptop per user INCLUDED', 'SentinelOne EDR', 'Axcient workstation backup INCLUDED for included devices', 'Microsoft 365 administration', 'Priority response times');
-      } else if (tier === 'complete') {
-        total = userCount * 200;
-        breakdown.push(`Compliance Complete Plan: ${userCount} users × $200 = $${total.toFixed(2)}`);
-        features.push('Everything in Standard', '1 workstation + 1 laptop per user INCLUDED', 'IronScales email security INCLUDED', 'Mailbox/OneDrive/SharePoint backup INCLUDED', 'Quarterly compliance reviews', 'Device lifecycle planning', 'Dedicated account management');
+      // Always use the live, authoritative result from the main calculator.
+      try { calculateTotal(); } catch (e) {}
+      const cached = window._lastQuote;
+      if (cached) {
+        return {
+          tier: cached.tier,
+          userCount: cached.userCount,
+          total: cached.total,
+          breakdown: cached.breakdown.slice(),
+          features: cached.features.slice()
+        };
       }
-      
-      // Add selected add-ons with same logic as calculator
-      if (tier !== 'complete' && document.getElementById('ironscales')?.checked) {
-        const ironscalesCount = parseInt(document.getElementById('ironscalesCount')?.value) || 0;
-        const ironscalesCost = ironscalesCount * 5;
-        total += ironscalesCost;
-        breakdown.push(`IronScales Email Security: ${ironscalesCount} emails × $5 = $${ironscalesCost.toFixed(2)}`);
-        features.push('IronScales email security & training');
-      }
-      
-      if ((tier === 'essentials' || tier === 'standard') && document.getElementById('mailboxBackup')?.checked) {
-        const mailboxCount = parseInt(document.getElementById('mailboxCount')?.value) || 0;
-        const mailboxCost = mailboxCount * 5;
-        total += mailboxCost;
-        breakdown.push(`Mailbox/OneDrive/SharePoint Backup: ${mailboxCount} mailboxes × $5 = $${mailboxCost.toFixed(2)}`);
-        features.push('Mailbox/OneDrive/SharePoint backup');
-      }
-      
-      if (tier === 'essentials' && document.getElementById('workstationBackup')?.checked) {
-        const workstationDevices = parseInt(document.getElementById('workstationDevices')?.value) || 0;
-        const workstationCost = workstationDevices * 20;
-        total += workstationCost;
-        breakdown.push(`Workstation Backup: ${workstationDevices} devices × $20 = $${workstationCost.toFixed(2)}`);
-        features.push('Axcient workstation backup & recovery');
-      }
-      
-      if ((tier === 'standard' || tier === 'complete') && document.getElementById('extraDevices')?.checked) {
-        const extraDeviceCount = parseInt(document.getElementById('extraDevicesNumber')?.value) || 0;
-        const extraDeviceCost = extraDeviceCount * 20;
-        total += extraDeviceCost;
-        breakdown.push(`Extra Devices: ${extraDeviceCount} devices × $20 = $${extraDeviceCost.toFixed(2)}`);
-        features.push(`${extraDeviceCount} additional devices beyond included 2 per user`);
-      }
-      
-      if (document.getElementById('serverBackup')?.checked) {
-        const serverCount = parseInt(document.getElementById('serverCount')?.value) || 0;
-        const serverCost = serverCount * 150;
-        total += serverCost;
-        breakdown.push(`Server Backup: ${serverCount} servers × $150 = $${serverCost.toFixed(2)}`);
-        features.push('Server backup & disaster recovery');
-      }
-      
-      if (document.getElementById('x360sync')?.checked) {
-        const x360syncCount = parseInt(document.getElementById('x360syncCount')?.value) || 0;
-        const x360syncCost = x360syncCount * 15;
-        total += x360syncCost;
-        breakdown.push(`x360Sync Cloud File Server: ${x360syncCount} users × $15 = $${x360syncCost.toFixed(2)}`);
-        features.push('Cloud file server & sync');
-      }
-      
-      return {
-        tier,
-        userCount,
-        total,
-        breakdown,
-        features
-      };
+      return { tier: 'standard', userCount: 0, total: 0, breakdown: [], features: [] };
+    }
+
+    function buildAgreementUrl(formData, quoteData) {
+      const services = (quoteData.breakdown || []).map(line => {
+        const m = line.match(/^(.*?):\s*(.*?)\s*=\s*(\$[\d,.]+)\s*$/);
+        if (m) return { label: `${m[1].trim()} (${m[2].trim()})`, amount: m[3] };
+        const m2 = line.match(/^(.*?):\s*(.*)$/);
+        if (m2) return { label: m2[1].trim(), amount: m2[2].trim() };
+        return { label: line, amount: '' };
+      });
+      const params = new URLSearchParams();
+      if (formData.get('company')) params.append('company', formData.get('company'));
+      if (formData.get('name')) params.append('contact', formData.get('name'));
+      if (formData.get('email')) params.append('email', formData.get('email'));
+      if (quoteData.tier) params.append('tier', quoteData.tier);
+      if (quoteData.userCount) params.append('users', String(quoteData.userCount));
+      if (typeof quoteData.total === 'number') params.append('total', quoteData.total.toFixed(2));
+      params.append('services', JSON.stringify(services));
+      return `agreement.html?${params.toString()}`;
     }
 
     async function submitQuote() {
       const form = document.getElementById('quoteForm');
       const formData = new FormData(form);
       const quoteData = compileQuoteData();
-      
+
       // Compile email content
       const emailBody = `
         NEW QUOTE REQUEST - MSP Services
@@ -1615,17 +1590,27 @@
         });
 
         if (response.ok) {
-          // Show success message
+          // Build agreement URL with prefilled params
+          const agreementUrl = buildAgreementUrl(formData, quoteData);
+
+          // Show success message with sign-now CTA
           document.getElementById('quoteForm').innerHTML = `
-            <div class="text-center py-8">
+            <div class="text-center py-6">
               <div class="w-16 h-16 bg-green-500/20 border border-green-500/30 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg class="w-8 h-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
               </div>
-              <h3 class="text-xl font-bold text-white mb-2">Quote Request Sent!</h3>
-              <p class="text-slate-400 mb-4">We'll review your custom plan and get back to you within 24 hours with a formal agreement.</p>
-              <button onclick="hideQuoteForm()" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors">Close</button>
+              <h3 class="text-xl font-bold text-white mb-2">Quote Request Received!</h3>
+              <p class="text-slate-400 mb-6">Your selections have been sent to IronPeak Technology. To get started right now, you can review and sign the service agreement below &mdash; signed copies will be emailed to you and to us automatically.</p>
+              <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <a href="${agreementUrl}" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                  Review &amp; Sign Agreement
+                </a>
+                <button onclick="hideQuoteForm()" class="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">Close</button>
+              </div>
+              <p class="text-xs text-slate-500 mt-4">Prefer to review later? We'll follow up by email within 24 hours.</p>
             </div>
           `;
         } else {

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Agreement | IronPeak Technology LLC</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="IronPeak%20Technology.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    .signature-font { font-family: 'Brush Script MT', 'Lucida Handwriting', cursive; font-size: 1.75rem; }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; color: black !important; }
+      .agreement-doc { box-shadow: none !important; border: none !important; padding: 0 !important; }
+      .page-break { page-break-before: always; }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 antialiased">
+
+  <!-- Top bar (hidden on print) -->
+  <div class="no-print bg-slate-900 text-white py-3 px-6 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <img src="IronPeak%20Technology.png" alt="IronPeak" class="w-8 h-8">
+      <span class="font-bold">IronPeak Technology LLC</span>
+    </div>
+    <button onclick="window.print()" class="text-sm bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded transition-colors">
+      🖨 Print / Save as PDF
+    </button>
+  </div>
+
+  <main class="max-w-4xl mx-auto p-6 sm:p-10">
+
+    <!-- Agreement Document -->
+    <article class="agreement-doc bg-white rounded-lg shadow-xl p-8 sm:p-12 border border-slate-200">
+
+      <header class="text-center border-b-2 border-slate-900 pb-6 mb-8">
+        <h1 class="text-3xl font-black tracking-tight text-slate-900">MANAGED SERVICES AGREEMENT</h1>
+        <p class="text-sm text-slate-500 mt-2">IronPeak Technology LLC</p>
+        <p class="text-xs text-slate-500 mt-1" id="docDate"></p>
+      </header>
+
+      <!-- Parties -->
+      <section class="mb-8">
+        <h2 class="text-lg font-bold text-slate-900 mb-3 uppercase tracking-wide">1. Parties</h2>
+        <p class="text-sm leading-relaxed">
+          This Managed Services Agreement (the &ldquo;<strong>Agreement</strong>&rdquo;) is entered into between
+          <strong>IronPeak Technology LLC</strong>, a Florida limited liability company (the &ldquo;<strong>Provider</strong>&rdquo;),
+          and the client identified below (the &ldquo;<strong>Client</strong>&rdquo;), effective as of the date this Agreement is executed.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-4 mt-4 text-sm">
+          <div class="bg-slate-50 border border-slate-200 rounded p-4">
+            <div class="text-xs font-bold text-slate-500 uppercase mb-1">Provider</div>
+            <div class="font-semibold">IronPeak Technology LLC</div>
+            <div class="text-slate-600">tfinch@ironpeaktechnology.com</div>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 rounded p-4">
+            <div class="text-xs font-bold text-slate-500 uppercase mb-1">Client</div>
+            <div class="font-semibold" id="clientCompany">[Company Name]</div>
+            <div class="text-slate-600" id="clientContact">[Contact Name]</div>
+            <div class="text-slate-600" id="clientEmail">[Email]</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services -->
+      <section class="mb-8">
+        <h2 class="text-lg font-bold text-slate-900 mb-3 uppercase tracking-wide">2. Services &amp; Pricing</h2>
+        <p class="text-sm leading-relaxed mb-4">
+          The Provider agrees to provide the following managed IT services to the Client on a recurring monthly basis:
+        </p>
+        <div class="border border-slate-300 rounded overflow-hidden">
+          <table class="w-full text-sm">
+            <thead class="bg-slate-100 text-left">
+              <tr>
+                <th class="px-4 py-2 font-bold">Service</th>
+                <th class="px-4 py-2 font-bold text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="servicesTable" class="divide-y divide-slate-200">
+              <tr><td class="px-4 py-3 text-slate-500 italic" colspan="2">No services prefilled. Use the calculator link to generate this agreement.</td></tr>
+            </tbody>
+            <tfoot class="bg-slate-50 border-t-2 border-slate-900">
+              <tr>
+                <td class="px-4 py-3 font-bold text-slate-900">Monthly Total</td>
+                <td class="px-4 py-3 font-bold text-slate-900 text-right" id="monthlyTotal">$0.00</td>
+              </tr>
+              <tr class="border-t border-slate-200">
+                <td class="px-4 py-2 text-xs text-slate-600">One-Time Setup Fee</td>
+                <td class="px-4 py-2 text-xs text-slate-600 text-right" id="setupFee">$0.00</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <p class="text-xs text-slate-500 mt-2">All pricing in U.S. Dollars. Setup fee is one-time, billed with first invoice. Out-of-scope work is billed at $120/hour.</p>
+      </section>
+
+      <!-- Term -->
+      <section class="mb-8">
+        <h2 class="text-lg font-bold text-slate-900 mb-3 uppercase tracking-wide">3. Term &amp; Termination</h2>
+        <p class="text-sm leading-relaxed">
+          This Agreement begins on the Effective Date and continues on a <strong>month-to-month</strong> basis. Either party may terminate this
+          Agreement with thirty (30) days&rsquo; written notice to the other party. The Client remains responsible for all fees incurred through the
+          effective date of termination. Upon termination, the Provider will reasonably cooperate to transition services and return Client data within
+          thirty (30) days.
+        </p>
+      </section>
+
+      <!-- Payment -->
+      <section class="mb-8">
+        <h2 class="text-lg font-bold text-slate-900 mb-3 uppercase tracking-wide">4. Payment Terms</h2>
+        <ul class="text-sm leading-relaxed space-y-1 list-disc list-inside">
+          <li>Recurring fees are billed monthly in advance.</li>
+          <li>Invoices are due upon receipt; payment is considered late after fifteen (15) days.</li>
+          <li>Late payments accrue interest at 1.5% per month or the maximum permitted by law, whichever is lower.</li>
+          <li>Accepted payment methods: ACH, credit card, or check. Auto-pay is encouraged.</li>
+        </ul>
+      </section>
+
+      <!-- SLA -->
+      <section class="mb-8">
+        <h2 class="text-lg font-bold text-slate-900 mb-3 uppercase tracking-wide">5. Service Levels</h2>
+        <p class="text-sm leading-relaxed mb-2">The Provider will use commercially reasonable efforts to respond to support requests within the following targets during business hours (Mon&ndash;Fri, 8 AM&ndash;6 PM ET):</p>
+        <ul class="text-sm leading-relaxed space-y-1 list-disc list-inside">
+          <li><strong>Critical</strong> (system down, data loss): 1 hour</li>
+          <li><strong>High</strong> (major impact, workaround possible): 4 business hours</li>
+          <li><strong>Normal</strong> (single user / non-critical): 1 business day</li>
+        </ul>
+      </section>
+
+      <!-- Client Responsibilities -->
+      <section class="mb-8">
+        <h2 class="text-lg font-bold text-slate-900 mb-3 uppercase tracking-wide">6. Client Responsibilities</h2>
+        <p class="text-sm leading-relaxed">
+          The Client agrees to: (a) provide the Provider with administrative access necessary to perform the Services; (b) maintain valid software licenses for systems being supported;
+          (c) promptly notify the Provider of any service issues; and (d) supply accurate billing and contact information.
+        </p>
+      </section>
+
+      <!-- Confidentiality -->
+      <section class="mb-8">
+        <h2 class="text-lg font-bold text-slate-900 mb-3 uppercase tracking-wide">7. Confidentiality &amp; Data</h2>
+        <p class="text-sm leading-relaxed">
+          Each party will protect the other&rsquo;s confidential information using the same care it uses to protect its own (no less than reasonable care).
+          The Provider will not disclose Client data to third parties except as required by law or as necessary to provide the Services. Client data
+          remains the exclusive property of the Client.
+        </p>
+      </section>
+
+      <!-- Liability -->
+      <section class="mb-8">
+        <h2 class="text-lg font-bold text-slate-900 mb-3 uppercase tracking-wide">8. Warranty &amp; Liability</h2>
+        <p class="text-sm leading-relaxed">
+          The Services are provided on an &ldquo;as is&rdquo; basis. The Provider disclaims all warranties not expressly stated in this Agreement,
+          including warranties of merchantability and fitness for a particular purpose. The Provider&rsquo;s total liability under this Agreement is limited
+          to the amount paid by the Client in the three (3) months preceding the event giving rise to liability. In no event will either party be liable
+          for indirect, incidental, or consequential damages.
+        </p>
+      </section>
+
+      <!-- General -->
+      <section class="mb-8">
+        <h2 class="text-lg font-bold text-slate-900 mb-3 uppercase tracking-wide">9. General</h2>
+        <p class="text-sm leading-relaxed">
+          This Agreement is governed by the laws of the State of Florida. It constitutes the entire agreement between the parties regarding its subject
+          matter and supersedes any prior understandings. Modifications must be in writing and signed by both parties. If any provision is found
+          unenforceable, the remaining provisions remain in full force.
+        </p>
+      </section>
+
+      <!-- Signatures -->
+      <section class="mt-12 pt-8 border-t-2 border-slate-900">
+        <h2 class="text-lg font-bold text-slate-900 mb-6 uppercase tracking-wide">10. Acceptance &amp; Signature</h2>
+
+        <div class="grid sm:grid-cols-2 gap-8">
+          <!-- Provider (pre-signed) -->
+          <div>
+            <div class="text-xs font-bold text-slate-500 uppercase mb-2">Provider</div>
+            <div class="border-b-2 border-slate-900 pb-1 mb-1 h-12 flex items-end">
+              <span class="signature-font text-slate-900">Travis Finch</span>
+            </div>
+            <div class="text-sm font-semibold">Travis Finch</div>
+            <div class="text-xs text-slate-500">Owner, IronPeak Technology LLC</div>
+            <div class="text-xs text-slate-500 mt-1" id="providerDate"></div>
+          </div>
+
+          <!-- Client (signing area) -->
+          <div>
+            <div class="text-xs font-bold text-slate-500 uppercase mb-2">Client</div>
+            <div class="border-b-2 border-slate-900 pb-1 mb-1 h-12 flex items-end">
+              <span id="signaturePreview" class="signature-font text-slate-400">[Type your name below]</span>
+            </div>
+            <div class="text-sm font-semibold" id="clientSignedName">[Print Name]</div>
+            <div class="text-xs text-slate-500" id="clientSignedTitle">[Title]</div>
+            <div class="text-xs text-slate-500 mt-1" id="clientSignedDate"></div>
+          </div>
+        </div>
+      </section>
+
+    </article>
+
+    <!-- Signing form (hidden on print) -->
+    <section class="no-print mt-8 bg-white rounded-lg shadow-xl border-2 border-orange-500 p-6 sm:p-8">
+      <h2 class="text-xl font-bold text-slate-900 mb-1">✍ Electronic Signature</h2>
+      <p class="text-sm text-slate-600 mb-6">By typing your full legal name and checking the box below, you acknowledge you have read and agree to the terms of this Agreement. Your signature has the same legal effect as a handwritten signature.</p>
+
+      <form id="signForm" class="space-y-4">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Full Legal Name <span class="text-red-500">*</span></label>
+            <input type="text" id="signName" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none" placeholder="John A. Smith">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Title <span class="text-red-500">*</span></label>
+            <input type="text" id="signTitle" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none" placeholder="Owner / CEO / IT Manager">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Email <span class="text-red-500">*</span></label>
+            <input type="email" id="signEmail" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Company <span class="text-red-500">*</span></label>
+            <input type="text" id="signCompany" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none">
+          </div>
+        </div>
+
+        <label class="flex items-start gap-3 mt-4 cursor-pointer">
+          <input type="checkbox" id="signAgree" required class="mt-1 w-5 h-5 text-orange-500 rounded focus:ring-orange-500">
+          <span class="text-sm text-slate-700">I have read, understood, and agree to the terms and conditions of this Managed Services Agreement. I am authorized to bind my organization to this Agreement.</span>
+        </label>
+
+        <button type="submit" id="submitBtn" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          Sign &amp; Submit Agreement
+        </button>
+
+        <p class="text-xs text-slate-500 text-center">A copy will be emailed to both you and IronPeak Technology with a timestamped record of execution.</p>
+      </form>
+    </section>
+
+    <div class="no-print text-center text-xs text-slate-400 mt-8">
+      &copy; <span id="footerYear"></span> IronPeak Technology LLC. All rights reserved.
+    </div>
+
+  </main>
+
+  <script>
+    // Read URL params for prefill
+    const params = new URLSearchParams(window.location.search);
+    const company = params.get('company') || '';
+    const contact = params.get('contact') || '';
+    const email = params.get('email') || '';
+    const total = parseFloat(params.get('total') || '0');
+    const tier = params.get('tier') || '';
+    const userCount = parseInt(params.get('users') || '0');
+    let services = [];
+    try { services = JSON.parse(params.get('services') || '[]'); } catch {}
+
+    // Dates
+    const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('docDate').textContent = `Effective Date: ${today}`;
+    document.getElementById('providerDate').textContent = `Date: ${today}`;
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    // Prefill client info
+    if (company) document.getElementById('clientCompany').textContent = company;
+    if (contact) document.getElementById('clientContact').textContent = contact;
+    if (email) document.getElementById('clientEmail').textContent = email;
+
+    // Prefill services table
+    if (services.length > 0) {
+      document.getElementById('servicesTable').innerHTML = services.map(s => `
+        <tr>
+          <td class="px-4 py-3">${s.label}</td>
+          <td class="px-4 py-3 text-right font-mono">${s.amount}</td>
+        </tr>
+      `).join('');
+    } else if (tier) {
+      document.getElementById('servicesTable').innerHTML = `
+        <tr>
+          <td class="px-4 py-3">${tier.charAt(0).toUpperCase() + tier.slice(1)} Plan${userCount ? ` &mdash; ${userCount} user${userCount === 1 ? '' : 's'}` : ''}</td>
+          <td class="px-4 py-3 text-right font-mono">$${total.toFixed(2)} / month</td>
+        </tr>
+      `;
+    }
+
+    document.getElementById('monthlyTotal').textContent = `$${total.toFixed(2)} / mo`;
+    const setupDevices = userCount * 2;
+    document.getElementById('setupFee').textContent = setupDevices ? `$${(setupDevices * 100).toFixed(2)} (${setupDevices} devices × $100)` : '$0.00';
+
+    // Prefill signing form
+    if (company) document.getElementById('signCompany').value = company;
+    if (contact) document.getElementById('signName').value = contact;
+    if (email) document.getElementById('signEmail').value = email;
+
+    // Live signature preview
+    const signNameEl = document.getElementById('signName');
+    const signTitleEl = document.getElementById('signTitle');
+    const sigPreview = document.getElementById('signaturePreview');
+    const printName = document.getElementById('clientSignedName');
+    const printTitle = document.getElementById('clientSignedTitle');
+    function updateSig() {
+      const n = signNameEl.value.trim();
+      sigPreview.textContent = n || '[Type your name below]';
+      sigPreview.classList.toggle('text-slate-400', !n);
+      sigPreview.classList.toggle('text-slate-900', !!n);
+      printName.textContent = n || '[Print Name]';
+      printTitle.textContent = signTitleEl.value.trim() || '[Title]';
+    }
+    signNameEl.addEventListener('input', updateSig);
+    signTitleEl.addEventListener('input', updateSig);
+
+    // Submit
+    document.getElementById('signForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      const signedAt = new Date().toISOString();
+      document.getElementById('clientSignedDate').textContent = `Signed: ${new Date(signedAt).toLocaleString()}`;
+
+      const payload = {
+        type: 'sign_agreement',
+        signed: {
+          company: document.getElementById('signCompany').value.trim(),
+          name: signNameEl.value.trim(),
+          title: signTitleEl.value.trim(),
+          email: document.getElementById('signEmail').value.trim(),
+          agreed: document.getElementById('signAgree').checked,
+          signedAt
+        },
+        agreement: {
+          company, contact, email, tier, userCount, total,
+          services,
+          documentUrl: window.location.href
+        }
+      };
+
+      try {
+        const response = await fetch('/api/verify.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error('Submission failed');
+
+        // Replace form with confirmation
+        document.getElementById('signForm').parentElement.innerHTML = `
+          <div class="text-center py-6">
+            <div class="w-16 h-16 bg-green-100 border border-green-300 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 mb-2">Agreement Signed</h3>
+            <p class="text-slate-600 mb-4">Thank you, ${payload.signed.name}. A copy of this signed agreement has been emailed to you and to IronPeak Technology.</p>
+            <button onclick="window.print()" class="bg-slate-900 text-white px-6 py-2 rounded font-semibold hover:bg-slate-700 transition-colors">🖨 Print / Save Your Copy</button>
+          </div>
+        `;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) {
+        alert('There was an error submitting your signature. Please try again or email tfinch@ironpeaktechnology.com.');
+        btn.disabled = false;
+        btn.textContent = 'Sign & Submit Agreement';
+      }
+    });
+  </script>
+</body>
+</html>
