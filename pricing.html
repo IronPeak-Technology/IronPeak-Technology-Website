@@ -337,6 +337,7 @@
           <div class="space-y-3 mb-6">
             <div class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Includes everything in Essentials, Plus</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Unlimited remote support for 1x user</div>
+            <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> RMM (Remote Monitoring &amp; Management)</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> <strong>1 workstation + 1 laptop per user INCLUDED</strong></div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> <strong>1 mailbox per user INCLUDED</strong> (Mailbox/OneDrive/SharePoint backup)</div>
             <div class="flex items-center gap-2 text-sm text-slate-300"><span class="text-green-400">&#10004;</span> Microsoft 365 administration</div>
@@ -1164,7 +1165,7 @@
         
         total = userCount * 130;
         breakdown.push(`Standard Plan: ${userCount} users × $130 = $${total.toFixed(2)}`);
-        features.push('Unlimited remote support', '1 workstation + 1 laptop per user INCLUDED', '1 mailbox per user INCLUDED (Mailbox/OneDrive/SharePoint backup)', 'SentinelOne EDR', 'Microsoft 365 administration');
+        features.push('Unlimited remote support', 'RMM (Remote Monitoring & Management)', '1 workstation + 1 laptop per user INCLUDED', '1 mailbox per user INCLUDED (Mailbox/OneDrive/SharePoint backup)', 'SentinelOne EDR', 'Microsoft 365 administration');
         description = `Standard tier - ${userCount} users (${userCount * 2} devices included, ${userCount} mailbox${userCount === 1 ? '' : 'es'} included) with unlimited support`;
         
       } else if (tier === 'complete') {
