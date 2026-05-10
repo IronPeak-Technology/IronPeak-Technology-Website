@@ -1,10 +1,27 @@
 const crypto = require('crypto');
+const FormData = require('form-data');
+const Mailgun = require('mailgun.js');
+
+// Lazily-initialized singleton Mailgun client
+let _mgClient = null;
+function getMailgunClient() {
+  if (_mgClient) return _mgClient;
+  const mailgun = new Mailgun(FormData);
+  _mgClient = mailgun.client({
+    username: 'api',
+    key: process.env.MAILGUN_API_KEY,
+    // EU-domain users would set: url: 'https://api.eu.mailgun.net'
+    url: process.env.MAILGUN_API_BASE_URL || 'https://api.mailgun.net',
+  });
+  return _mgClient;
+}
 
 /**
  * POST /api/verify
  * Handles multiple request types:
  * 1. Password verification for trading page
- * 2. Quote request emails from pricing calculator (via Mailgun HTTP API)
+ * 2. Quote request emails from pricing calculator (via Mailgun SDK)
+ * 3. Signed agreement emails (via Mailgun SDK)
  */
 module.exports = async function handler(req, res) {
   // Only allow POST
@@ -69,35 +86,20 @@ async function handleQuoteRequest(body, res) {
     const emailHtml = formatQuoteEmailHtml(body);
     const emailText = body.body; // Plain text version
 
-    // Prepare form data for Mailgun API
-    const formData = new URLSearchParams();
-    formData.append('from', `IronPeak Quote System <postmaster@${process.env.MAILGUN_DOMAIN}>`);
-    formData.append('to', 'tfinch@ironpeaktechnology.com');
-    formData.append('subject', body.subject);
-    formData.append('text', emailText);
-    formData.append('html', emailHtml);
+    const message = {
+      from: `IronPeak Quote System <quotes@${process.env.MAILGUN_DOMAIN}>`,
+      to: ['tfinch@ironpeaktechnology.com'],
+      subject: body.subject,
+      text: emailText,
+      html: emailHtml,
+    };
     if (body.customerData?.email) {
-      formData.append('h:Reply-To', body.customerData.email);
+      message['h:Reply-To'] = body.customerData.email;
     }
 
-    // Send email via Mailgun HTTP API
-    const response = await fetch(`https://api.mailgun.net/v3/${process.env.MAILGUN_DOMAIN}/messages`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Basic ${Buffer.from(`api:${process.env.MAILGUN_API_KEY}`).toString('base64')}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: formData.toString()
-    });
+    const mg = getMailgunClient();
+    const result = await mg.messages.create(process.env.MAILGUN_DOMAIN, message);
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Mailgun API error:', response.status, errorText);
-      throw new Error(`Mailgun API error: ${response.status} ${errorText}`);
-    }
-
-    const result = await response.json();
-    
     console.log('Quote email sent successfully:', {
       messageId: result.id,
       company: body.customerData?.company,
@@ -106,8 +108,8 @@ async function handleQuoteRequest(body, res) {
       timestamp: new Date().toISOString()
     });
 
-    return res.status(200).json({ 
-      ok: true, 
+    return res.status(200).json({
+      ok: true,
       message: 'Quote request sent successfully',
       messageId: result.id
     });
@@ -273,42 +275,50 @@ async function handleSignAgreement(body, req, res) {
     const html = formatSignedAgreementHtml({ signed, agreement, ip, userAgent, signedAt });
     const subject = `[SIGNED AGREEMENT] ${signed.company} — ${signed.name}`;
 
+    const mg = getMailgunClient();
+    const domain = process.env.MAILGUN_DOMAIN;
+
     // Send to Travis
-    const internalForm = new URLSearchParams();
-    internalForm.append('from', `IronPeak Agreements <postmaster@${process.env.MAILGUN_DOMAIN}>`);
-    internalForm.append('to', 'tfinch@ironpeaktechnology.com');
-    internalForm.append('subject', subject);
-    internalForm.append('html', html);
-    internalForm.append('h:Reply-To', signed.email);
+    const internalMessage = {
+      from: `IronPeak Agreements <agreements@${domain}>`,
+      to: ['tfinch@ironpeaktechnology.com'],
+      subject,
+      html,
+      'h:Reply-To': signed.email,
+    };
 
     // Send copy to customer
-    const customerForm = new URLSearchParams();
-    customerForm.append('from', `IronPeak Technology <postmaster@${process.env.MAILGUN_DOMAIN}>`);
-    customerForm.append('to', signed.email);
-    customerForm.append('subject', `Signed Agreement Copy — IronPeak Technology LLC`);
-    customerForm.append('html', html);
-    customerForm.append('h:Reply-To', 'tfinch@ironpeaktechnology.com');
+    const customerMessage = {
+      from: `IronPeak Technology <agreements@${domain}>`,
+      to: [signed.email],
+      subject: `Signed Agreement Copy — IronPeak Technology LLC`,
+      html,
+      'h:Reply-To': 'tfinch@ironpeaktechnology.com',
+    };
 
-    const mailgunUrl = `https://api.mailgun.net/v3/${process.env.MAILGUN_DOMAIN}/messages`;
-    const auth = `Basic ${Buffer.from(`api:${process.env.MAILGUN_API_KEY}`).toString('base64')}`;
-
-    const [internalRes, customerRes] = await Promise.all([
-      fetch(mailgunUrl, { method: 'POST', headers: { 'Authorization': auth, 'Content-Type': 'application/x-www-form-urlencoded' }, body: internalForm.toString() }),
-      fetch(mailgunUrl, { method: 'POST', headers: { 'Authorization': auth, 'Content-Type': 'application/x-www-form-urlencoded' }, body: customerForm.toString() })
+    const [internalResult, customerResult] = await Promise.allSettled([
+      mg.messages.create(domain, internalMessage),
+      mg.messages.create(domain, customerMessage),
     ]);
 
-    if (!internalRes.ok) {
-      const t = await internalRes.text();
-      console.error('Internal email failed:', internalRes.status, t);
-      throw new Error(`Internal email failed: ${internalRes.status}`);
+    if (internalResult.status === 'rejected') {
+      console.error('Internal email failed:', internalResult.reason);
+      throw new Error(`Internal email failed: ${internalResult.reason?.message || internalResult.reason}`);
     }
-    if (!customerRes.ok) {
-      const t = await customerRes.text();
-      console.error('Customer email failed:', customerRes.status, t);
+    if (customerResult.status === 'rejected') {
+      console.error('Customer email failed:', customerResult.reason);
       // Don't fail the request if just the customer copy fails — Travis still has the record
     }
 
-    console.log('Agreement signed:', { company: signed.company, name: signed.name, email: signed.email, signedAt, ip });
+    console.log('Agreement signed:', {
+      company: signed.company,
+      name: signed.name,
+      email: signed.email,
+      signedAt,
+      ip,
+      internalMessageId: internalResult.value?.id,
+      customerMessageId: customerResult.status === 'fulfilled' ? customerResult.value?.id : null,
+    });
 
     return res.status(200).json({ ok: true });
   } catch (error) {
