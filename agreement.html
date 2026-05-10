@@ -189,56 +189,45 @@
             <div class="text-xs text-slate-500 mt-1" id="providerDate"></div>
           </div>
 
-          <!-- Client (signing area) -->
+          <!-- Client (signing area — wet signature on print/PDF) -->
           <div>
             <div class="text-xs font-bold text-slate-500 uppercase mb-2">Client</div>
             <div class="border-b-2 border-slate-900 pb-1 mb-1 h-12 flex items-end">
-              <span id="signaturePreview" class="signature-font text-slate-400">[Type your name below]</span>
+              <span class="signature-font text-slate-400">&nbsp;</span>
             </div>
             <div class="text-sm font-semibold" id="clientSignedName">[Print Name]</div>
             <div class="text-xs text-slate-500" id="clientSignedTitle">[Title]</div>
-            <div class="text-xs text-slate-500 mt-1" id="clientSignedDate"></div>
+            <div class="text-xs text-slate-500 mt-1">Date: ____________________</div>
           </div>
         </div>
       </section>
 
     </article>
 
-    <!-- Signing form (hidden on print) -->
-    <section class="no-print mt-8 bg-white rounded-lg shadow-xl border-2 border-orange-500 p-6 sm:p-8">
-      <h2 class="text-xl font-bold text-slate-900 mb-1">✍ Electronic Signature</h2>
-      <p class="text-sm text-slate-600 mb-6">By typing your full legal name and checking the box below, you acknowledge you have read and agree to the terms of this Agreement. Your signature has the same legal effect as a handwritten signature.</p>
-
-      <form id="signForm" class="space-y-4">
+    <!-- Admin-only: Email to Customer (only visible when opened from the Admin Portal) -->
+    <section id="adminEmailPanel" class="no-print mt-8 bg-white rounded-lg shadow-xl border-2 border-orange-500 p-6 sm:p-8 hidden">
+      <h2 class="text-xl font-bold text-slate-900 mb-1">✉ Email This Agreement to Customer</h2>
+      <p class="text-sm text-slate-600 mb-6">Sends the rendered agreement above as an HTML email to the customer. A copy is also sent to <strong>tfinch@ironpeaktechnology.com</strong> for your records.</p>
+      <form id="emailAgreementForm" class="space-y-4">
         <div class="grid sm:grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-1">Full Legal Name <span class="text-red-500">*</span></label>
-            <input type="text" id="signName" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none" placeholder="John A. Smith">
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Recipient Email <span class="text-red-500">*</span></label>
+            <input type="email" id="emailTo" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none">
           </div>
           <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-1">Title <span class="text-red-500">*</span></label>
-            <input type="text" id="signTitle" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none" placeholder="Owner / CEO / IT Manager">
-          </div>
-          <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-1">Email <span class="text-red-500">*</span></label>
-            <input type="email" id="signEmail" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-1">Company <span class="text-red-500">*</span></label>
-            <input type="text" id="signCompany" required class="w-full px-3 py-2 border border-slate-300 rounded focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none">
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Subject</label>
+            <input type="text" id="emailSubject" class="w-full px-3 py-2 border border-slate-300 rounded focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none">
           </div>
         </div>
-
-        <label class="flex items-start gap-3 mt-4 cursor-pointer">
-          <input type="checkbox" id="signAgree" required class="mt-1 w-5 h-5 text-orange-500 rounded focus:ring-orange-500">
-          <span class="text-sm text-slate-700">I have read, understood, and agree to the terms and conditions of this Managed Services Agreement. I am authorized to bind my organization to this Agreement.</span>
-        </label>
-
-        <button type="submit" id="submitBtn" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-          Sign &amp; Submit Agreement
-        </button>
-
-        <p class="text-xs text-slate-500 text-center">A copy will be emailed to both you and IronPeak Technology with a timestamped record of execution.</p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button type="submit" id="emailSendBtn" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            Send Agreement to Customer
+          </button>
+          <button type="button" onclick="window.print()" class="flex-1 bg-slate-900 hover:bg-slate-700 text-white font-bold py-3 rounded-lg transition-colors">
+            🖨 Print / Save as PDF
+          </button>
+        </div>
+        <p id="emailStatus" class="text-sm text-center hidden"></p>
       </form>
     </section>
 
@@ -251,122 +240,144 @@
   <script>
     // Read URL params for prefill
     const params = new URLSearchParams(window.location.search);
-    const company = params.get('company') || '';
-    const contact = params.get('contact') || '';
-    const email = params.get('email') || '';
-    const total = parseFloat(params.get('total') || '0');
-    const tier = params.get('tier') || '';
-    const userCount = parseInt(params.get('users') || '0');
+    let company = params.get('company') || '';
+    let contact = params.get('contact') || '';
+    let email   = params.get('email') || '';
+    let total   = parseFloat(params.get('total') || '0');
+    let tier    = params.get('tier') || '';
+    let userCount = parseInt(params.get('users') || '0');
     let services = [];
     try { services = JSON.parse(params.get('services') || '[]'); } catch {}
+    const quoteId = params.get('quoteId') || '';
 
-    // Dates
+    // Admin mode is active when ?admin=1 is in the URL AND a valid token exists in sessionStorage.
+    const isAdminMode = params.get('admin') === '1' && !!sessionStorage.getItem('ironpeak_admin_token');
+    const adminToken = sessionStorage.getItem('ironpeak_admin_token') || '';
+
+    // Static text
     const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     document.getElementById('docDate').textContent = `Effective Date: ${today}`;
     document.getElementById('providerDate').textContent = `Date: ${today}`;
     document.getElementById('footerYear').textContent = new Date().getFullYear();
 
-    // Prefill client info
-    if (company) document.getElementById('clientCompany').textContent = company;
-    if (contact) document.getElementById('clientContact').textContent = contact;
-    if (email) document.getElementById('clientEmail').textContent = email;
+    function applyPrefill() {
+      document.getElementById('clientCompany').textContent = company || '[Company Name]';
+      document.getElementById('clientContact').textContent = contact || '[Contact Name]';
+      document.getElementById('clientEmail').textContent   = email   || '[Email]';
+      document.getElementById('clientSignedName').textContent  = contact || '[Print Name]';
+      document.getElementById('clientSignedTitle').textContent = '[Title]';
 
-    // Prefill services table
-    if (services.length > 0) {
-      document.getElementById('servicesTable').innerHTML = services.map(s => `
-        <tr>
-          <td class="px-4 py-3">${s.label}</td>
-          <td class="px-4 py-3 text-right font-mono">${s.amount}</td>
-        </tr>
-      `).join('');
-    } else if (tier) {
-      document.getElementById('servicesTable').innerHTML = `
-        <tr>
-          <td class="px-4 py-3">${tier.charAt(0).toUpperCase() + tier.slice(1)} Plan${userCount ? ` &mdash; ${userCount} user${userCount === 1 ? '' : 's'}` : ''}</td>
-          <td class="px-4 py-3 text-right font-mono">$${total.toFixed(2)} / month</td>
-        </tr>
-      `;
+      const tbody = document.getElementById('servicesTable');
+      if (services.length > 0) {
+        tbody.innerHTML = services.map(s => `
+          <tr>
+            <td class="px-4 py-3">${s.label}</td>
+            <td class="px-4 py-3 text-right font-mono">${s.amount}</td>
+          </tr>
+        `).join('');
+      } else if (tier) {
+        tbody.innerHTML = `
+          <tr>
+            <td class="px-4 py-3">${tier.charAt(0).toUpperCase() + tier.slice(1)} Plan${userCount ? ` &mdash; ${userCount} user${userCount === 1 ? '' : 's'}` : ''}</td>
+            <td class="px-4 py-3 text-right font-mono">$${total.toFixed(2)} / month</td>
+          </tr>
+        `;
+      } else {
+        tbody.innerHTML = `<tr><td class="px-4 py-3 text-slate-500 italic" colspan="2">No services prefilled.</td></tr>`;
+      }
+
+      document.getElementById('monthlyTotal').textContent = `$${total.toFixed(2)} / mo`;
+      const setupDevices = userCount * 2;
+      document.getElementById('setupFee').textContent = setupDevices ? `$${(setupDevices * 100).toFixed(2)} (${setupDevices} devices × $100)` : '$0.00';
     }
+    applyPrefill();
 
-    document.getElementById('monthlyTotal').textContent = `$${total.toFixed(2)} / mo`;
-    const setupDevices = userCount * 2;
-    document.getElementById('setupFee').textContent = setupDevices ? `$${(setupDevices * 100).toFixed(2)} (${setupDevices} devices × $100)` : '$0.00';
-
-    // Prefill signing form
-    if (company) document.getElementById('signCompany').value = company;
-    if (contact) document.getElementById('signName').value = contact;
-    if (email) document.getElementById('signEmail').value = email;
-
-    // Live signature preview
-    const signNameEl = document.getElementById('signName');
-    const signTitleEl = document.getElementById('signTitle');
-    const sigPreview = document.getElementById('signaturePreview');
-    const printName = document.getElementById('clientSignedName');
-    const printTitle = document.getElementById('clientSignedTitle');
-    function updateSig() {
-      const n = signNameEl.value.trim();
-      sigPreview.textContent = n || '[Type your name below]';
-      sigPreview.classList.toggle('text-slate-400', !n);
-      sigPreview.classList.toggle('text-slate-900', !!n);
-      printName.textContent = n || '[Print Name]';
-      printTitle.textContent = signTitleEl.value.trim() || '[Title]';
-    }
-    signNameEl.addEventListener('input', updateSig);
-    signTitleEl.addEventListener('input', updateSig);
-
-    // Submit
-    document.getElementById('signForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.textContent = 'Submitting...';
-
-      const signedAt = new Date().toISOString();
-      document.getElementById('clientSignedDate').textContent = `Signed: ${new Date(signedAt).toLocaleString()}`;
-
-      const payload = {
-        type: 'sign_agreement',
-        signed: {
-          company: document.getElementById('signCompany').value.trim(),
-          name: signNameEl.value.trim(),
-          title: signTitleEl.value.trim(),
-          email: document.getElementById('signEmail').value.trim(),
-          agreed: document.getElementById('signAgree').checked,
-          signedAt
-        },
-        agreement: {
-          company, contact, email, tier, userCount, total,
-          services,
-          documentUrl: window.location.href
-        }
-      };
-
+    // If a quoteId was provided and we're in admin mode, fetch the saved record and re-render.
+    async function loadQuoteFromKV() {
+      if (!quoteId || !isAdminMode) return;
       try {
-        const response = await fetch('/api/verify.js', {
+        const r = await fetch('/api/verify.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ type: 'admin_quotes_list', token: adminToken })
         });
-        if (!response.ok) throw new Error('Submission failed');
-
-        // Replace form with confirmation
-        document.getElementById('signForm').parentElement.innerHTML = `
-          <div class="text-center py-6">
-            <div class="w-16 h-16 bg-green-100 border border-green-300 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-            </div>
-            <h3 class="text-2xl font-bold text-slate-900 mb-2">Agreement Signed</h3>
-            <p class="text-slate-600 mb-4">Thank you, ${payload.signed.name}. A copy of this signed agreement has been emailed to you and to IronPeak Technology.</p>
-            <button onclick="window.print()" class="bg-slate-900 text-white px-6 py-2 rounded font-semibold hover:bg-slate-700 transition-colors">🖨 Print / Save Your Copy</button>
-          </div>
-        `;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (!r.ok) return;
+        const data = await r.json();
+        const quote = (data.quotes || []).find(q => q.id === quoteId);
+        if (!quote) return;
+        const c = quote.customerData || {};
+        const q = quote.quoteData || {};
+        company = c.company || company;
+        contact = c.name || contact;
+        email   = c.email || email;
+        tier    = q.tier || tier;
+        userCount = q.userCount || userCount;
+        total   = typeof q.total === 'number' ? q.total : total;
+        if (Array.isArray(q.breakdown)) {
+          services = q.breakdown.map(line => {
+            const m = line.match(/^(.*?):\s*(.*?)\s*=\s*(\$[\d,.]+)\s*$/);
+            if (m) return { label: `${m[1].trim()} (${m[2].trim()})`, amount: m[3] };
+            const m2 = line.match(/^(.*?):\s*(.*)$/);
+            if (m2) return { label: m2[1].trim(), amount: m2[2].trim() };
+            return { label: line, amount: '' };
+          });
+        }
+        applyPrefill();
+        // Prefill the email-to-customer form too
+        if (email) document.getElementById('emailTo').value = email;
+        document.getElementById('emailSubject').value = `Managed Services Agreement — ${company || 'IronPeak Technology'}`;
       } catch (err) {
-        alert('There was an error submitting your signature. Please try again or email tfinch@ironpeaktechnology.com.');
-        btn.disabled = false;
-        btn.textContent = 'Sign & Submit Agreement';
+        console.warn('Failed to load quote from KV:', err);
       }
-    });
+    }
+
+    // Show admin email panel if in admin mode
+    if (isAdminMode) {
+      const panel = document.getElementById('adminEmailPanel');
+      panel.classList.remove('hidden');
+      if (email) document.getElementById('emailTo').value = email;
+      document.getElementById('emailSubject').value = `Managed Services Agreement — ${company || 'IronPeak Technology'}`;
+
+      document.getElementById('emailAgreementForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('emailSendBtn');
+        const status = document.getElementById('emailStatus');
+        const to = document.getElementById('emailTo').value.trim();
+        const subject = document.getElementById('emailSubject').value.trim() || `Managed Services Agreement — IronPeak Technology LLC`;
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        status.classList.add('hidden');
+
+        // Snapshot the rendered agreement document as standalone HTML
+        const docNode = document.querySelector('.agreement-doc').cloneNode(true);
+        const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Managed Services Agreement</title>
+<script src="https://cdn.tailwindcss.com"><\/script>
+<style>.signature-font{font-family:'Brush Script MT','Lucida Handwriting',cursive;font-size:1.75rem}body{font-family:Inter,Arial,sans-serif;background:#f8fafc;color:#0f172a;padding:24px}</style>
+</head><body>${docNode.outerHTML}</body></html>`;
+
+        try {
+          const r = await fetch('/api/verify.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'admin_send_agreement', token: adminToken, to, subject, html, quoteId: quoteId || undefined })
+          });
+          const data = await r.json().catch(() => ({}));
+          if (!r.ok) throw new Error(data.error || 'Send failed');
+          status.textContent = `✅ Sent to ${to}`;
+          status.className = 'text-sm text-center text-green-600 font-semibold';
+          status.classList.remove('hidden');
+          btn.textContent = 'Sent ✓';
+        } catch (err) {
+          status.textContent = `❌ ${err.message}`;
+          status.className = 'text-sm text-center text-red-600 font-semibold';
+          status.classList.remove('hidden');
+          btn.disabled = false;
+          btn.textContent = 'Send Agreement to Customer';
+        }
+      });
+
+      loadQuoteFromKV();
+    }
   </script>
 </body>
 </html>

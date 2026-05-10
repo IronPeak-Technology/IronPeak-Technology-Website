@@ -334,64 +334,162 @@
   </footer>
 
   <!-- Modal placeholders (to be implemented) -->
-  <div id="customerModal" class="hidden"><!-- Customer management modal --></div>
-  <div id="invoiceModal" class="hidden"><!-- Invoice management modal --></div>
-  <div id="productModal" class="hidden"><!-- Product access modal --></div>
-  <div id="quoteModal" class="hidden"><!-- Quote management modal --></div>
-  <div id="settingsModal" class="hidden"><!-- System settings modal --></div>
+  <div id="customerModal" class="hidden"></div>
+  <div id="invoiceModal" class="hidden"></div>
+  <div id="productModal" class="hidden"></div>
+  <div id="settingsModal" class="hidden"></div>
+
+  <!-- Customer / Quote Manager Modal -->
+  <div id="quoteModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm overflow-y-auto">
+    <div class="min-h-screen flex items-start justify-center p-4 sm:p-8">
+      <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-6xl shadow-2xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700">
+          <div>
+            <h3 class="text-xl font-bold text-white">Customer &amp; Quote Manager</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Quote requests are auto-saved here. Generate a formal agreement for any customer with one click.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="newCustomerBtn" class="text-sm bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg font-semibold transition-colors">+ New Customer</button>
+            <button id="refreshQuotesBtn" class="text-sm bg-slate-700 hover:bg-slate-600 text-slate-200 px-3 py-2 rounded-lg transition-colors">Refresh</button>
+            <button onclick="closeQuoteModal()" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <input id="quoteSearch" type="search" placeholder="Search by company, contact, or email…" class="w-full mb-4 px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none">
+          <div id="quotesStatus" class="text-sm text-slate-400 mb-4">Loading…</div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="text-left text-xs uppercase text-slate-500 border-b border-slate-700">
+                <tr>
+                  <th class="py-2 pr-3">Company</th>
+                  <th class="py-2 pr-3">Contact</th>
+                  <th class="py-2 pr-3">Email</th>
+                  <th class="py-2 pr-3">Plan</th>
+                  <th class="py-2 pr-3 text-right">Monthly</th>
+                  <th class="py-2 pr-3">Status</th>
+                  <th class="py-2 pr-3">Received</th>
+                  <th class="py-2 pr-3 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="quotesTbody" class="divide-y divide-slate-800 text-slate-200"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New / Edit Customer Modal -->
+  <div id="customerEditModal" class="hidden fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm overflow-y-auto">
+    <div class="min-h-screen flex items-start justify-center p-4 sm:p-8">
+      <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl shadow-2xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700">
+          <h3 id="customerEditTitle" class="text-xl font-bold text-white">New Customer</h3>
+          <button onclick="closeCustomerEdit()" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <form id="customerEditForm" class="p-6 space-y-4">
+          <input type="hidden" id="ce_id">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div><label class="block text-xs text-slate-400 mb-1">Company *</label><input id="ce_company" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+            <div><label class="block text-xs text-slate-400 mb-1">Contact Name *</label><input id="ce_name" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+            <div><label class="block text-xs text-slate-400 mb-1">Email *</label><input id="ce_email" type="email" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+            <div><label class="block text-xs text-slate-400 mb-1">Phone</label><input id="ce_phone" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+            <div><label class="block text-xs text-slate-400 mb-1">Plan / Tier</label><input id="ce_tier" placeholder="essentials / standard / complete / custom" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+            <div><label class="block text-xs text-slate-400 mb-1">Number of Users</label><input id="ce_users" type="number" min="0" max="500" value="0" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-xs text-slate-400">Service Line Items</label>
+              <button type="button" id="ce_addLine" class="text-xs text-orange-400 hover:text-orange-300 font-semibold">+ Add line</button>
+            </div>
+            <div id="ce_lines" class="space-y-2"></div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div><label class="block text-xs text-slate-400 mb-1">Monthly Total (USD)</label><input id="ce_total" type="number" step="0.01" min="0" value="0" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+            <div><label class="block text-xs text-slate-400 mb-1">Notes</label><input id="ce_notes" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <button type="submit" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-lg transition-colors">Save Customer</button>
+            <button type="button" onclick="closeCustomerEdit()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-bold py-2.5 rounded-lg transition-colors">Cancel</button>
+          </div>
+          <p id="ce_status" class="text-sm text-center hidden"></p>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <script>
-    /* ---- Password verification ---- */
+    /* ---- Admin login (server-issued token) ---- */
+    const TOKEN_KEY = 'ironpeak_admin_token';
+    const TOKEN_EXP_KEY = 'ironpeak_admin_token_exp';
     const gate = document.getElementById('gate');
     const passwordForm = document.getElementById('passwordForm');
     const passwordInput = document.getElementById('passwordInput');
     const errorMsg = document.getElementById('errorMsg');
 
-    passwordForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const password = passwordInput.value;
-      
-      try {
-        const response = await fetch('/api/verify.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password, type: 'password_verify' })
-        });
-        
-        if (response.ok) {
-          gate.style.display = 'none';
-          sessionStorage.setItem('adminAccess', 'true');
-        } else {
-          errorMsg.classList.remove('hidden');
-          passwordInput.value = '';
-          passwordInput.focus();
-        }
-      } catch (err) {
-        console.error('Password verification failed:', err);
-        errorMsg.classList.remove('hidden');
-      }
-    });
+    function getToken() {
+      const t = sessionStorage.getItem(TOKEN_KEY);
+      const exp = parseInt(sessionStorage.getItem(TOKEN_EXP_KEY) || '0', 10);
+      if (!t || !exp || Date.now() >= exp) return null;
+      return t;
+    }
+    function clearToken() {
+      sessionStorage.removeItem(TOKEN_KEY);
+      sessionStorage.removeItem(TOKEN_EXP_KEY);
+    }
 
-    // Check if already authenticated
-    if (sessionStorage.getItem('adminAccess') === 'true') {
+    if (getToken()) {
       gate.style.display = 'none';
     }
+
+    passwordForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorMsg.classList.add('hidden');
+      const password = passwordInput.value;
+      try {
+        const r = await fetch('/api/verify.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'admin_login', password })
+        });
+        const data = await r.json().catch(() => ({}));
+        if (r.status === 429) {
+          const retry = parseInt(r.headers.get('Retry-After') || '0', 10);
+          const mins = retry ? Math.ceil(retry / 60) : null;
+          throw new Error(mins ? `Too many failed attempts. Try again in ~${mins} min.` : (data.error || 'Too many attempts.'));
+        }
+        if (!r.ok || !data.token) throw new Error(data.error || 'Login failed');
+        sessionStorage.setItem(TOKEN_KEY, data.token);
+        sessionStorage.setItem(TOKEN_EXP_KEY, String(Date.now() + (data.expiresIn || 43200) * 1000));
+        gate.style.display = 'none';
+      } catch (err) {
+        errorMsg.textContent = err.message || 'Incorrect password';
+        errorMsg.classList.remove('hidden');
+        passwordInput.value = '';
+        passwordInput.focus();
+      }
+    });
 
     /* ---- Mobile menu ---- */
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const iconOpen = document.getElementById('icon-open');
     const iconClose = document.getElementById('icon-close');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
-
     menuToggle?.addEventListener('click', () => {
       const isOpen = !mobileMenu.classList.contains('hidden');
       mobileMenu.classList.toggle('hidden', isOpen);
       iconOpen.classList.toggle('hidden', !isOpen);
       iconClose.classList.toggle('hidden', isOpen);
     });
-
-    mobileLinks.forEach(link => link.addEventListener('click', () => {
+    document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', () => {
       mobileMenu.classList.add('hidden');
       iconOpen.classList.remove('hidden');
       iconClose.classList.add('hidden');
@@ -412,32 +510,303 @@
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    /* ---- Admin Functions ---- */
-    function showCustomerModal() {
-      alert('Customer Management System\n\nFeatures to implement:\n• Add new customers\n• Edit customer details\n• Manage service packages\n• Set portal access permissions\n• View customer activity');
+    /* ---- Customer / Quote Manager ---- */
+    const quoteModal = document.getElementById('quoteModal');
+    const quotesTbody = document.getElementById('quotesTbody');
+    const quotesStatus = document.getElementById('quotesStatus');
+    const quoteSearch = document.getElementById('quoteSearch');
+    let _allQuotes = [];
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     }
 
-    function showInvoiceModal() {
-      alert('Invoice Management System\n\nFeatures to implement:\n• Generate invoices\n• Track payment status\n• Send payment reminders\n• View payment history\n• Export financial reports');
+    function fmtMoney(n) {
+      const v = typeof n === 'number' ? n : parseFloat(n) || 0;
+      return '$' + v.toFixed(2);
+    }
+    function fmtDate(iso) {
+      if (!iso) return '—';
+      try { return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
+      catch { return iso; }
+    }
+    function statusBadge(s) {
+      const map = {
+        new:               { label: 'New',              cls: 'bg-blue-500/10 text-blue-300 border-blue-500/30' },
+        agreement_sent:    { label: 'Agreement Sent',   cls: 'bg-green-500/10 text-green-300 border-green-500/30' },
+        signed:            { label: 'Signed',           cls: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' },
+        archived:          { label: 'Archived',         cls: 'bg-slate-500/10 text-slate-300 border-slate-500/30' },
+      };
+      const m = map[s] || { label: s || '—', cls: 'bg-slate-500/10 text-slate-300 border-slate-500/30' };
+      return `<span class="text-xs px-2 py-0.5 rounded-full border ${m.cls}">${m.label}</span>`;
     }
 
-    function showProductModal() {
-      alert('Product Access Management\n\nFeatures to implement:\n• Grant/revoke trading access\n• Manage MSP tool permissions\n• Set feature limitations\n• Track usage analytics\n• Configure product pricing');
+    async function apiCall(payload) {
+      const token = getToken();
+      if (!token) {
+        sessionStorage.clear();
+        location.reload();
+        return;
+      }
+      const r = await fetch('/api/verify.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, token })
+      });
+      const data = await r.json().catch(() => ({}));
+      if (r.status === 401) {
+        clearToken();
+        location.reload();
+        return;
+      }
+      if (!r.ok) throw new Error(data.error || `Request failed (${r.status})`);
+      return data;
     }
 
+    async function loadQuotes() {
+      quotesStatus.textContent = 'Loading…';
+      quotesStatus.className = 'text-sm text-slate-400 mb-4';
+      try {
+        const data = await apiCall({ type: 'admin_quotes_list' });
+        _allQuotes = data.quotes || [];
+        renderQuotes();
+        quotesStatus.textContent = `${_allQuotes.length} customer${_allQuotes.length === 1 ? '' : 's'} on file`;
+      } catch (err) {
+        quotesStatus.textContent = `Error: ${err.message}`;
+        quotesStatus.className = 'text-sm text-red-400 mb-4';
+      }
+    }
+
+    function renderQuotes() {
+      const q = (quoteSearch.value || '').trim().toLowerCase();
+      const list = q
+        ? _allQuotes.filter(x => {
+            const c = x.customerData || {};
+            return [c.company, c.name, c.email].some(v => (v || '').toLowerCase().includes(q));
+          })
+        : _allQuotes;
+
+      if (list.length === 0) {
+        quotesTbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-slate-500 italic">${_allQuotes.length === 0 ? 'No quotes yet — they\u2019ll appear here when customers submit the pricing calculator.' : 'No matches.'}</td></tr>`;
+        return;
+      }
+
+      quotesTbody.innerHTML = list.map(item => {
+        const c = item.customerData || {};
+        const qd = item.quoteData || {};
+        const planLabel = qd.tier ? (qd.tier.charAt(0).toUpperCase() + qd.tier.slice(1)) + (qd.userCount ? ` • ${qd.userCount}u` : '') : '—';
+        return `
+          <tr class="hover:bg-slate-800/50">
+            <td class="py-3 pr-3 font-semibold text-white">${escapeHtml(c.company) || '—'}</td>
+            <td class="py-3 pr-3">${escapeHtml(c.name) || '—'}</td>
+            <td class="py-3 pr-3 text-slate-400">${escapeHtml(c.email) || '—'}</td>
+            <td class="py-3 pr-3 text-slate-300">${escapeHtml(planLabel)}</td>
+            <td class="py-3 pr-3 text-right font-mono text-slate-200">${fmtMoney(qd.total)}</td>
+            <td class="py-3 pr-3">${statusBadge(item.status)}</td>
+            <td class="py-3 pr-3 text-slate-400">${fmtDate(item.createdAt)}</td>
+            <td class="py-3 pr-3">
+              <div class="flex justify-end gap-2">
+                <button onclick="openAgreement('${item.id}')" title="Open prefilled agreement (admin mode)" class="text-xs bg-orange-500 hover:bg-orange-600 text-white px-2.5 py-1 rounded font-semibold">Agreement</button>
+                <button onclick="editCustomer('${item.id}')" title="Edit" class="text-xs bg-slate-700 hover:bg-slate-600 text-slate-200 px-2.5 py-1 rounded">Edit</button>
+                <button onclick="deleteQuote('${item.id}')" title="Delete" class="text-xs bg-red-600/80 hover:bg-red-600 text-white px-2.5 py-1 rounded">×</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    quoteSearch.addEventListener('input', renderQuotes);
+    document.getElementById('refreshQuotesBtn').addEventListener('click', loadQuotes);
+
+    function buildAgreementUrl(item) {
+      const c = item.customerData || {};
+      const q = item.quoteData || {};
+      const params = new URLSearchParams();
+      params.append('admin', '1');
+      params.append('quoteId', item.id);
+      if (c.company) params.append('company', c.company);
+      if (c.name)    params.append('contact', c.name);
+      if (c.email)   params.append('email', c.email);
+      if (q.tier)    params.append('tier', q.tier);
+      if (q.userCount) params.append('users', String(q.userCount));
+      if (typeof q.total === 'number') params.append('total', q.total.toFixed(2));
+      if (Array.isArray(q.breakdown)) {
+        const services = q.breakdown.map(line => {
+          const m = line.match(/^(.*?):\s*(.*?)\s*=\s*(\$[\d,.]+)\s*$/);
+          if (m) return { label: `${m[1].trim()} (${m[2].trim()})`, amount: m[3] };
+          const m2 = line.match(/^(.*?):\s*(.*)$/);
+          if (m2) return { label: m2[1].trim(), amount: m2[2].trim() };
+          return { label: line, amount: '' };
+        });
+        params.append('services', JSON.stringify(services));
+      }
+      return `agreement.html?${params.toString()}`;
+    }
+
+    function openAgreement(id) {
+      const item = _allQuotes.find(x => x.id === id);
+      if (!item) return;
+      window.open(buildAgreementUrl(item), '_blank', 'noopener');
+    }
+
+    async function deleteQuote(id) {
+      const item = _allQuotes.find(x => x.id === id);
+      if (!item) return;
+      if (!confirm(`Delete record for ${item.customerData?.company || 'this customer'}? This cannot be undone.`)) return;
+      try {
+        await apiCall({ type: 'admin_quote_delete', id });
+        await loadQuotes();
+      } catch (err) {
+        alert('Delete failed: ' + err.message);
+      }
+    }
+
+    /* ---- Customer Edit Modal ---- */
+    const customerEditModal = document.getElementById('customerEditModal');
+    const ceForm = document.getElementById('customerEditForm');
+    const ceLines = document.getElementById('ce_lines');
+
+    function ceAddLine(label = '', amount = '') {
+      const row = document.createElement('div');
+      row.className = 'flex gap-2';
+      row.innerHTML = `
+        <input type="text" placeholder="Service description" value="${escapeHtml(label)}" class="ce_label flex-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none">
+        <input type="text" placeholder="$ amount" value="${escapeHtml(amount)}" class="ce_amount w-32 px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none">
+        <button type="button" class="px-3 text-slate-400 hover:text-red-400">×</button>
+      `;
+      row.querySelector('button').addEventListener('click', () => row.remove());
+      ceLines.appendChild(row);
+    }
+    document.getElementById('ce_addLine').addEventListener('click', () => ceAddLine());
+
+    function openCustomerEdit(item) {
+      ceForm.reset();
+      ceLines.innerHTML = '';
+      document.getElementById('ce_status').classList.add('hidden');
+      const isNew = !item;
+      document.getElementById('customerEditTitle').textContent = isNew ? 'New Customer' : `Edit — ${item.customerData?.company || ''}`;
+      document.getElementById('ce_id').value = item?.id || '';
+      const c = item?.customerData || {};
+      const q = item?.quoteData || {};
+      document.getElementById('ce_company').value = c.company || '';
+      document.getElementById('ce_name').value    = c.name || '';
+      document.getElementById('ce_email').value   = c.email || '';
+      document.getElementById('ce_phone').value   = c.phone || '';
+      document.getElementById('ce_tier').value    = q.tier || '';
+      document.getElementById('ce_users').value   = q.userCount || 0;
+      document.getElementById('ce_total').value   = typeof q.total === 'number' ? q.total : 0;
+      document.getElementById('ce_notes').value   = c.notes || '';
+
+      const breakdown = Array.isArray(q.breakdown) ? q.breakdown : [];
+      if (breakdown.length === 0) {
+        ceAddLine();
+      } else {
+        breakdown.forEach(line => {
+          const m = line.match(/^(.*?):\s*(.*)$/);
+          if (m) ceAddLine(m[1].trim(), m[2].trim());
+          else ceAddLine(line, '');
+        });
+      }
+      customerEditModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCustomerEdit() {
+      customerEditModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    function editCustomer(id) {
+      const item = _allQuotes.find(x => x.id === id);
+      if (item) openCustomerEdit(item);
+    }
+    document.getElementById('newCustomerBtn').addEventListener('click', () => openCustomerEdit(null));
+
+    ceForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = document.getElementById('ce_status');
+      status.classList.add('hidden');
+      const id = document.getElementById('ce_id').value.trim();
+      const breakdown = Array.from(ceLines.children).map(row => {
+        const label  = row.querySelector('.ce_label').value.trim();
+        const amount = row.querySelector('.ce_amount').value.trim();
+        if (!label && !amount) return null;
+        return `${label}: ${amount}`;
+      }).filter(Boolean);
+
+      const existing = id ? _allQuotes.find(x => x.id === id) : null;
+      const quote = {
+        id: id || undefined,
+        createdAt: existing?.createdAt,
+        status: existing?.status || 'new',
+        source: existing?.source || 'admin_manual',
+        customerData: {
+          company: document.getElementById('ce_company').value.trim(),
+          name:    document.getElementById('ce_name').value.trim(),
+          email:   document.getElementById('ce_email').value.trim(),
+          phone:   document.getElementById('ce_phone').value.trim(),
+          notes:   document.getElementById('ce_notes').value.trim(),
+        },
+        quoteData: {
+          tier:      document.getElementById('ce_tier').value.trim(),
+          userCount: parseInt(document.getElementById('ce_users').value || '0', 10),
+          total:     parseFloat(document.getElementById('ce_total').value || '0'),
+          breakdown,
+          features: existing?.quoteData?.features || [],
+        },
+      };
+
+      try {
+        await apiCall({ type: 'admin_quote_save', quote });
+        status.textContent = 'Saved ✓';
+        status.className = 'text-sm text-center text-green-400';
+        status.classList.remove('hidden');
+        await loadQuotes();
+        setTimeout(closeCustomerEdit, 600);
+      } catch (err) {
+        status.textContent = 'Save failed: ' + err.message;
+        status.className = 'text-sm text-center text-red-400';
+        status.classList.remove('hidden');
+      }
+    });
+
+    /* ---- Modal open/close ---- */
     function showQuoteModal() {
-      alert('Quote Management System\n\nFeatures to implement:\n• View pending quotes\n• Convert quotes to customers\n• Send formal proposals\n• Track quote status\n• Manage pricing templates');
+      quoteModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      loadQuotes();
     }
+    function closeQuoteModal() {
+      quoteModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    quoteModal.addEventListener('click', (e) => { if (e.target === quoteModal) closeQuoteModal(); });
+    customerEditModal.addEventListener('click', (e) => { if (e.target === customerEditModal) closeCustomerEdit(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!customerEditModal.classList.contains('hidden')) closeCustomerEdit();
+        else if (!quoteModal.classList.contains('hidden')) closeQuoteModal();
+      }
+    });
 
+    /* ---- Customer Management button → same Quote modal (it IS the customer manager) ---- */
+    function showCustomerModal() { showQuoteModal(); }
+
+    /* ---- Stubs for the other dashboard cards (left for future) ---- */
+    function showInvoiceModal() {
+      alert('Invoice Management — not yet implemented.\n\nThe Customer Manager (Customer Management or Quote Requests button) is fully functional.');
+    }
+    function showProductModal() {
+      alert('Product Access Management — not yet implemented.');
+    }
     function showSettingsModal() {
-      alert('System Administration\n\nFeatures to implement:\n• User management\n• Security settings\n• Email configurations\n• API key management\n• System monitoring');
+      alert('System Settings — not yet implemented.');
     }
 
     function logout() {
-      sessionStorage.removeItem('adminAccess');
+      clearToken();
+      sessionStorage.clear();
       location.reload();
     }
   </script>

@@ -11,6 +11,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "@upstash/redis": "^1.38.0",
     "form-data": "^4.0.1",
     "mailgun.js": "^11.1.0"
   },
