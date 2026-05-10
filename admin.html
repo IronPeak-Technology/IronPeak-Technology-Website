@@ -181,7 +181,7 @@
           IronPeak <span class="gradient-text">Admin Portal</span>
         </h1>
         <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
-          Customer management, ticket system, invoice portal, and product administration.
+          Customer management, quotes, agreements, hardware products, and PSA tools.
         </p>
       </div>
     </div>
@@ -192,7 +192,7 @@
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-12 reveal">
         <h2 class="text-3xl font-black tracking-tight mb-3">Admin Dashboard</h2>
-        <p class="text-slate-400 max-w-xl mx-auto">Manage customers, view support tickets, and access administrative tools.</p>
+        <p class="text-slate-400 max-w-xl mx-auto">Manage customers, quotes, hardware products, and access PSA tools.</p>
       </div>
 
       <!-- Admin Tools Grid -->
@@ -214,58 +214,6 @@
           </button>
         </div>
 
-        <!-- Support Tickets -->
-        <div class="admin-card rounded-2xl p-8 reveal reveal-delay-2">
-          <div class="w-12 h-12 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold mb-3">Support Tickets</h3>
-          <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-            View and manage customer support tickets, assign technicians, and track resolution status.
-          </p>
-          <a href="https://helpdesk.ironpeaktechnology.com/admin" target="_blank" rel="noopener noreferrer" 
-             class="w-full text-center bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2">
-            Open Ticket System
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-            </svg>
-          </a>
-        </div>
-
-        <!-- Invoice Management -->
-        <div class="admin-card rounded-2xl p-8 reveal reveal-delay-3">
-          <div class="w-12 h-12 bg-purple-500/10 border border-purple-500/20 rounded-xl flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold mb-3">Invoice Portal</h3>
-          <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-            Generate customer invoices, track payment status, and manage billing information.
-          </p>
-          <button onclick="showInvoiceModal()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-xl transition-colors">
-            Manage Invoices
-          </button>
-        </div>
-
-        <!-- Product Links -->
-        <div class="admin-card rounded-2xl p-8 reveal reveal-delay-1">
-          <div class="w-12 h-12 bg-orange-500/10 border border-orange-500/20 rounded-xl flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold mb-3">Product Access</h3>
-          <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-            Manage customer access to trading products, MSP tools, and other premium services.
-          </p>
-          <button onclick="showProductModal()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-xl transition-colors">
-            Manage Products
-          </button>
-        </div>
-
         <!-- Quote Management -->
         <div class="admin-card rounded-2xl p-8 reveal reveal-delay-2">
           <div class="w-12 h-12 bg-yellow-500/10 border border-yellow-500/20 rounded-xl flex items-center justify-center mb-6">
@@ -282,43 +230,59 @@
           </button>
         </div>
 
-        <!-- System Settings -->
+        <!-- PSA (SuperOps) -->
         <div class="admin-card rounded-2xl p-8 reveal reveal-delay-3">
-          <div class="w-12 h-12 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          <div class="w-12 h-12 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold mb-3">System Settings</h3>
+          <h3 class="text-xl font-bold mb-3">PSA</h3>
           <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-            Configure system settings, manage user permissions, and access administrative tools.
+            Tickets, invoices, time tracking, and client management are handled in SuperOps.
           </p>
-          <button onclick="showSettingsModal()" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-colors">
-            System Settings
+          <a href="https://ironpeak.superops.ai/" target="_blank" rel="noopener noreferrer"
+             class="w-full text-center bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2">
+            Open SuperOps
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Hardware Products -->
+        <div class="admin-card rounded-2xl p-8 reveal reveal-delay-1">
+          <div class="w-12 h-12 bg-orange-500/10 border border-orange-500/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Hardware Products</h3>
+          <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+            Add computers, switches, peripherals, and other hardware to the public store. Manage stock and pricing.
+          </p>
+          <button onclick="showProductModal()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-xl transition-colors">
+            Manage Products
+          </button>
+        </div>
+
+        <!-- Custom Quote Builder -->
+        <div class="admin-card rounded-2xl p-8 reveal reveal-delay-2">
+          <div class="w-12 h-12 bg-purple-500/10 border border-purple-500/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Custom Quote Builder</h3>
+          <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+            Build a custom quote with products + services, generate the legal agreement on the fly, and send it to the customer (a copy goes to support for ticketing).
+          </p>
+          <button onclick="showBuilderModal()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-xl transition-colors">
+            Build Custom Quote
           </button>
         </div>
       </div>
 
-      <!-- Quick Stats -->
-      <div class="grid md:grid-cols-4 gap-6 reveal">
-        <div class="admin-card rounded-xl p-6 text-center">
-          <div class="text-2xl font-bold text-blue-400 mb-1">24</div>
-          <div class="text-slate-400 text-sm">Active Customers</div>
-        </div>
-        <div class="admin-card rounded-xl p-6 text-center">
-          <div class="text-2xl font-bold text-green-400 mb-1">3</div>
-          <div class="text-slate-400 text-sm">Open Tickets</div>
-        </div>
-        <div class="admin-card rounded-xl p-6 text-center">
-          <div class="text-2xl font-bold text-purple-400 mb-1">$18,450</div>
-          <div class="text-slate-400 text-sm">Monthly Revenue</div>
-        </div>
-        <div class="admin-card rounded-xl p-6 text-center">
-          <div class="text-2xl font-bold text-orange-400 mb-1">7</div>
-          <div class="text-slate-400 text-sm">Pending Quotes</div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -335,9 +299,6 @@
 
   <!-- Modal placeholders (to be implemented) -->
   <div id="customerModal" class="hidden"></div>
-  <div id="invoiceModal" class="hidden"></div>
-  <div id="productModal" class="hidden"></div>
-  <div id="settingsModal" class="hidden"></div>
 
   <!-- Customer / Quote Manager Modal -->
   <div id="quoteModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm overflow-y-auto">
@@ -422,6 +383,205 @@
           </div>
           <p id="ce_status" class="text-sm text-center hidden"></p>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hardware Products Manager Modal -->
+  <div id="productModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm overflow-y-auto">
+    <div class="min-h-screen flex items-start justify-center p-4 sm:p-8">
+      <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-6xl shadow-2xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700">
+          <div>
+            <h3 class="text-xl font-bold text-white">Hardware Products</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Products listed here appear in the public store. Image is loaded from a URL — host on GitHub, Imgur, or your CDN.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="newProductBtn" class="text-sm bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg font-semibold transition-colors">+ New Product</button>
+            <button id="refreshProductsBtn" class="text-sm bg-slate-700 hover:bg-slate-600 text-slate-200 px-3 py-2 rounded-lg transition-colors">Refresh</button>
+            <button onclick="closeProductModal()" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="p-6">
+          <input id="productSearch" type="search" placeholder="Search by name, SKU, or category…" class="w-full mb-4 px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none">
+          <div id="productsStatus" class="text-sm text-slate-400 mb-4">Loading…</div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="text-left text-xs uppercase text-slate-500 border-b border-slate-700">
+                <tr>
+                  <th class="py-2 pr-3">Image</th>
+                  <th class="py-2 pr-3">Name</th>
+                  <th class="py-2 pr-3">SKU</th>
+                  <th class="py-2 pr-3">Category</th>
+                  <th class="py-2 pr-3 text-right">Price</th>
+                  <th class="py-2 pr-3 text-right">Stock</th>
+                  <th class="py-2 pr-3">Status</th>
+                  <th class="py-2 pr-3 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productsTbody" class="divide-y divide-slate-800 text-slate-200"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New / Edit Product Modal -->
+  <div id="productEditModal" class="hidden fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm overflow-y-auto">
+    <div class="min-h-screen flex items-start justify-center p-4 sm:p-8">
+      <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl shadow-2xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700">
+          <h3 id="productEditTitle" class="text-xl font-bold text-white">New Product</h3>
+          <button onclick="closeProductEdit()" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <form id="productEditForm" class="p-6 space-y-4">
+          <input type="hidden" id="pe_id">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="sm:col-span-2"><label class="block text-xs text-slate-400 mb-1">Product Name *</label><input id="pe_name" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+            <div><label class="block text-xs text-slate-400 mb-1">SKU</label><input id="pe_sku" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+            <div><label class="block text-xs text-slate-400 mb-1">Category</label><select id="pe_category" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"><option value="computers">Computers</option><option value="laptops">Laptops</option><option value="servers">Servers</option><option value="networking">Networking</option><option value="peripherals">Peripherals</option><option value="monitors">Monitors</option><option value="accessories">Accessories</option><option value="other">Other</option></select></div>
+            <div><label class="block text-xs text-slate-400 mb-1">Price (USD) *</label><input id="pe_price" type="number" step="0.01" min="0" required class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+            <div><label class="block text-xs text-slate-400 mb-1">Stock</label><input id="pe_stock" type="number" min="0" value="0" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></div>
+          </div>
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">Image URL</label>
+            <input id="pe_imageUrl" type="url" placeholder="https://example.com/product.jpg" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none">
+            <p class="text-xs text-slate-500 mt-1">Tip: upload images to your GitHub repo (e.g. <code>/images/foo.jpg</code>) and use that path, or use Imgur / Cloudinary.</p>
+            <img id="pe_imagePreview" class="hidden mt-2 max-h-32 rounded border border-slate-700" alt="">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">Description</label>
+            <textarea id="pe_description" rows="3" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">Buy / Inquiry Link</label>
+            <input id="pe_buyUrl" type="url" placeholder="https://… (Stripe link, etc.)" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-white focus:border-orange-500 focus:outline-none">
+            <p class="text-xs text-slate-500 mt-1">Leave blank to default to a contact email link.</p>
+          </div>
+          <label class="flex items-center gap-2 text-sm text-slate-300">
+            <input id="pe_active" type="checkbox" checked class="w-4 h-4 rounded">
+            Active (visible on the public store)
+          </label>
+          <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <button type="submit" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-lg transition-colors">Save Product</button>
+            <button type="button" onclick="closeProductEdit()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-bold py-2.5 rounded-lg transition-colors">Cancel</button>
+          </div>
+          <p id="pe_status" class="text-sm text-center hidden"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Quote Builder Modal -->
+  <div id="builderModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm overflow-y-auto">
+    <div class="min-h-screen flex items-start justify-center p-4 sm:p-8">
+      <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-5xl shadow-2xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700 sticky top-0 bg-slate-900 z-10 rounded-t-2xl">
+          <div>
+            <h3 class="text-xl font-bold text-white">Custom Quote Builder</h3>
+            <p class="text-xs text-slate-400 mt-0.5">Pick products + add custom services. The legal agreement is generated and emailed to the customer; a copy goes to support@ for ticketing.</p>
+          </div>
+          <button onclick="closeBuilderModal()" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div class="p-6 space-y-6">
+
+          <!-- Customer Info -->
+          <fieldset class="border border-slate-700 rounded-xl p-4">
+            <legend class="px-2 text-sm font-bold text-slate-300">Customer Information</legend>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Company Name *</label>
+                <input id="bq_company" type="text" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-purple-500 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Contact Name *</label>
+                <input id="bq_contact" type="text" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-purple-500 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Email *</label>
+                <input id="bq_email" type="email" required class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-purple-500 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Phone</label>
+                <input id="bq_phone" type="tel" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-purple-500 focus:outline-none">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Quote Title</label>
+                <input id="bq_title" type="text" placeholder="Managed Services + Hardware Quote" class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-purple-500 focus:outline-none">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Add From Catalog -->
+          <fieldset class="border border-slate-700 rounded-xl p-4">
+            <legend class="px-2 text-sm font-bold text-slate-300">Add From Hardware Catalog</legend>
+            <div class="flex gap-2">
+              <select id="bq_productPicker" class="flex-1 bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-purple-500 focus:outline-none">
+                <option value="">Loading products…</option>
+              </select>
+              <input id="bq_productQty" type="number" min="1" value="1" class="w-20 bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-purple-500 focus:outline-none" title="Qty">
+              <button type="button" onclick="bqAddProduct()" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded text-sm">+ Add</button>
+            </div>
+          </fieldset>
+
+          <!-- Add Custom Line -->
+          <fieldset class="border border-slate-700 rounded-xl p-4">
+            <legend class="px-2 text-sm font-bold text-slate-300">Add Custom Line Item</legend>
+            <div class="grid grid-cols-12 gap-2">
+              <input id="bq_customDesc" type="text" placeholder="Description (e.g. Managed IT — 25 endpoints)" class="col-span-6 bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-purple-500 focus:outline-none">
+              <input id="bq_customQty" type="number" min="1" value="1" placeholder="Qty" class="col-span-1 bg-slate-800 border border-slate-700 rounded px-2 py-2 text-sm text-white focus:border-purple-500 focus:outline-none">
+              <input id="bq_customPrice" type="number" min="0" step="0.01" placeholder="Unit $" class="col-span-2 bg-slate-800 border border-slate-700 rounded px-2 py-2 text-sm text-white focus:border-purple-500 focus:outline-none">
+              <select id="bq_customType" class="col-span-2 bg-slate-800 border border-slate-700 rounded px-2 py-2 text-sm text-white focus:border-purple-500 focus:outline-none">
+                <option value="onetime">One-Time</option>
+                <option value="monthly">Monthly</option>
+                <option value="setup">Setup Fee</option>
+              </select>
+              <button type="button" onclick="bqAddCustom()" class="col-span-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded text-sm">+</button>
+            </div>
+          </fieldset>
+
+          <!-- Line Items -->
+          <fieldset class="border border-slate-700 rounded-xl p-4">
+            <legend class="px-2 text-sm font-bold text-slate-300">Line Items</legend>
+            <div id="bq_lines" class="space-y-2">
+              <p class="text-sm text-slate-500 italic">No items yet. Add hardware from the catalog or a custom line above.</p>
+            </div>
+            <div class="border-t border-slate-700 mt-4 pt-3 grid grid-cols-3 gap-3 text-sm">
+              <div class="text-slate-400">One-Time / Hardware: <span id="bq_totOneTime" class="text-white font-bold">$0.00</span></div>
+              <div class="text-slate-400">Setup Fees: <span id="bq_totSetup" class="text-white font-bold">$0.00</span></div>
+              <div class="text-slate-400">Monthly Recurring: <span id="bq_totMonthly" class="text-white font-bold">$0.00</span></div>
+            </div>
+          </fieldset>
+
+          <!-- Notes -->
+          <fieldset class="border border-slate-700 rounded-xl p-4">
+            <legend class="px-2 text-sm font-bold text-slate-300">Notes / Scope of Work (optional)</legend>
+            <textarea id="bq_notes" rows="3" placeholder="Anything specific to call out: install timeline, warranty, exclusions, etc." class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:border-purple-500 focus:outline-none"></textarea>
+          </fieldset>
+
+          <!-- Actions -->
+          <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <button type="button" onclick="bqPreview()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-xl transition-colors">
+              👁 Preview Agreement
+            </button>
+            <button type="button" onclick="bqDownloadPdf()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors">
+              ⬇ Download as PDF
+            </button>
+            <button type="button" onclick="bqSend()" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition-colors">
+              ✉ Email to Customer + Support
+            </button>
+          </div>
+          <p id="bq_status" class="text-sm text-center hidden"></p>
+
+        </div>
       </div>
     </div>
   </div>
@@ -783,25 +943,479 @@
     }
     quoteModal.addEventListener('click', (e) => { if (e.target === quoteModal) closeQuoteModal(); });
     customerEditModal.addEventListener('click', (e) => { if (e.target === customerEditModal) closeCustomerEdit(); });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (!customerEditModal.classList.contains('hidden')) closeCustomerEdit();
-        else if (!quoteModal.classList.contains('hidden')) closeQuoteModal();
-      }
-    });
 
     /* ---- Customer Management button → same Quote modal (it IS the customer manager) ---- */
     function showCustomerModal() { showQuoteModal(); }
 
-    /* ---- Stubs for the other dashboard cards (left for future) ---- */
-    function showInvoiceModal() {
-      alert('Invoice Management — not yet implemented.\n\nThe Customer Manager (Customer Management or Quote Requests button) is fully functional.');
-    }
+    /* ============================================================
+       Hardware Products Manager
+       ============================================================ */
+    const productModal = document.getElementById('productModal');
+    const productEditModal = document.getElementById('productEditModal');
+    const productsTbody = document.getElementById('productsTbody');
+    const productsStatus = document.getElementById('productsStatus');
+    const productSearch = document.getElementById('productSearch');
+    let _allProducts = [];
+
     function showProductModal() {
-      alert('Product Access Management — not yet implemented.');
+      productModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      loadProducts();
     }
-    function showSettingsModal() {
-      alert('System Settings — not yet implemented.');
+    function closeProductModal() {
+      productModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    productModal.addEventListener('click', (e) => { if (e.target === productModal) closeProductModal(); });
+
+    async function loadProducts() {
+      productsStatus.textContent = 'Loading…';
+      productsStatus.className = 'text-sm text-slate-400 mb-4';
+      try {
+        const data = await apiCall({ type: 'admin_products_list' });
+        _allProducts = data.products || [];
+        renderProducts();
+        productsStatus.textContent = `${_allProducts.length} product${_allProducts.length === 1 ? '' : 's'} on file`;
+      } catch (err) {
+        productsStatus.textContent = `Error: ${err.message}`;
+        productsStatus.className = 'text-sm text-red-400 mb-4';
+      }
+    }
+
+    function renderProducts() {
+      const q = (productSearch.value || '').trim().toLowerCase();
+      const list = q
+        ? _allProducts.filter(p => [p.name, p.sku, p.category].some(v => (v || '').toLowerCase().includes(q)))
+        : _allProducts;
+
+      if (list.length === 0) {
+        productsTbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-slate-500 italic">${_allProducts.length === 0 ? 'No products yet — click + New Product to add one.' : 'No matches.'}</td></tr>`;
+        return;
+      }
+
+      productsTbody.innerHTML = list.map(p => `
+        <tr class="hover:bg-slate-800/50">
+          <td class="py-3 pr-3">${p.imageUrl ? `<img src="${escapeHtml(p.imageUrl)}" alt="" class="w-10 h-10 object-cover rounded border border-slate-700">` : '<div class="w-10 h-10 rounded bg-slate-800 border border-slate-700"></div>'}</td>
+          <td class="py-3 pr-3 font-semibold text-white">${escapeHtml(p.name)}</td>
+          <td class="py-3 pr-3 text-slate-400 font-mono text-xs">${escapeHtml(p.sku) || '—'}</td>
+          <td class="py-3 pr-3 text-slate-300 capitalize">${escapeHtml(p.category) || '—'}</td>
+          <td class="py-3 pr-3 text-right font-mono text-slate-200">${fmtMoney(p.price)}</td>
+          <td class="py-3 pr-3 text-right text-slate-300">${p.stock ?? 0}</td>
+          <td class="py-3 pr-3">${p.active ? '<span class="text-xs px-2 py-0.5 rounded-full border bg-green-500/10 text-green-300 border-green-500/30">Active</span>' : '<span class="text-xs px-2 py-0.5 rounded-full border bg-slate-500/10 text-slate-300 border-slate-500/30">Hidden</span>'}</td>
+          <td class="py-3 pr-3">
+            <div class="flex justify-end gap-2">
+              <button onclick="editProduct('${p.id}')" class="text-xs bg-slate-700 hover:bg-slate-600 text-slate-200 px-2.5 py-1 rounded">Edit</button>
+              <button onclick="deleteProduct('${p.id}')" class="text-xs bg-red-600/80 hover:bg-red-600 text-white px-2.5 py-1 rounded">×</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    productSearch.addEventListener('input', renderProducts);
+    document.getElementById('refreshProductsBtn').addEventListener('click', loadProducts);
+
+    /* ---- Product Edit Modal ---- */
+    const peForm = document.getElementById('productEditForm');
+    const peImageUrl = document.getElementById('pe_imageUrl');
+    const peImagePreview = document.getElementById('pe_imagePreview');
+    peImageUrl.addEventListener('input', () => {
+      const url = peImageUrl.value.trim();
+      if (url) { peImagePreview.src = url; peImagePreview.classList.remove('hidden'); }
+      else { peImagePreview.classList.add('hidden'); }
+    });
+
+    function openProductEdit(item) {
+      peForm.reset();
+      document.getElementById('pe_status').classList.add('hidden');
+      peImagePreview.classList.add('hidden');
+      const isNew = !item;
+      document.getElementById('productEditTitle').textContent = isNew ? 'New Product' : `Edit — ${item.name}`;
+      document.getElementById('pe_id').value          = item?.id || '';
+      document.getElementById('pe_name').value        = item?.name || '';
+      document.getElementById('pe_sku').value         = item?.sku || '';
+      document.getElementById('pe_category').value    = item?.category || 'computers';
+      document.getElementById('pe_price').value       = typeof item?.price === 'number' ? item.price : '';
+      document.getElementById('pe_stock').value       = item?.stock ?? 0;
+      document.getElementById('pe_imageUrl').value    = item?.imageUrl || '';
+      document.getElementById('pe_description').value = item?.description || '';
+      document.getElementById('pe_buyUrl').value      = item?.buyUrl || '';
+      document.getElementById('pe_active').checked    = item ? !!item.active : true;
+      if (item?.imageUrl) { peImagePreview.src = item.imageUrl; peImagePreview.classList.remove('hidden'); }
+      productEditModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeProductEdit() {
+      productEditModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    function editProduct(id) {
+      const item = _allProducts.find(x => x.id === id);
+      if (item) openProductEdit(item);
+    }
+    async function deleteProduct(id) {
+      const item = _allProducts.find(x => x.id === id);
+      if (!item) return;
+      if (!confirm(`Delete "${item.name}"? This removes it from the public store.`)) return;
+      try {
+        await apiCall({ type: 'admin_product_delete', id });
+        await loadProducts();
+      } catch (err) { alert('Delete failed: ' + err.message); }
+    }
+    document.getElementById('newProductBtn').addEventListener('click', () => openProductEdit(null));
+    productEditModal.addEventListener('click', (e) => { if (e.target === productEditModal) closeProductEdit(); });
+
+    peForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = document.getElementById('pe_status');
+      status.classList.add('hidden');
+      const id = document.getElementById('pe_id').value.trim();
+      const existing = id ? _allProducts.find(x => x.id === id) : null;
+      const product = {
+        id: id || undefined,
+        createdAt: existing?.createdAt,
+        name:        document.getElementById('pe_name').value.trim(),
+        sku:         document.getElementById('pe_sku').value.trim(),
+        category:    document.getElementById('pe_category').value,
+        price:       parseFloat(document.getElementById('pe_price').value || '0'),
+        stock:       parseInt(document.getElementById('pe_stock').value || '0', 10),
+        imageUrl:    document.getElementById('pe_imageUrl').value.trim(),
+        description: document.getElementById('pe_description').value.trim(),
+        buyUrl:      document.getElementById('pe_buyUrl').value.trim(),
+        active:      document.getElementById('pe_active').checked,
+      };
+      try {
+        await apiCall({ type: 'admin_product_save', product });
+        status.textContent = 'Saved ✓';
+        status.className = 'text-sm text-center text-green-400';
+        status.classList.remove('hidden');
+        await loadProducts();
+        setTimeout(closeProductEdit, 600);
+      } catch (err) {
+        status.textContent = 'Save failed: ' + err.message;
+        status.className = 'text-sm text-center text-red-400';
+        status.classList.remove('hidden');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!builderModal.classList.contains('hidden')) closeBuilderModal();
+        else if (!productEditModal.classList.contains('hidden')) closeProductEdit();
+        else if (!productModal.classList.contains('hidden')) closeProductModal();
+        else if (!customerEditModal.classList.contains('hidden')) closeCustomerEdit();
+        else if (!quoteModal.classList.contains('hidden')) closeQuoteModal();
+      }
+    });
+
+    /* ---- Custom Quote Builder ---- */
+    const builderModal = document.getElementById('builderModal');
+    const bqLines = document.getElementById('bq_lines');
+    const bqStatus = document.getElementById('bq_status');
+    let bqItems = [];
+    let bqProducts = [];
+
+    builderModal.addEventListener('click', (e) => { if (e.target === builderModal) closeBuilderModal(); });
+
+    async function showBuilderModal() {
+      builderModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      bqStatus.classList.add('hidden');
+      try {
+        const data = await apiCall({ type: 'admin_products_list' });
+        bqProducts = data.products || [];
+        const picker = document.getElementById('bq_productPicker');
+        if (bqProducts.length === 0) {
+          picker.innerHTML = '<option value="">No products in catalog yet</option>';
+        } else {
+          picker.innerHTML = '<option value="">Select a product…</option>' + bqProducts.map(p =>
+            `<option value="${p.id}">${escapeHtml(p.name)}${p.sku ? ' — ' + escapeHtml(p.sku) : ''} ($${(p.price||0).toFixed(2)})</option>`
+          ).join('');
+        }
+      } catch (err) {
+        document.getElementById('bq_productPicker').innerHTML = '<option value="">Failed to load products</option>';
+      }
+    }
+    function closeBuilderModal() {
+      builderModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function bqAddProduct() {
+      const id = document.getElementById('bq_productPicker').value;
+      const qty = Math.max(1, parseInt(document.getElementById('bq_productQty').value, 10) || 1);
+      if (!id) return;
+      const p = bqProducts.find(x => x.id === id);
+      if (!p) return;
+      bqItems.push({
+        kind: 'product',
+        type: 'onetime',
+        description: p.name + (p.sku ? ` (SKU: ${p.sku})` : ''),
+        qty,
+        unitPrice: parseFloat(p.price) || 0,
+      });
+      bqRender();
+    }
+    function bqAddCustom() {
+      const desc = document.getElementById('bq_customDesc').value.trim();
+      const qty = Math.max(1, parseInt(document.getElementById('bq_customQty').value, 10) || 1);
+      const price = Math.max(0, parseFloat(document.getElementById('bq_customPrice').value) || 0);
+      const type = document.getElementById('bq_customType').value;
+      if (!desc) { alert('Description required'); return; }
+      bqItems.push({ kind: 'custom', type, description: desc, qty, unitPrice: price });
+      document.getElementById('bq_customDesc').value = '';
+      document.getElementById('bq_customQty').value = '1';
+      document.getElementById('bq_customPrice').value = '';
+      bqRender();
+    }
+    function bqRemove(i) { bqItems.splice(i, 1); bqRender(); }
+
+    function bqRender() {
+      if (bqItems.length === 0) {
+        bqLines.innerHTML = '<p class="text-sm text-slate-500 italic">No items yet. Add hardware from the catalog or a custom line above.</p>';
+      } else {
+        const typeBadge = (t) => {
+          const map = { onetime: ['One-Time', 'bg-orange-500/15 text-orange-300'], monthly: ['Monthly', 'bg-blue-500/15 text-blue-300'], setup: ['Setup', 'bg-yellow-500/15 text-yellow-300'] };
+          const [label, cls] = map[t] || map.onetime;
+          return `<span class="${cls} text-xs font-bold px-2 py-0.5 rounded">${label}</span>`;
+        };
+        bqLines.innerHTML = bqItems.map((it, i) => `
+          <div class="flex items-center gap-2 bg-slate-800/60 border border-slate-700 rounded p-2">
+            ${typeBadge(it.type)}
+            <div class="flex-1 text-sm text-white truncate" title="${escapeHtml(it.description)}">${escapeHtml(it.description)}</div>
+            <div class="text-xs text-slate-400 w-16 text-right">${it.qty} ×</div>
+            <div class="text-sm text-white w-24 text-right font-mono">$${it.unitPrice.toFixed(2)}</div>
+            <div class="text-sm text-orange-300 w-28 text-right font-mono font-bold">$${(it.qty * it.unitPrice).toFixed(2)}</div>
+            <button type="button" onclick="bqRemove(${i})" class="text-red-400 hover:text-red-300 text-lg px-2" title="Remove">×</button>
+          </div>
+        `).join('');
+      }
+      let one = 0, setup = 0, monthly = 0;
+      bqItems.forEach(it => {
+        const sub = it.qty * it.unitPrice;
+        if (it.type === 'monthly') monthly += sub;
+        else if (it.type === 'setup') setup += sub;
+        else one += sub;
+      });
+      document.getElementById('bq_totOneTime').textContent = '$' + one.toFixed(2);
+      document.getElementById('bq_totSetup').textContent = '$' + setup.toFixed(2);
+      document.getElementById('bq_totMonthly').textContent = '$' + monthly.toFixed(2);
+    }
+
+    function bqValidate() {
+      const company = document.getElementById('bq_company').value.trim();
+      const contact = document.getElementById('bq_contact').value.trim();
+      const email   = document.getElementById('bq_email').value.trim();
+      if (!company || !contact || !email) { alert('Company, contact name, and email are required.'); return null; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Invalid email.'); return null; }
+      if (bqItems.length === 0) { alert('Add at least one line item.'); return null; }
+      return {
+        company, contact, email,
+        phone: document.getElementById('bq_phone').value.trim(),
+        title: document.getElementById('bq_title').value.trim() || 'Service & Hardware Quote',
+        notes: document.getElementById('bq_notes').value.trim(),
+      };
+    }
+
+    function bqBuildHtml(meta, opts) {
+      opts = opts || {};
+      const includeToolbar = !!opts.includeToolbar;
+      const fmt = n => '$' + (n || 0).toFixed(2);
+      const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const oneTime = bqItems.filter(i => i.type === 'onetime');
+      const setup   = bqItems.filter(i => i.type === 'setup');
+      const monthly = bqItems.filter(i => i.type === 'monthly');
+      const sumQty = arr => arr.reduce((a, i) => a + i.qty * i.unitPrice, 0);
+      const oneTotal = sumQty(oneTime);
+      const setupTotal = sumQty(setup);
+      const monthlyTotal = sumQty(monthly);
+      const grandFirst = oneTotal + setupTotal + monthlyTotal;
+
+      const rowFor = (arr) => arr.length === 0
+        ? `<tr><td colspan="4" style="padding:10px;color:#888;font-style:italic;">None.</td></tr>`
+        : arr.map(i => `
+            <tr>
+              <td style="padding:8px;border-bottom:1px solid #eee;">${escapeHtml(i.description)}</td>
+              <td style="padding:8px;border-bottom:1px solid #eee;text-align:center;">${i.qty}</td>
+              <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;font-family:monospace;">${fmt(i.unitPrice)}</td>
+              <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;font-family:monospace;font-weight:bold;">${fmt(i.qty * i.unitPrice)}</td>
+            </tr>`).join('');
+
+      const section = (title, arr, total, footerLabel) => `
+        <h3 style="font-size:14px;font-weight:bold;text-transform:uppercase;letter-spacing:.05em;color:#0f172a;margin:18px 0 6px;">${title}</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;border:1px solid #e2e8f0;">
+          <thead>
+            <tr style="background:#f1f5f9;text-align:left;">
+              <th style="padding:8px;">Item</th>
+              <th style="padding:8px;text-align:center;width:60px;">Qty</th>
+              <th style="padding:8px;text-align:right;width:90px;">Unit</th>
+              <th style="padding:8px;text-align:right;width:110px;">Total</th>
+            </tr>
+          </thead>
+          <tbody>${rowFor(arr)}</tbody>
+          <tfoot>
+            <tr style="background:#f8fafc;border-top:2px solid #0f172a;">
+              <td colspan="3" style="padding:8px;text-align:right;font-weight:bold;">${footerLabel}</td>
+              <td style="padding:8px;text-align:right;font-family:monospace;font-weight:bold;">${fmt(total)}</td>
+            </tr>
+          </tfoot>
+        </table>`;
+
+      return `<!doctype html><html><head><meta charset="utf-8"><title>${escapeHtml(meta.title)} — ${escapeHtml(meta.company)}</title>
+<style>
+  @media print {
+    .no-print { display: none !important; }
+    body { background: #fff !important; }
+    .agreement-wrap { padding: 0 !important; max-width: none !important; box-shadow: none !important; }
+    @page { margin: 0.5in; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:Arial,Helvetica,sans-serif;color:#0f172a;">
+${includeToolbar ? `<div class="no-print" style="background:#0f172a;color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2);">
+  <div style="font-weight:bold;font-size:14px;">📄 ${escapeHtml(meta.title)} — ${escapeHtml(meta.company)}</div>
+  <div style="display:flex;gap:8px;">
+    <button onclick="window.print()" style="background:#f97316;border:0;color:#fff;font-weight:bold;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;">⬇ Save as PDF / Print</button>
+    <button onclick="window.close()" style="background:#334155;border:0;color:#fff;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:13px;">Close</button>
+  </div>
+</div>
+<div class="no-print" style="background:#fef3c7;color:#78350f;padding:8px 20px;font-size:12px;text-align:center;border-bottom:1px solid #fbbf24;">
+  💡 Tip: Click "Save as PDF" → in the print dialog, choose <strong>"Save as PDF"</strong> as the destination. Upload the resulting file to the SuperOps Documents section for this customer.
+</div>` : ''}
+<div class="agreement-wrap" style="max-width:760px;margin:0 auto;background:#fff;padding:40px;">
+  <div style="text-align:center;border-bottom:2px solid #0f172a;padding-bottom:18px;margin-bottom:22px;">
+    <h1 style="margin:0;font-size:24px;letter-spacing:.02em;">MANAGED SERVICES &amp; HARDWARE AGREEMENT</h1>
+    <p style="margin:6px 0 0;font-size:13px;color:#64748b;">IronPeak Technology LLC</p>
+    <p style="margin:2px 0 0;font-size:12px;color:#64748b;">${today}</p>
+  </div>
+
+  <h2 style="font-size:14px;font-weight:bold;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px;">1. Parties</h2>
+  <p style="font-size:13px;line-height:1.6;margin:0 0 12px;">
+    This Agreement (the &ldquo;<strong>Agreement</strong>&rdquo;) is between
+    <strong>IronPeak Technology LLC</strong>, a Florida limited liability company (&ldquo;<strong>Provider</strong>&rdquo;),
+    and the client identified below (&ldquo;<strong>Client</strong>&rdquo;), effective as of execution.
+  </p>
+  <table style="width:100%;border-collapse:collapse;margin:8px 0 18px;font-size:13px;">
+    <tr>
+      <td style="vertical-align:top;width:50%;background:#f8fafc;border:1px solid #e2e8f0;padding:12px;">
+        <div style="font-size:11px;font-weight:bold;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Provider</div>
+        <div style="font-weight:bold;">IronPeak Technology LLC</div>
+        <div style="color:#475569;">support@ironpeaktechnology.com</div>
+      </td>
+      <td style="vertical-align:top;width:50%;background:#f8fafc;border:1px solid #e2e8f0;padding:12px;">
+        <div style="font-size:11px;font-weight:bold;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Client</div>
+        <div style="font-weight:bold;">${escapeHtml(meta.company)}</div>
+        <div style="color:#475569;">${escapeHtml(meta.contact)}</div>
+        <div style="color:#475569;">${escapeHtml(meta.email)}</div>
+        ${meta.phone ? `<div style="color:#475569;">${escapeHtml(meta.phone)}</div>` : ''}
+      </td>
+    </tr>
+  </table>
+
+  <h2 style="font-size:14px;font-weight:bold;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px;">2. Services, Hardware &amp; Pricing</h2>
+  ${monthly.length ? section('Recurring Monthly Services', monthly, monthlyTotal, 'Monthly Total') : ''}
+  ${setup.length   ? section('One-Time Setup Fees',        setup,   setupTotal,   'Setup Total')   : ''}
+  ${oneTime.length ? section('Hardware / One-Time Items',  oneTime, oneTotal,     'Hardware Total'): ''}
+
+  <table style="width:100%;border-collapse:collapse;margin:18px 0;font-size:14px;background:#0f172a;color:#fff;">
+    <tr>
+      <td style="padding:12px 14px;font-weight:bold;">First-Invoice Total (Hardware + Setup + First Month)</td>
+      <td style="padding:12px 14px;text-align:right;font-family:monospace;font-weight:bold;font-size:16px;">${fmt(grandFirst)}</td>
+    </tr>
+    ${monthly.length ? `<tr style="background:#1e293b;"><td style="padding:10px 14px;">Recurring Monthly Thereafter</td><td style="padding:10px 14px;text-align:right;font-family:monospace;font-weight:bold;">${fmt(monthlyTotal)}</td></tr>` : ''}
+  </table>
+
+  <p style="font-size:11px;color:#64748b;margin:0 0 18px;">All pricing in U.S. Dollars. Out-of-scope work is billed at $120/hour. Hardware shipped after payment is received.</p>
+
+  ${meta.notes ? `<h2 style="font-size:14px;font-weight:bold;text-transform:uppercase;letter-spacing:.05em;margin:18px 0 8px;">3. Scope &amp; Notes</h2><p style="font-size:13px;line-height:1.6;white-space:pre-wrap;margin:0 0 18px;">${escapeHtml(meta.notes)}</p>` : ''}
+
+  <h2 style="font-size:14px;font-weight:bold;text-transform:uppercase;letter-spacing:.05em;margin:18px 0 8px;">${meta.notes ? '4' : '3'}. Term &amp; Payment</h2>
+  <p style="font-size:13px;line-height:1.6;margin:0 0 12px;">
+    Recurring services run on a month-to-month basis; either party may terminate with 30 days&rsquo; written notice.
+    Invoices are due upon receipt; payment is late after fifteen (15) days and accrues interest at 1.5%/month.
+  </p>
+
+  <h2 style="font-size:14px;font-weight:bold;text-transform:uppercase;letter-spacing:.05em;margin:18px 0 8px;">${meta.notes ? '5' : '4'}. Service Levels</h2>
+  <ul style="font-size:13px;line-height:1.6;margin:0 0 12px;">
+    <li><strong>Critical</strong> (system down): 1 hour</li>
+    <li><strong>High</strong> (major impact): 4 business hours</li>
+    <li><strong>Normal</strong>: 1 business day</li>
+  </ul>
+
+  <h2 style="font-size:14px;font-weight:bold;text-transform:uppercase;letter-spacing:.05em;margin:18px 0 8px;">${meta.notes ? '6' : '5'}. General</h2>
+  <p style="font-size:13px;line-height:1.6;margin:0 0 18px;">
+    Governed by the laws of the State of Florida. The Provider&rsquo;s total liability is limited to the amount paid by Client in the three (3) months preceding any claim.
+    The Services are provided &ldquo;as is&rdquo;; no warranties beyond those expressly stated herein.
+  </p>
+
+  <div style="border-top:2px solid #0f172a;margin-top:30px;padding-top:18px;">
+    <h2 style="font-size:14px;font-weight:bold;text-transform:uppercase;letter-spacing:.05em;margin:0 0 14px;">Acceptance &amp; Signature</h2>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+      <tr>
+        <td style="vertical-align:top;width:50%;padding-right:14px;">
+          <div style="font-size:11px;font-weight:bold;color:#64748b;text-transform:uppercase;">Provider</div>
+          <div style="border-bottom:2px solid #0f172a;height:36px;font-family:'Brush Script MT',cursive;font-size:22px;padding-top:8px;">Travis Finch</div>
+          <div style="font-weight:bold;margin-top:4px;">Travis Finch</div>
+          <div style="color:#64748b;font-size:12px;">Owner, IronPeak Technology LLC</div>
+          <div style="color:#64748b;font-size:12px;">${today}</div>
+        </td>
+        <td style="vertical-align:top;width:50%;padding-left:14px;">
+          <div style="font-size:11px;font-weight:bold;color:#64748b;text-transform:uppercase;">Client</div>
+          <div style="border-bottom:2px solid #0f172a;height:36px;"></div>
+          <div style="font-weight:bold;margin-top:4px;">${escapeHtml(meta.contact)}</div>
+          <div style="color:#64748b;font-size:12px;">${escapeHtml(meta.company)}</div>
+          <div style="color:#64748b;font-size:12px;margin-top:4px;">Date: ____________________</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body></html>`;
+    }
+
+    function bqPreview() {
+      const meta = bqValidate(); if (!meta) return;
+      const html = bqBuildHtml(meta, { includeToolbar: true });
+      const w = window.open('', '_blank');
+      if (!w) { alert('Popup blocked. Allow popups to preview.'); return; }
+      w.document.open(); w.document.write(html); w.document.close();
+    }
+
+    function bqDownloadPdf() {
+      const meta = bqValidate(); if (!meta) return;
+      const html = bqBuildHtml(meta, { includeToolbar: true });
+      const w = window.open('', '_blank');
+      if (!w) { alert('Popup blocked. Allow popups to download.'); return; }
+      w.document.open(); w.document.write(html); w.document.close();
+      // Auto-trigger the print dialog so the user can save as PDF immediately
+      const safeName = (meta.company || 'agreement').replace(/[^a-z0-9]+/gi, '_').replace(/^_|_$/g, '');
+      const dateStr = new Date().toISOString().slice(0, 10);
+      w.addEventListener('load', () => {
+        try { w.document.title = `IronPeak_Agreement_${safeName}_${dateStr}`; } catch (_) {}
+        setTimeout(() => { try { w.print(); } catch (_) {} }, 400);
+      });
+      // Fallback if load already fired
+      setTimeout(() => {
+        try { w.document.title = `IronPeak_Agreement_${safeName}_${dateStr}`; } catch (_) {}
+        try { w.print(); } catch (_) {}
+      }, 600);
+    }
+
+    async function bqSend() {
+      const meta = bqValidate(); if (!meta) return;
+      const html = bqBuildHtml(meta, { includeToolbar: false });
+      const subject = `${meta.title} — IronPeak Technology LLC`;
+      bqStatus.textContent = 'Sending…';
+      bqStatus.className = 'text-sm text-center text-slate-300';
+      bqStatus.classList.remove('hidden');
+      try {
+        await apiCall({ type: 'admin_send_agreement', to: meta.email, subject, html });
+        bqStatus.textContent = `✓ Sent to ${meta.email} and support@ironpeaktechnology.com (ticket created)`;
+        bqStatus.className = 'text-sm text-center text-green-400';
+      } catch (err) {
+        bqStatus.textContent = 'Failed: ' + err.message;
+        bqStatus.className = 'text-sm text-center text-red-400';
+      }
     }
 
     function logout() {

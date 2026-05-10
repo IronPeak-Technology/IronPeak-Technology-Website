@@ -46,6 +46,7 @@ async function getKV() {
 }
 
 const QUOTES_KEY = 'ironpeak:quotes';
+const PRODUCTS_KEY = 'ironpeak:products';
 
 // ---------------------------------------------------------------------------
 // Rate limiting / IP blocking
@@ -181,6 +182,10 @@ module.exports = async function handler(req, res) {
     case 'admin_quote_save':    return handleAdminQuoteSave(body, res);
     case 'admin_quote_delete':  return handleAdminQuoteDelete(body, res);
     case 'admin_send_agreement':return handleAdminSendAgreement(body, res);
+    case 'products_list':       return handlePublicProductsList(body, res);
+    case 'admin_products_list': return handleAdminProductsList(body, res);
+    case 'admin_product_save':  return handleAdminProductSave(body, res);
+    case 'admin_product_delete':return handleAdminProductDelete(body, res);
     default:                    return res.status(400).json({ error: 'Invalid request type' });
   }
 };
@@ -231,7 +236,7 @@ async function handleQuoteRequest(body, res) {
 
     const message = {
       from: `IronPeak Quote System <quotes@${process.env.MAILGUN_DOMAIN}>`,
-      to: ['tfinch@ironpeaktechnology.com'],
+      to: ['support@ironpeaktechnology.com'],
       subject: body.subject,
       text: emailText,
       html: emailHtml,
@@ -403,11 +408,11 @@ async function handleAdminSendAgreement(body, res) {
       to: [to],
       subject,
       html,
-      'h:Reply-To': 'tfinch@ironpeaktechnology.com',
+      'h:Reply-To': 'support@ironpeaktechnology.com',
     };
     const internalMessage = {
       from: `IronPeak Agreements <agreements@${domain}>`,
-      to: ['tfinch@ironpeaktechnology.com'],
+      to: ['support@ironpeaktechnology.com'],
       subject: `[SENT AGREEMENT COPY] ${subject}`,
       html,
       'h:Reply-To': to,
@@ -587,3 +592,94 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+
+// ---------------------------------------------------------------------------
+// Hardware Products
+// ---------------------------------------------------------------------------
+async function handlePublicProductsList(body, res) {
+  const kv = await getKV();
+  if (!kv) return res.status(200).json({ ok: true, products: [] });
+  try {
+    const all = (await kv.hgetall(PRODUCTS_KEY)) || {};
+    const products = Object.values(all)
+      .map(v => { try { return typeof v === 'string' ? JSON.parse(v) : v; } catch { return null; } })
+      .filter(p => p && p.active)
+      .map(p => ({
+        id: p.id, name: p.name, sku: p.sku, category: p.category,
+        price: p.price, stock: p.stock, imageUrl: p.imageUrl,
+        description: p.description, buyUrl: p.buyUrl,
+      }))
+      .sort((a, b) => (a.category || '').localeCompare(b.category || '') || (a.name || '').localeCompare(b.name || ''));
+    return res.status(200).json({ ok: true, products });
+  } catch (err) {
+    console.error('products_list error:', err);
+    return res.status(500).json({ error: 'Failed to load products' });
+  }
+}
+
+async function handleAdminProductsList(body, res) {
+  if (!requireAdmin(body, res)) return;
+  const kv = await getKV();
+  if (!kv) return res.status(503).json({ error: 'Storage not configured (Upstash Redis env vars missing)' });
+  try {
+    const all = (await kv.hgetall(PRODUCTS_KEY)) || {};
+    const products = Object.values(all)
+      .map(v => { try { return typeof v === 'string' ? JSON.parse(v) : v; } catch { return null; } })
+      .filter(Boolean)
+      .sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+    return res.status(200).json({ ok: true, products });
+  } catch (err) {
+    console.error('admin_products_list error:', err);
+    return res.status(500).json({ error: 'Failed to load products', details: err.message });
+  }
+}
+
+async function handleAdminProductSave(body, res) {
+  if (!requireAdmin(body, res)) return;
+  const kv = await getKV();
+  if (!kv) return res.status(503).json({ error: 'Storage not configured (Upstash Redis env vars missing)' });
+  try {
+    const incoming = body.product || {};
+    if (!incoming.name || typeof incoming.name !== 'string') return res.status(400).json({ error: 'Product name required' });
+    if (incoming.imageUrl && !/^https?:\/\/|^\//.test(incoming.imageUrl)) {
+      return res.status(400).json({ error: 'Image URL must be a full URL or absolute path' });
+    }
+    if (incoming.buyUrl && !/^(https?:\/\/|mailto:|\/)/.test(incoming.buyUrl)) {
+      return res.status(400).json({ error: 'Buy URL must be a full URL, mailto:, or absolute path' });
+    }
+    const id = (incoming.id && String(incoming.id).match(/^[a-zA-Z0-9_-]{4,64}$/)) ? incoming.id : generateId();
+    const record = {
+      id,
+      createdAt: incoming.createdAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      name: String(incoming.name).slice(0, 200),
+      sku: String(incoming.sku || '').slice(0, 100),
+      category: String(incoming.category || 'other').slice(0, 50),
+      price: Math.max(0, parseFloat(incoming.price) || 0),
+      stock: Math.max(0, parseInt(incoming.stock, 10) || 0),
+      imageUrl: String(incoming.imageUrl || '').slice(0, 1000),
+      description: String(incoming.description || '').slice(0, 2000),
+      buyUrl: String(incoming.buyUrl || '').slice(0, 1000),
+      active: !!incoming.active,
+    };
+    await kv.hset(PRODUCTS_KEY, { [id]: JSON.stringify(record) });
+    return res.status(200).json({ ok: true, product: record });
+  } catch (err) {
+    console.error('admin_product_save error:', err);
+    return res.status(500).json({ error: 'Failed to save product', details: err.message });
+  }
+}
+
+async function handleAdminProductDelete(body, res) {
+  if (!requireAdmin(body, res)) return;
+  const kv = await getKV();
+  if (!kv) return res.status(503).json({ error: 'Storage not configured (Upstash Redis env vars missing)' });
+  const id = body.id;
+  if (!id || typeof id !== 'string') return res.status(400).json({ error: 'Missing id' });
+  try {
+    await kv.hdel(PRODUCTS_KEY, id);
+    return res.status(200).json({ ok: true });
+  } catch (err) {
+    return res.status(500).json({ error: 'Failed to delete', details: err.message });
+  }
+}
