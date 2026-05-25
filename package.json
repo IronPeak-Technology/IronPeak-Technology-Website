@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@upstash/redis": "^1.38.0",
+    "@vercel/analytics": "^2.0.1",
     "form-data": "^4.0.1",
     "mailgun.js": "^11.1.0"
   },
